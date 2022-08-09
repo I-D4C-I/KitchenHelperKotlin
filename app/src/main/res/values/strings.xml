@@ -1,3 +1,52 @@
 <resources>
-    <string name="app_name">Kitchen Helper Kotlin</string>
+    <!--Общее-->
+    <string name="app_name">My Application</string>
+    <string name="version">Version 0.1</string>
+    <string name="retype">"Повторите ввод"</string>
+    <string name="edit">Изменить</string>
+    <string name="name">Название</string>
+    <string name="amount">Количество</string>
+    <string name="sort">Сортировка</string>
+    <string name="sortByName">Сортировка по имени</string>
+    <string name="sortByDate">Сортировка по времени</string>
+    <string name="search">Поиск</string>
+    <!--Меню-->
+    <string name="navigation_drawer_open">Открыть боковое меню</string>
+    <string name="navigation_drawer_close">Закрыть боковое меню</string>
+    <string name="recipeBook">Книга рецептов</string>
+    <string name="ToBuyList">Список покупок</string>
+    <string name="notifications">Уведомления</string>
+    <string name="additions">Дополнительно</string>
+    <string name="help">Помощь</string>
+    <string name="settings">Настройки</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отменить</string>
+    <!--Продукты-->
+    <string name="AddNewProduct">Продукт</string>
+    <string name="AddNewHashCode">Добавить</string>
+    <string name="addProduct">Добавить продукт</string>
+    <string name="ProductsList">Продукты</string>
+    <string name="CategoryList">Категории</string>
+    <string name="productHashCode">Штрих-код продукта</string>
+    <string name="ExpirationDate">Годен до</string>
+    <string name="UnitOfMeasure">Ед.Изм.</string>
+    <string name="Category">Категория</string>
+    <string name="deleteAllProducts">Удалить все продукты</string>
+    <string name="productDeleted">Продукт удален</string>
+    <string name="productAdded">Продукт добавлен</string>
+    <string name="productEdited">Продукт изменен</string>
+    <string name="daysLeft">Осталось дней:</string>
+    <!--Рецепты-->
+    <string name="addRecipe">Добавить рецепт</string>
+    <string name="startCooking">Начать готовить</string>
+    <string name="description">Описание</string>
+    <!--Список покупок-->
+    <string name="addToList">Добавить</string>
+    <string name="important">Важное</string>
+    <string name="hideCompleted">Скрыть законченные</string>
+    <string name="deleteCompleted">Удалить законченные</string>
+    <!--Уведомления-->
+    <string name="addNotifications">Добавить уведомление</string>
+    <!--Помощь-->
+    <!--Настройки-->
 </resources>
