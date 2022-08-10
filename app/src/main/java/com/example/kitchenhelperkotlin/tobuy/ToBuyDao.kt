@@ -16,6 +16,6 @@ interface ToBuyDao {
     @Delete
     suspend fun delete(toBuy: ToBuy)
 
-    @Query("select * from toBuy_table")
-    fun getToBuy():Flow<List<ToBuy>>
+    @Query("select * from toBuy_table where title like '%' || :searchQuery || '%' order by important desc")
+    fun getToBuy(searchQuery : String):Flow<List<ToBuy>>
 }
