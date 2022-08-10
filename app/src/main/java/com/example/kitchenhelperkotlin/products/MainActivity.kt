@@ -1,7 +1,8 @@
-package com.example.kitchenhelperkotlin
+package com.example.kitchenhelperkotlin.products
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.kitchenhelperkotlin.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kitchenhelperkotlin.R
+import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentTobuyBinding
 import com.example.kitchenhelperkotlin.util.OnQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,13 +55,16 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.sortBuyName -> {
+                viewModel.sortOrder.value = SortOrder.BY_NAME
                 true
             }
             R.id.sortBuyDate-> {
+                viewModel.sortOrder.value = SortOrder.BY_DATE
                 true
             }
             R.id.hideCompleted-> {
                 item.isChecked = !item.isChecked
+                viewModel.hideCompleted.value = item.isChecked
                 true
             }
             R.id.deleteComleted-> {
