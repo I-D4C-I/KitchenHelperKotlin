@@ -8,12 +8,12 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "toBuy_table")
 @Parcelize
 data class ToBuy (
-    @PrimaryKey(autoGenerate = true) val id: Int,
     val title: String,
     val amount: Int,
     val important: Boolean = false,
     val completed: Boolean = false,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long = System.currentTimeMillis(),
+    @PrimaryKey(autoGenerate = true) val id: Int = 0
 ) : Parcelable {
 
 }
