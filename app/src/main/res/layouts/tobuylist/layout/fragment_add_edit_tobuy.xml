@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/eToBuyName"
+            android:id="@+id/eToBuyTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -32,7 +32,7 @@
             android:inputType="number"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/eToBuyName" />
+            app:layout_constraintTop_toBottomOf="@+id/eToBuyTitle" />
 
         <CheckBox
             android:id="@+id/cpImportant"
@@ -43,7 +43,7 @@
             android:text="@string/important"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/eToBuyAmount"
-            app:layout_constraintTop_toBottomOf="@+id/eToBuyName" />
+            app:layout_constraintTop_toBottomOf="@+id/eToBuyTitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

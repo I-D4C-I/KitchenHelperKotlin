@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp">
@@ -23,7 +24,7 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxLines="1"
-        android:text="Example Item"
+        tools:text="Example Item"
         android:textColor="@color/black" />
 
     <TextView
@@ -35,7 +36,7 @@
         android:layout_marginHorizontal="8dp"
         android:layout_toStartOf="@+id/tobuyPriority"
         android:gravity="center_vertical"
-        android:text="Amount"
+        tools:text="Amount"
         android:textColor="@color/black" />
 
     <ImageView
@@ -44,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_priority" />
+        android:src="@drawable/ic_priority"
+        />
 
 </RelativeLayout>

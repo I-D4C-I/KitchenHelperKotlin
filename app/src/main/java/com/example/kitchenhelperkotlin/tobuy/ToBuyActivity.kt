@@ -1,13 +1,12 @@
-package com.example.kitchenhelperkotlin
+package com.example.kitchenhelperkotlin.tobuy
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.kitchenhelperkotlin.R
 
-
-class MainActivity : AppCompatActivity() {
+class ToBuyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tobuy)
-
     }
 }
