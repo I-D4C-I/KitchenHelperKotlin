@@ -26,10 +26,10 @@ abstract class KHDatabase : RoomDatabase(){
 
            val tobuydao = database.get().toBuyDao()
             applicationScope.launch {
-                tobuydao.insert(ToBuy("Title 1", 23))
-                tobuydao.insert(ToBuy("Title 2", 23, important = true))
-                tobuydao.insert(ToBuy("Title 3", 23, important =false, completed = true))
-                tobuydao.insert(ToBuy("Title 4", 23, important =true, completed = true))
+                tobuydao.insert(ToBuy(title = "Title 1", amount = 3))
+                tobuydao.insert(ToBuy(title ="Title 2", amount = 2, important = true))
+                tobuydao.insert(ToBuy(title ="Title 3",amount = 13, important =false, completed = true))
+                tobuydao.insert(ToBuy(title ="Title 4",amount = 23, important =true, completed = true))
             }
 
         }
