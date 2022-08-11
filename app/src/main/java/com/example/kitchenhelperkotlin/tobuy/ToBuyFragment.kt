@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentTobuyBinding
+import com.example.kitchenhelperkotlin.util.OnItemClickListener
 import com.example.kitchenhelperkotlin.util.OnQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 
 //TODO("Заменить setHasOptionsMenu")
 @AndroidEntryPoint
-class ToBuyFragment : Fragment(R.layout.fragment_tobuy) {
+class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
 
     private val  viewModel : ToBuyViewModel by viewModels()
 
@@ -30,7 +31,7 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy) {
         setHasOptionsMenu(true)
 
 
-        val adapter = ToBuyAdapter()
+        val adapter = ToBuyAdapter(this)
         binding.apply {
             recycleViewToBuy.apply {
                 this.adapter = adapter
@@ -80,5 +81,13 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy) {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onItemClick(toBuy: ToBuy) {
+        viewModel.onToBuySelected(toBuy)
+    }
+
+    override fun onCheckBoxClick(toBuy: ToBuy, isChecked: Boolean) {
+        viewModel.onToBuyCheckedChanged(toBuy, isChecked)
     }
 }

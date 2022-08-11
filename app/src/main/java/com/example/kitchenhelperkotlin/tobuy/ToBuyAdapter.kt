@@ -7,8 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kitchenhelperkotlin.databinding.TobuyItemBinding
+import com.example.kitchenhelperkotlin.util.OnItemClickListener
 
-class ToBuyAdapter : ListAdapter<ToBuy, ToBuyAdapter.ToBuyViewHolder>(DiffCallback()) {
+class ToBuyAdapter(
+    private val listener: OnItemClickListener
+    ) : ListAdapter<ToBuy, ToBuyAdapter.ToBuyViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToBuyViewHolder {
         val binding = TobuyItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -20,9 +23,30 @@ class ToBuyAdapter : ListAdapter<ToBuy, ToBuyAdapter.ToBuyViewHolder>(DiffCallba
         holder.bind(currentItem)
     }
 
-    class ToBuyViewHolder(
+    inner class ToBuyViewHolder(
         private val binding: TobuyItemBinding
     ) : RecyclerView.ViewHolder(binding.root){
+
+        init {
+            binding.apply {
+                root.setOnClickListener{
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION)
+                    {
+                        val toBuy = getItem(position)
+                        listener.onItemClick(toBuy)
+                    }
+                }
+                cbCompleted.setOnClickListener {
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION)
+                    {
+                        val toBuy = getItem(position)
+                        listener.onCheckBoxClick(toBuy, cbCompleted.isChecked)
+                    }
+                }
+            }
+        }
 
         fun bind(toBuy: ToBuy){
             binding.apply {

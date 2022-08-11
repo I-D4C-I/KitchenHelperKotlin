@@ -40,6 +40,16 @@ class ToBuyViewModel @Inject constructor(
         preferences.updateHideCompleted(hideCompleted)
     }
 
+    val toBuys = toBuyFlow.asLiveData()
+
+    fun onToBuySelected(toBuy: ToBuy) {
+        TODO("Not yet implemented")
+    }
+
+    fun onToBuyCheckedChanged(toBuy: ToBuy, isChecked: Boolean) = viewModelScope.launch {
+        toBuyDao.update(toBuy.copy(completed = isChecked))
+    }
+
     /*
     val sortOrder = MutableStateFlow(SortOrder.BY_DATE)
     val hideCompleted = MutableStateFlow(false)
@@ -57,6 +67,6 @@ class ToBuyViewModel @Inject constructor(
         toBuyDao.getToBuy(query, sortOrder, hideCompleted)
     }
 */
-    val toBuys = toBuyFlow.asLiveData()
+
 }
 
