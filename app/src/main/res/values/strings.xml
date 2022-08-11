@@ -10,6 +10,7 @@
     <string name="sortByName">Сортировка по имени</string>
     <string name="sortByDate">Сортировка по времени</string>
     <string name="search">Поиск</string>
+    <string name="undo">Отменить</string>
     <!--Меню-->
     <string name="navigation_drawer_open">Открыть боковое меню</string>
     <string name="navigation_drawer_close">Закрыть боковое меню</string>
@@ -45,6 +46,7 @@
     <string name="important">Важное</string>
     <string name="hideCompleted">Скрыть законченные</string>
     <string name="deleteCompleted">Удалить законченные</string>
+    <string name="deletedToBuy">Покупа удалена</string>
     <!--Уведомления-->
     <string name="addNotifications">Добавить уведомление</string>
     <!--Помощь-->

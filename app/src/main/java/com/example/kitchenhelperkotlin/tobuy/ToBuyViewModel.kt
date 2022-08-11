@@ -5,10 +5,13 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.kitchenhelperkotlin.PreferencesRepository
 import com.example.kitchenhelperkotlin.SortOrder
+import com.example.kitchenhelperkotlin.util.ItemEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,6 +24,9 @@ class ToBuyViewModel @Inject constructor(
     val searchQuery = MutableStateFlow("")
 
     val preferencesFlow = preferences.preferencesFlow
+
+    private val toBuyEventChannel = Channel<ItemEvent>()
+    val toBuyEvent = toBuyEventChannel.receiveAsFlow()
 
     private val toBuyFlow = combine(
         searchQuery,
@@ -50,6 +56,15 @@ class ToBuyViewModel @Inject constructor(
         toBuyDao.update(toBuy.copy(completed = isChecked))
     }
 
+    fun onToBuySwiped(toBuy: ToBuy) = viewModelScope.launch {
+        toBuyDao.delete(toBuy)
+        toBuyEventChannel.send(ItemEvent.ShowUndoDeleteToBuyMessage(toBuy))
+    }
+
+    fun onUndoDeleteClick(toBuy: ToBuy) = viewModelScope.launch {
+        toBuyDao.insert(toBuy)
+    }
+}
     /*
     val sortOrder = MutableStateFlow(SortOrder.BY_DATE)
     val hideCompleted = MutableStateFlow(false)
@@ -68,5 +83,5 @@ class ToBuyViewModel @Inject constructor(
     }
 */
 
-}
+
 
