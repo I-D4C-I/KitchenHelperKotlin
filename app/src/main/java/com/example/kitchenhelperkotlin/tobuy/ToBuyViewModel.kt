@@ -1,10 +1,15 @@
 package com.example.kitchenhelperkotlin.tobuy
 
+import android.app.Application
 import android.os.Bundle
+import android.os.Message
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.kitchenhelperkotlin.PreferencesRepository
+import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
+import com.example.kitchenhelperkotlin.util.ADD_RESULT_OK
+import com.example.kitchenhelperkotlin.util.EDIT_RESULT_OK
 import com.example.kitchenhelperkotlin.util.ItemEvent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -16,10 +21,11 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class ToBuyViewModel @AssistedInject constructor(
+    application: Application,
     private val toBuyDao: ToBuyDao,
     private val preferences: PreferencesRepository,
     @Assisted val savedState: SavedStateHandle
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     val searchQuery = savedState.getLiveData("searchQuery", "")
 
@@ -68,12 +74,16 @@ class ToBuyViewModel @AssistedInject constructor(
         toBuyEventChannel.send(ItemEvent.NavigateToAddScreen)
     }
 
-    @AssistedFactory
-    interface Factory {
-        fun build(stateHandle: SavedStateHandle): ToBuyViewModel
+    fun onAddEditResult(result: Int) {
+        when(result){
+            ADD_RESULT_OK -> showConfirmationMessage(getApplication<Application>().resources.getString(R.string.addedToBuy))
+            EDIT_RESULT_OK -> showConfirmationMessage(getApplication<Application>().resources.getString(R.string.editedToBuy))
+        }
     }
 
-
+    private fun showConfirmationMessage(message: String) = viewModelScope.launch {
+        toBuyEventChannel.send(ItemEvent.ShowConfirmationMessage(message))
+    }
 
     @AssistedFactory
     interface ToBuyModelFactory {

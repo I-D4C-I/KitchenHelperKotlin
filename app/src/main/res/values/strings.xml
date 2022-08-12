@@ -48,6 +48,8 @@
     <string name="hideCompleted">Скрыть законченные</string>
     <string name="deleteCompleted">Удалить законченные</string>
     <string name="deletedToBuy">Покупа удалена</string>
+    <string name="addedToBuy">Покупка добалена</string>
+    <string name="editedToBuy">Покупка обновлена</string>
     <!--Уведомления-->
     <string name="addNotifications">Добавить уведомление</string>
     <!--Помощь-->

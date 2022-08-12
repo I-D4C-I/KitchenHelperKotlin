@@ -1,20 +1,24 @@
 package com.example.kitchenhelperkotlin.tobuy.addedit
 
+import android.app.Application
 import android.os.Bundle
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
-import com.example.kitchenhelperkotlin.tobuy.ToBuy
-import com.example.kitchenhelperkotlin.tobuy.ToBuyDao
+import com.example.kitchenhelperkotlin.R
+import com.example.kitchenhelperkotlin.tobuy.*
+import com.example.kitchenhelperkotlin.util.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 
 class AddEditToBuyViewModel @AssistedInject constructor(
+    application: Application,
     private val toBuyDao: ToBuyDao,
     @Assisted val stateHandle: SavedStateHandle
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     val toBuy = stateHandle.get<ToBuy>("toBuy")
 
@@ -23,7 +27,7 @@ class AddEditToBuyViewModel @AssistedInject constructor(
             field = value
             stateHandle["toBuyTitle"] = value
         }
-    var toBuyAmount = stateHandle.get<Int>("toBuyAmount") ?: toBuy?.amount ?: 0
+    var toBuyAmount = stateHandle.get<String>("toBuyAmount") ?: toBuy?.amount.toString()
         set(value) {
             field = value
             stateHandle["toBuyAmount"] = value
@@ -33,6 +37,42 @@ class AddEditToBuyViewModel @AssistedInject constructor(
             field = value
             stateHandle["toBuyImportance"] = value
         }
+
+    private val addEditToBuyEventChannel = Channel<AddEditEvent>()
+    val addEditToBuyEvent = addEditToBuyEventChannel.receiveAsFlow()
+
+    fun onSaveClick() {
+        if (toBuyTitle.isBlank() || toBuyAmount.isBlank()) {
+            showInvalidInputMessage(getApplication<Application>().resources.getString(R.string.retype))
+            return
+        }
+        if (toBuy != null) {
+            val updatedToBuy = toBuy.copy(
+                title = toBuyTitle,
+                amount = toBuyAmount.toInt(),
+                important = toBuyImportance
+            )
+            updatedToBuy(updatedToBuy)
+        } else {
+            val newToBuy =
+                ToBuy(title = toBuyTitle, amount = toBuyAmount.toInt(), important = toBuyImportance)
+            createToBuy(newToBuy)
+        }
+    }
+
+    private fun showInvalidInputMessage(message: String) = viewModelScope.launch {
+        addEditToBuyEventChannel.send(AddEditEvent.ShowInvalidInputMessage(message))
+    }
+
+    private fun createToBuy(createToBuy: ToBuy) = viewModelScope.launch {
+        toBuyDao.insert(createToBuy)
+        addEditToBuyEventChannel.send(AddEditEvent.NavigateBackWithResult(ADD_RESULT_OK))
+    }
+
+    private fun updatedToBuy(updatedToBuy: ToBuy) = viewModelScope.launch {
+        toBuyDao.update(updatedToBuy)
+        addEditToBuyEventChannel.send(AddEditEvent.NavigateBackWithResult(EDIT_RESULT_OK))
+    }
 
 
     @AssistedFactory

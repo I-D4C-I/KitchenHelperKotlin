@@ -36,7 +36,7 @@
             app:layout_constraintTop_toBottomOf="@+id/eToBuyTitle" />
 
         <CheckBox
-            android:id="@+id/cpImportant"
+            android:id="@+id/cbImportant"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
