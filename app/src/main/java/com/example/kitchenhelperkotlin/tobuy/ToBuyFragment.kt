@@ -39,6 +39,8 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
         ToBuyViewModel.provideFactory(factory, this, arguments)
     }
 
+    private lateinit var searchView: SearchView
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentTobuyBinding.bind(view)
@@ -126,7 +128,13 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
         inflater.inflate(R.menu.fragment_tobuy_menu, menu)
 
         val searchItem = menu.findItem(R.id.actionSearch)
-        val searchView = searchItem.actionView as SearchView
+        searchView = searchItem.actionView as SearchView
+
+        val pendingQuery = viewModel.searchQuery.value
+        if(pendingQuery != null && pendingQuery.isNotEmpty()){
+            searchItem.expandActionView()
+            searchView.setQuery(pendingQuery, false)
+        }
 
         searchView.onQueryTextChanged {
             viewModel.searchQuery.value = it
@@ -167,5 +175,10 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
 
     override fun onCheckBoxClick(toBuy: ToBuy, isChecked: Boolean) {
         viewModel.onToBuyCheckedChanged(toBuy, isChecked)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        searchView.setOnQueryTextListener(null)
     }
 }
