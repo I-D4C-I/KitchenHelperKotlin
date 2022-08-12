@@ -2,7 +2,6 @@ package com.example.kitchenhelperkotlin.tobuy
 
 import android.app.Application
 import android.os.Bundle
-import android.os.Message
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.kitchenhelperkotlin.PreferencesRepository
@@ -75,14 +74,26 @@ class ToBuyViewModel @AssistedInject constructor(
     }
 
     fun onAddEditResult(result: Int) {
-        when(result){
-            ADD_RESULT_OK -> showConfirmationMessage(getApplication<Application>().resources.getString(R.string.addedToBuy))
-            EDIT_RESULT_OK -> showConfirmationMessage(getApplication<Application>().resources.getString(R.string.editedToBuy))
+        when (result) {
+            ADD_RESULT_OK -> showConfirmationMessage(
+                getApplication<Application>().resources.getString(
+                    R.string.addedToBuy
+                )
+            )
+            EDIT_RESULT_OK -> showConfirmationMessage(
+                getApplication<Application>().resources.getString(
+                    R.string.editedToBuy
+                )
+            )
         }
     }
 
     private fun showConfirmationMessage(message: String) = viewModelScope.launch {
         toBuyEventChannel.send(ItemEvent.ShowConfirmationMessage(message))
+    }
+
+    fun onDeleteAllCompletedClick() = viewModelScope.launch {
+        toBuyEventChannel.send(ItemEvent.NavigateToDeleteAllScreen)
     }
 
     @AssistedFactory
@@ -95,12 +106,17 @@ class ToBuyViewModel @AssistedInject constructor(
             assistedFactory: ToBuyModelFactory,
             owner: SavedStateRegistryOwner,
             defaultArgs: Bundle? = null,
-        ): AbstractSavedStateViewModelFactory = object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T {
-                return assistedFactory.create(handle) as T
+        ): AbstractSavedStateViewModelFactory =
+            object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel?> create(
+                    key: String,
+                    modelClass: Class<T>,
+                    handle: SavedStateHandle
+                ): T {
+                    return assistedFactory.create(handle) as T
+                }
             }
-        }
     }
 
 }

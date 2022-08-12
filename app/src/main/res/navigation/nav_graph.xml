@@ -28,4 +28,9 @@
             android:name="title"
             app:argType="string" />
     </fragment>
+    <dialog
+        android:id="@+id/deleteAllDialogFragment"
+        android:name="com.example.dialog.DeleteAllCompletedDialogFragment"
+        android:label="DeleteAllDialogFragment" />
+    <action android:id="@+id/action_global_deleteAllDialogFragment" app:destination="@id/deleteAllDialogFragment" />
 </navigation>

@@ -19,8 +19,8 @@ import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentTobuyBinding
 import com.example.kitchenhelperkotlin.util.ItemEvent
 import com.example.kitchenhelperkotlin.util.OnItemClickListener
-import com.example.kitchenhelperkotlin.util.OnQueryTextChanged
 import com.example.kitchenhelperkotlin.util.exhaustive
+import com.example.kitchenhelperkotlin.util.onQueryTextChanged
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -75,7 +75,7 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
             }
         }
 
-        setFragmentResultListener("add_edit_request") {_, bundle ->
+        setFragmentResultListener("add_edit_request") { _, bundle ->
             val result = bundle.getInt("add_edit_result")
             viewModel.onAddEditResult(result)
         }
@@ -95,16 +95,27 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
                     }
                     is ItemEvent.NavigateToAddScreen -> {
                         val action =
-                            ToBuyFragmentDirections.actionToBuyFragmentToAddEditToBuyFragment(resources.getString(R.string.addNew),null)
+                            ToBuyFragmentDirections.actionToBuyFragmentToAddEditToBuyFragment(
+                                resources.getString(R.string.addNew),
+                                null
+                            )
                         findNavController().navigate(action)
                     }
                     is ItemEvent.NavigateToEditToBuyScreen -> {
                         val action =
-                            ToBuyFragmentDirections.actionToBuyFragmentToAddEditToBuyFragment(resources.getString(R.string.edit) ,event.toBuy)
+                            ToBuyFragmentDirections.actionToBuyFragmentToAddEditToBuyFragment(
+                                resources.getString(R.string.edit),
+                                event.toBuy
+                            )
                         findNavController().navigate(action)
                     }
                     is ItemEvent.ShowConfirmationMessage -> {
-                        Snackbar.make(requireView(),event.msg, Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(requireView(), event.msg, Snackbar.LENGTH_SHORT).show()
+                    }
+                    is ItemEvent.NavigateToDeleteAllScreen -> {
+                        val action =
+                            ToBuyFragmentDirections.actionGlobalDeleteAllDialogFragment()
+                        findNavController().navigate(action)
                     }
                 }.exhaustive
             }
@@ -117,7 +128,7 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
         val searchItem = menu.findItem(R.id.actionSearch)
         val searchView = searchItem.actionView as SearchView
 
-        searchView.OnQueryTextChanged {
+        searchView.onQueryTextChanged {
             viewModel.searchQuery.value = it
         }
 
@@ -143,6 +154,7 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
                 true
             }
             R.id.deleteComleted -> {
+                viewModel.onDeleteAllCompletedClick()
                 true
             }
             else -> super.onOptionsItemSelected(item)

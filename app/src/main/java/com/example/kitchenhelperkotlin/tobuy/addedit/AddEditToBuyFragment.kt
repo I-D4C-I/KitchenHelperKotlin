@@ -9,7 +9,6 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.databinding.FragmentAddEditTobuyBinding
 import com.example.kitchenhelperkotlin.util.AddEditEvent
@@ -59,8 +58,8 @@ class AddEditToBuyFragment : Fragment(R.layout.fragment_add_edit_tobuy) {
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.addEditToBuyEvent.collect{ event ->
-                when(event){
+            viewModel.addEditToBuyEvent.collect { event ->
+                when (event) {
                     is AddEditEvent.NavigateBackWithResult -> {
                         binding.eToBuyTitle.clearFocus()
                         setFragmentResult(

@@ -12,6 +12,8 @@
     <string name="search">Поиск</string>
     <string name="undo">Отменить</string>
     <string name="addNew">Новая запись</string>
+    <string name="confirmDeletion">Подтвердите удаление</string>
+    <string name="confirm">Подтвердить</string>
     <!--Меню-->
     <string name="navigation_drawer_open">Открыть боковое меню</string>
     <string name="navigation_drawer_close">Закрыть боковое меню</string>
@@ -50,6 +52,7 @@
     <string name="deletedToBuy">Покупа удалена</string>
     <string name="addedToBuy">Покупка добалена</string>
     <string name="editedToBuy">Покупка обновлена</string>
+    <string name="deleteAllCompletedMessage">Вы уверены, что хотите удалить все завершенные покупки?</string>
     <!--Уведомления-->
     <string name="addNotifications">Добавить уведомление</string>
     <!--Помощь-->
