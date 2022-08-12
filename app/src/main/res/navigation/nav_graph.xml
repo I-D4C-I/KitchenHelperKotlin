@@ -8,6 +8,24 @@
     <fragment
         android:id="@+id/toBuyFragment"
         android:name="com.example.kitchenhelperkotlin.tobuy.ToBuyFragment"
-        android:label="fragment_tobuy"
-        tools:layout="@layout/fragment_tobuy" />
+        android:label="@string/ToBuyList"
+        tools:layout="@layout/fragment_tobuy">
+        <action
+            android:id="@+id/action_toBuyFragment_to_addEditToBuyFragment"
+            app:destination="@id/addEditToBuyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditToBuyFragment"
+        android:name="com.example.kitchenhelperkotlin.tobuy.addedit.AddEditToBuyFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_add_edit_tobuy" >
+        <argument
+            android:name="toBuy"
+            app:argType="com.example.kitchenhelperkotlin.tobuy.ToBuy"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
 </navigation>
