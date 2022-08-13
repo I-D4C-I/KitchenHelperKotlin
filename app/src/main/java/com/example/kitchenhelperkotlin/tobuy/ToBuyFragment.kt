@@ -98,7 +98,6 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
 
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-
         val adapter = ToBuyAdapter(this)
         binding.apply {
             recycleViewToBuy.apply {
