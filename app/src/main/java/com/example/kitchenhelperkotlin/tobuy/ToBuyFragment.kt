@@ -6,9 +6,12 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -44,8 +47,57 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentTobuyBinding.bind(view)
-        setHasOptionsMenu(true)
 
+        //setHasOptionsMenu(true)
+        val menuHost : MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.fragment_tobuy_menu, menu)
+
+                val searchItem = menu.findItem(R.id.actionSearch)
+                searchView = searchItem.actionView as SearchView
+
+                val pendingQuery = viewModel.searchQuery.value
+                if(pendingQuery != null && pendingQuery.isNotEmpty()){
+                    searchItem.expandActionView()
+                    searchView.setQuery(pendingQuery, false)
+                }
+
+                searchView.onQueryTextChanged {
+                    viewModel.searchQuery.value = it
+                }
+
+                viewLifecycleOwner.lifecycleScope.launch {
+                    menu.findItem(R.id.hideCompleted).isChecked =
+                        viewModel.preferencesFlow.first().hideCompleted
+                }
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.sortBuyName -> {
+                        viewModel.onSortOrderSelected(SortOrder.BY_NAME)
+                        true
+                    }
+                    R.id.sortBuyDate -> {
+                        viewModel.onSortOrderSelected(SortOrder.BY_DATE)
+                        true
+                    }
+                    R.id.hideCompleted -> {
+                        menuItem.isChecked = !menuItem.isChecked
+                        viewModel.onCompletedClick(menuItem.isChecked)
+                        true
+                    }
+                    R.id.deleteComleted -> {
+                        viewModel.onDeleteAllCompletedClick()
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        
 
         val adapter = ToBuyAdapter(this)
         binding.apply {
@@ -123,7 +175,7 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
             }
         }
     }
-
+/*
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.fragment_tobuy_menu, menu)
 
@@ -168,7 +220,7 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
+*/
     override fun onItemClick(toBuy: ToBuy) {
         viewModel.onToBuySelected(toBuy)
     }
