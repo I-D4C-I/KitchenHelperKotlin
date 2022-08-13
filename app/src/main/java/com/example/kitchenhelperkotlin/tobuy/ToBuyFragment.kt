@@ -49,8 +49,8 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
         val binding = FragmentTobuyBinding.bind(view)
 
         //setHasOptionsMenu(true)
-        val menuHost : MenuHost = requireActivity()
-        menuHost.addMenuProvider(object : MenuProvider{
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.fragment_tobuy_menu, menu)
 
@@ -58,7 +58,7 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
                 searchView = searchItem.actionView as SearchView
 
                 val pendingQuery = viewModel.searchQuery.value
-                if(pendingQuery != null && pendingQuery.isNotEmpty()){
+                if (pendingQuery != null && pendingQuery.isNotEmpty()) {
                     searchItem.expandActionView()
                     searchView.setQuery(pendingQuery, false)
                 }
@@ -97,7 +97,7 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
             }
 
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-        
+
 
         val adapter = ToBuyAdapter(this)
         binding.apply {
@@ -175,52 +175,7 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
             }
         }
     }
-/*
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.fragment_tobuy_menu, menu)
 
-        val searchItem = menu.findItem(R.id.actionSearch)
-        searchView = searchItem.actionView as SearchView
-
-        val pendingQuery = viewModel.searchQuery.value
-        if(pendingQuery != null && pendingQuery.isNotEmpty()){
-            searchItem.expandActionView()
-            searchView.setQuery(pendingQuery, false)
-        }
-
-        searchView.onQueryTextChanged {
-            viewModel.searchQuery.value = it
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            menu.findItem(R.id.hideCompleted).isChecked =
-                viewModel.preferencesFlow.first().hideCompleted
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.sortBuyName -> {
-                viewModel.onSortOrderSelected(SortOrder.BY_NAME)
-                true
-            }
-            R.id.sortBuyDate -> {
-                viewModel.onSortOrderSelected(SortOrder.BY_DATE)
-                true
-            }
-            R.id.hideCompleted -> {
-                item.isChecked = !item.isChecked
-                viewModel.onCompletedClick(item.isChecked)
-                true
-            }
-            R.id.deleteComleted -> {
-                viewModel.onDeleteAllCompletedClick()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-*/
     override fun onItemClick(toBuy: ToBuy) {
         viewModel.onToBuySelected(toBuy)
     }

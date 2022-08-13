@@ -16,7 +16,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
 
         binding.apply {
             testButton.setOnClickListener {
-                val action = ProductsFragmentDirections.actionProductsFragmentToNotificationFragment()
+                val action = ProductsFragmentDirections.actionProductsFragmentToToBuyFragment()
                 findNavController().navigate(action)
             }
         }
