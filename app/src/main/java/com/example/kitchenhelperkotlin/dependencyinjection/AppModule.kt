@@ -31,6 +31,9 @@ object AppModule {
     @Provides
     fun provideToBuyDao(db: KHDatabase) = db.toBuyDao()
 
+    @Provides
+    fun provideProductDao(db: KHDatabase) = db.ProductDao()
+
     @ApplicationScope
     @Provides
     @Singleton
