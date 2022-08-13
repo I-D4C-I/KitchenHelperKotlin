@@ -1,4 +1,4 @@
-package com.example.dialog
+package com.example.kitchenhelperkotlin.dialog
 
 import android.app.AlertDialog
 import android.app.Dialog

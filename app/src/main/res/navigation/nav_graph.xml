@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/toBuyFragment">
+    app:startDestination="@id/productsFragment">
 
     <fragment
         android:id="@+id/toBuyFragment"
@@ -30,7 +30,12 @@
     </fragment>
     <dialog
         android:id="@+id/deleteAllDialogFragment"
-        android:name="com.example.dialog.DeleteAllCompletedDialogFragment"
+        android:name="com.example.kitchenhelperkotlin.dialog.DeleteAllCompletedDialogFragment"
         android:label="DeleteAllDialogFragment" />
     <action android:id="@+id/action_global_deleteAllDialogFragment" app:destination="@id/deleteAllDialogFragment" />
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="com.example.kitchenhelperkotlin.products.ProductsFragment"
+        android:label="fragment_products"
+        tools:layout="@layout/fragment_products" />
 </navigation>
