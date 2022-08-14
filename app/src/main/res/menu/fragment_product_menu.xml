@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/actionSearchProduct"
+        android:id="@+id/actionSearch"
         android:icon="@drawable/ic_search_white"
         android:title="@string/search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
@@ -14,13 +14,13 @@
         app:showAsAction="always">
         <menu>
             <item
-                android:id="@+id/actionSortDefaultProduct"
+                android:id="@+id/actionSortDefault"
                 android:title="@string/sortDefault" />
             <item
-                android:id="@+id/actionSortByNameProduct"
+                android:id="@+id/actionSortByName"
                 android:title="@string/sortByName" />
             <item
-                android:id="@+id/actionSortByDateProduct"
+                android:id="@+id/actionSortByDate"
                 android:title="@string/sortByDate" />
         </menu>
     </item>

@@ -2,5 +2,6 @@ package com.example.kitchenhelperkotlin
 
 enum class SortOrder{
     BY_NAME,
-    BY_DATE
+    BY_DATE,
+    DEFAULT
 }

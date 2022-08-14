@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kitchenhelperkotlin.R
+import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentProductsBinding
 import com.example.kitchenhelperkotlin.util.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +33,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.fragment_product_menu, menu)
 
-                val searchItem = menu.findItem(R.id.actionSearchProduct)
+                val searchItem = menu.findItem(R.id.actionSearch)
                 val searchView = searchItem.actionView as SearchView
 
                 searchView.onQueryTextChanged {
@@ -43,13 +44,16 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    R.id.actionSortDefaultProduct -> {
+                    R.id.actionSortDefault -> {
+                        viewModel.sortOrder.value = SortOrder.DEFAULT
                         true
                     }
-                    R.id.actionSortByNameProduct -> {
+                    R.id.actionSortByName -> {
+                        viewModel.sortOrder.value = SortOrder.BY_NAME
                         true
                     }
-                    R.id.actionSortByDateProduct -> {
+                    R.id.actionSortByDate -> {
+                        viewModel.sortOrder.value = SortOrder.BY_DATE
                         true
                     }
                     else -> false

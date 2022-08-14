@@ -30,5 +30,6 @@ interface ToBuyDao {
         when(sortOrder){
             SortOrder.BY_DATE -> getToBuySortedByDate(query,hideCompleted)
             SortOrder.BY_NAME -> getToBuySortedByName(query,hideCompleted)
+            SortOrder.DEFAULT -> getToBuySortedByName(query,hideCompleted) //заглушка, не должна работать
         }
 }
