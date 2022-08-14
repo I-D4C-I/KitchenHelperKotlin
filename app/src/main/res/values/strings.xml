@@ -40,6 +40,7 @@
     <string name="productAdded">Продукт добавлен</string>
     <string name="productEdited">Продукт изменен</string>
     <string name="daysLeft">Осталось дней:</string>
+    <string name="expired">Срок годности истек</string>
     <!--Рецепты-->
     <string name="addRecipe">Добавить рецепт</string>
     <string name="startCooking">Начать готовить</string>
