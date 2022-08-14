@@ -16,8 +16,8 @@ interface ProductDao {
     @Delete
     suspend fun delete(product: Product)
 
-    @Query("select * from product_table")
-    fun getProducts() : Flow<List<Product>>
+    @Query("select * from product_table where title like '%' || :searchQuery || '%' order by id desc")
+    fun getProducts(searchQuery : String) : Flow<List<Product>>
 
     //TODO: Реализвовать очистку в настройках
     @Query("DELETE FROM product_table")

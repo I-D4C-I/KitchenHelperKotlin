@@ -57,6 +57,7 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
                 val searchItem = menu.findItem(R.id.actionSearch)
                 searchView = searchItem.actionView as SearchView
 
+
                 val pendingQuery = viewModel.searchQuery.value
                 if (pendingQuery != null && pendingQuery.isNotEmpty()) {
                     searchItem.expandActionView()

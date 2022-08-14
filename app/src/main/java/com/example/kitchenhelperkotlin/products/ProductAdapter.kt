@@ -35,11 +35,11 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Di
 
                 val between = ChronoUnit.DAYS.between(LocalDate.now(), product.date).toInt()
                 if (between < 7)
-                    daysleft.setTextColor(Color.RED)
+                    productLeftDays.setTextColor(Color.RED)
                 if (between <= 0)
-                    daysleft.text = itemView.context.getString(R.string.expired)
+                    productLeftDays.text = itemView.context.getString(R.string.expired)
                 else
-                    daysleft.text = between.toString()
+                    productLeftDays.text = between.toString()
 
             }
         }

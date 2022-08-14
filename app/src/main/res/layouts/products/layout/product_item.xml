@@ -46,14 +46,15 @@
             android:id="@+id/daysleft"
             android:text="@string/daysLeft"
             android:layout_below="@+id/productTitle"/>
+
         <TextView
             android:id="@+id/productLeftDays"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/productTitle"
-            tools:text="Days"
             android:layout_marginHorizontal="8dp"
-            android:layout_toEndOf="@+id/daysleft"/>
+            android:layout_toEndOf="@+id/daysleft"
+            tools:text="Days" />
 
     </RelativeLayout>
 
