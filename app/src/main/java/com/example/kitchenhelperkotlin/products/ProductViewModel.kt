@@ -40,4 +40,8 @@ class ProductViewModel @Inject constructor(
 
     val products = productsFlow.asLiveData()
 
+    fun onProductSelected(product: Product) {
+
+    }
+
 }

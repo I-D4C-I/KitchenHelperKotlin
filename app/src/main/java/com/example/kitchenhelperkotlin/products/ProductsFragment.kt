@@ -19,7 +19,7 @@ import com.example.kitchenhelperkotlin.util.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductsFragment : Fragment(R.layout.fragment_products) {
+class ProductsFragment : Fragment(R.layout.fragment_products) , ProductAdapter.OnItemClickListener {
 
     private val viewModel: ProductViewModel by viewModels()
 
@@ -63,7 +63,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
 
-        val adapter = ProductAdapter()
+        val adapter = ProductAdapter(this)
 
         binding.apply {
             recycleViewProduct.apply {
@@ -76,5 +76,9 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         viewModel.products.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
+    }
+
+    override fun onItemClick(product: Product) {
+        viewModel.onProductSelected(product)
     }
 }

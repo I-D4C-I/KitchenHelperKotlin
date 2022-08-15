@@ -12,7 +12,9 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 
-class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(DiffCallBack()) {
+class ProductAdapter(
+    private val listener: OnItemClickListener
+) : ListAdapter<Product, ProductAdapter.ProductViewHolder>(DiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = ProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,9 +26,21 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Di
         holder.bind(currentProduct)
     }
 
-    class ProductViewHolder(
+    inner class ProductViewHolder(
         private val binding: ProductItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.apply {
+                root.setOnClickListener {
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION){
+                        val product = getItem(position)
+                        listener.onItemClick(product)
+                    }
+                }
+            }
+        }
 
         fun bind(product: Product) {
             binding.apply {
@@ -43,6 +57,10 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Di
 
             }
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(product: Product)
     }
 
     class DiffCallBack : DiffUtil.ItemCallback<Product>() {

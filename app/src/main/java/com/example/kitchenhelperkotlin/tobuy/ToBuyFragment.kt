@@ -21,7 +21,6 @@ import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentTobuyBinding
 import com.example.kitchenhelperkotlin.util.ItemEvent
-import com.example.kitchenhelperkotlin.util.OnItemClickListener
 import com.example.kitchenhelperkotlin.util.exhaustive
 import com.example.kitchenhelperkotlin.util.onQueryTextChanged
 import com.google.android.material.snackbar.Snackbar
@@ -32,7 +31,7 @@ import javax.inject.Inject
 
 //TODO("Заменить setHasOptionsMenu")
 @AndroidEntryPoint
-class ToBuyFragment : Fragment(R.layout.fragment_tobuy), OnItemClickListener {
+class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClickListener {
 
 
     @Inject
