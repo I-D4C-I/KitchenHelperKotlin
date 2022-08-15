@@ -43,11 +43,11 @@ class ToBuyViewModel @AssistedInject constructor(
     }
 
     fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
-        preferences.updateSortOrder(sortOrder)
+        preferences.updateToBuySortOrder(sortOrder)
     }
 
     fun onCompletedClick(hideCompleted: Boolean) = viewModelScope.launch {
-        preferences.updateHideCompleted(hideCompleted)
+        preferences.updateToBuyHideCompleted(hideCompleted)
     }
 
     val toBuys = toBuyFlow.asLiveData()

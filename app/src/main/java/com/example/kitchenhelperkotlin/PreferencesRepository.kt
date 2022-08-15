@@ -16,21 +16,41 @@ import javax.inject.Singleton
 private const val TAG = "PreferencesRepository"
 
 //Класс имплементириующий настройки
-data class FilterPreferences (val sortOrder: SortOrder, val hideCompleted: Boolean)
+data class ToBuyPreferences(val sortOrder: SortOrder, val hideCompleted: Boolean)
+
+data class ProductPreferences(val sortOrder: SortOrder)
 
 @Singleton
-class PreferencesRepository @Inject constructor(@ApplicationContext context: Context){
+class PreferencesRepository @Inject constructor(@ApplicationContext context: Context) {
 
     //Иницализация
-    private val dataStore = context.createDataStore("toBuy_preferences")
+    private val toBuyDataStore = context.createDataStore("toBuy_preferences")
+    private val productDataStore = context.createDataStore("product_preferences")
 
     //Чтение текущих настроек
-    val preferencesFlow = dataStore.data
-        .catch { exception ->
-            if (exception is IOException){
-                Log.e(TAG, "Ошибка в чтении персональных настройек " , exception)
+
+    val preferencesProductFlow = productDataStore.data
+        .catch {  exception ->
+            if (exception is IOException) {
+                Log.e(TAG, "Ошибка в чтении персональных настройек ", exception)
                 emit(emptyPreferences())
-            } else{
+            } else {
+                throw  exception
+            }
+        }
+        .map { preferences ->
+            val sortOrder = SortOrder.valueOf(
+                preferences[PreferencesKeys.SORT_ORDER] ?: SortOrder.DEFAULT.name
+            )
+            ProductPreferences(sortOrder)
+        }
+
+    val preferencesFlow = toBuyDataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                Log.e(TAG, "Ошибка в чтении персональных настройек ", exception)
+                emit(emptyPreferences())
+            } else {
                 throw  exception
             }
         }
@@ -39,18 +59,25 @@ class PreferencesRepository @Inject constructor(@ApplicationContext context: Con
                 preferences[PreferencesKeys.SORT_ORDER] ?: SortOrder.BY_DATE.name
             )
             val hideCompleted = preferences[PreferencesKeys.HIDE_COMPLETED] ?: false
-            FilterPreferences(sortOrder, hideCompleted)
+            ToBuyPreferences(sortOrder, hideCompleted)
         }
 
     //Установка настроек
-    suspend fun updateSortOrder(sortOrder: SortOrder){
-        dataStore.edit { preferences ->
+
+    suspend fun updateProductSortOrder(sortOrder: SortOrder){
+        productDataStore.edit {  preferences ->
             preferences[PreferencesKeys.SORT_ORDER] = sortOrder.name
         }
     }
 
-    suspend fun updateHideCompleted(hideCompleted: Boolean){
-        dataStore.edit { preferences ->
+    suspend fun updateToBuySortOrder(sortOrder: SortOrder) {
+        toBuyDataStore.edit { preferences ->
+            preferences[PreferencesKeys.SORT_ORDER] = sortOrder.name
+        }
+    }
+
+    suspend fun updateToBuyHideCompleted(hideCompleted: Boolean) {
+        toBuyDataStore.edit { preferences ->
             preferences[PreferencesKeys.HIDE_COMPLETED] = hideCompleted
         }
     }

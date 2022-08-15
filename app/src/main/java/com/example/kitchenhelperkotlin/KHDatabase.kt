@@ -34,11 +34,11 @@ abstract class KHDatabase : RoomDatabase() {
             val toBuyDao = database.get().toBuyDao()
             val productDao = database.get().ProductDao()
             applicationScope.launch {
-                toBuyDao.insert(ToBuy(title = "Title 1", amount = 3))
-                toBuyDao.insert(ToBuy(title = "Title 2", amount = 2, important = true))
+                toBuyDao.insert(ToBuy(title = "Call Mom", amount = 3))
+                toBuyDao.insert(ToBuy(title = "Feed Cat", amount = 2, important = true))
                 toBuyDao.insert(
                     ToBuy(
-                        title = "Title 3",
+                        title = "Call Elon Musk",
                         amount = 13,
                         important = false,
                         completed = true
@@ -46,23 +46,23 @@ abstract class KHDatabase : RoomDatabase() {
                 )
                 toBuyDao.insert(
                     ToBuy(
-                        title = "Title 4",
+                        title = "Wash a dishes",
                         amount = 23,
                         important = true,
                         completed = true
                     )
                 )
-                productDao.insert(Product(title = "Title 1", amount = 5))
+                productDao.insert(Product(title = "Bread", amount = 5))
                 productDao.insert(
                     Product(
-                        title = "Title 2",
+                        title = "Milk",
                         amount = 15,
                         LocalDate.now().plusWeeks(1)
                     )
                 )
                 productDao.insert(
                     Product(
-                        title = "Title 2",
+                        title = "Bacon",
                         amount = 15,
                         LocalDate.now().plusMonths(1)
                     )

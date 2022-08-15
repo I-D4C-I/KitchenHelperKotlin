@@ -45,15 +45,15 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.actionSortDefault -> {
-                        viewModel.sortOrder.value = SortOrder.DEFAULT
+                        viewModel.onSortOrderSelected(SortOrder.DEFAULT)
                         true
                     }
                     R.id.actionSortByName -> {
-                        viewModel.sortOrder.value = SortOrder.BY_NAME
+                        viewModel.onSortOrderSelected(SortOrder.BY_NAME)
                         true
                     }
                     R.id.actionSortByDate -> {
-                        viewModel.sortOrder.value = SortOrder.BY_DATE
+                        viewModel.onSortOrderSelected(SortOrder.BY_DATE)
                         true
                     }
                     else -> false

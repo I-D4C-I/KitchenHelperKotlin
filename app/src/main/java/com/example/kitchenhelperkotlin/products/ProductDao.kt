@@ -31,7 +31,7 @@ interface ProductDao {
     @Query("select * from product_table where title like '%' || :searchQuery || '%' order by title")
     fun getProductsSortedByName(searchQuery: String): Flow<List<Product>>
 
-    @Query("select * from product_table where title like '%' || :searchQuery || '%' order by date")
+    @Query("select * from product_table where title like '%' || :searchQuery || '%' order by date desc")
     fun getProductsSortedByDate(searchQuery: String): Flow<List<Product>>
 
     //TODO: Реализвовать очистку в настройках
