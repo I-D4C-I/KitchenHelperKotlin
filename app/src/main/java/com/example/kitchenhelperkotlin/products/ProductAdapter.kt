@@ -34,7 +34,7 @@ class ProductAdapter(
             binding.apply {
                 root.setOnClickListener {
                     val position = adapterPosition
-                    if (position != RecyclerView.NO_POSITION){
+                    if (position != RecyclerView.NO_POSITION) {
                         val product = getItem(position)
                         listener.onItemClick(product)
                     }

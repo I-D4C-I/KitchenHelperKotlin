@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentTobuyBinding
-import com.example.kitchenhelperkotlin.util.ItemEvent
+import com.example.kitchenhelperkotlin.events.ToBuyEvent
 import com.example.kitchenhelperkotlin.util.exhaustive
 import com.example.kitchenhelperkotlin.util.onQueryTextChanged
 import com.google.android.material.snackbar.Snackbar
@@ -140,13 +140,13 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClic
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.toBuyEvent.collect { event ->
                 when (event) {
-                    is ItemEvent.ShowUndoDeleteToBuyMessage -> {
+                    is ToBuyEvent.ShowUndoDeleteMessage -> {
                         Snackbar.make(requireView(), R.string.deletedToBuy, Snackbar.LENGTH_LONG)
                             .setAction(R.string.undo) {
                                 viewModel.onUndoDeleteClick(event.toBuy)
                             }.show()
                     }
-                    is ItemEvent.NavigateToAddScreen -> {
+                    is ToBuyEvent.NavigateToAddScreen -> {
                         val action =
                             ToBuyFragmentDirections.actionToBuyFragmentToAddEditToBuyFragment(
                                 resources.getString(R.string.addNew),
@@ -154,7 +154,7 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClic
                             )
                         findNavController().navigate(action)
                     }
-                    is ItemEvent.NavigateToEditToBuyScreen -> {
+                    is ToBuyEvent.NavigateToEditScreen -> {
                         val action =
                             ToBuyFragmentDirections.actionToBuyFragmentToAddEditToBuyFragment(
                                 resources.getString(R.string.edit),
@@ -162,10 +162,10 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClic
                             )
                         findNavController().navigate(action)
                     }
-                    is ItemEvent.ShowConfirmationMessage -> {
+                    is ToBuyEvent.ShowConfirmationMessage -> {
                         Snackbar.make(requireView(), event.msg, Snackbar.LENGTH_SHORT).show()
                     }
-                    is ItemEvent.NavigateToDeleteAllScreen -> {
+                    is ToBuyEvent.NavigateToDeleteAllScreen -> {
                         val action =
                             ToBuyFragmentDirections.actionGlobalDeleteAllDialogFragment()
                         findNavController().navigate(action)

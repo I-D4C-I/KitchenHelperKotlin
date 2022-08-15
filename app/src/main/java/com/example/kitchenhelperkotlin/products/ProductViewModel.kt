@@ -6,10 +6,13 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.kitchenhelperkotlin.PreferencesRepository
 import com.example.kitchenhelperkotlin.SortOrder
+import com.example.kitchenhelperkotlin.events.ProductEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +26,10 @@ class ProductViewModel @Inject constructor(
 
     val searchQuery = MutableStateFlow("")
 
-    val preferencesFlow = preferencesRepository.preferencesProductFlow
+    private val preferencesFlow = preferencesRepository.preferencesProductFlow
+
+    private val productsEventChannel = Channel<ProductEvent>()
+    val productEvent = productsEventChannel.receiveAsFlow()
 
     private val productsFlow = combine(
         searchQuery,
@@ -34,7 +40,7 @@ class ProductViewModel @Inject constructor(
         productDao.getProducts(query, filterPreferences.sortOrder)
     }
 
-    fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch{
+    fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
         preferencesRepository.updateProductSortOrder(sortOrder)
     }
 
@@ -42,6 +48,15 @@ class ProductViewModel @Inject constructor(
 
     fun onProductSelected(product: Product) {
 
+    }
+
+    fun onProductSwiped(product: Product) = viewModelScope.launch {
+        productDao.delete(product)
+        productsEventChannel.send(ProductEvent.ShowUndoDeleteMessage(product))
+    }
+
+    fun onUndoDeleteClick(product: Product) = viewModelScope.launch {
+        productDao.insert(product)
     }
 
 }

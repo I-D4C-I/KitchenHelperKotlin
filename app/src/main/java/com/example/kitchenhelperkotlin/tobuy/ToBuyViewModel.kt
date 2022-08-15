@@ -9,7 +9,7 @@ import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.util.ADD_RESULT_OK
 import com.example.kitchenhelperkotlin.util.EDIT_RESULT_OK
-import com.example.kitchenhelperkotlin.util.ItemEvent
+import com.example.kitchenhelperkotlin.events.ToBuyEvent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -30,7 +30,7 @@ class ToBuyViewModel @AssistedInject constructor(
 
     val preferencesFlow = preferences.preferencesFlow
 
-    private val toBuyEventChannel = Channel<ItemEvent>()
+    private val toBuyEventChannel = Channel<ToBuyEvent>()
     val toBuyEvent = toBuyEventChannel.receiveAsFlow()
 
     private val toBuyFlow = combine(
@@ -53,7 +53,7 @@ class ToBuyViewModel @AssistedInject constructor(
     val toBuys = toBuyFlow.asLiveData()
 
     fun onToBuySelected(toBuy: ToBuy) = viewModelScope.launch {
-        toBuyEventChannel.send(ItemEvent.NavigateToEditToBuyScreen(toBuy))
+        toBuyEventChannel.send(ToBuyEvent.NavigateToEditScreen(toBuy))
     }
 
     fun onToBuyCheckedChanged(toBuy: ToBuy, isChecked: Boolean) = viewModelScope.launch {
@@ -62,7 +62,7 @@ class ToBuyViewModel @AssistedInject constructor(
 
     fun onToBuySwiped(toBuy: ToBuy) = viewModelScope.launch {
         toBuyDao.delete(toBuy)
-        toBuyEventChannel.send(ItemEvent.ShowUndoDeleteToBuyMessage(toBuy))
+        toBuyEventChannel.send(ToBuyEvent.ShowUndoDeleteMessage(toBuy))
     }
 
     fun onUndoDeleteClick(toBuy: ToBuy) = viewModelScope.launch {
@@ -70,7 +70,7 @@ class ToBuyViewModel @AssistedInject constructor(
     }
 
     fun onAddNewTaskClick() = viewModelScope.launch {
-        toBuyEventChannel.send(ItemEvent.NavigateToAddScreen)
+        toBuyEventChannel.send(ToBuyEvent.NavigateToAddScreen)
     }
 
     fun onAddEditResult(result: Int) {
@@ -89,11 +89,11 @@ class ToBuyViewModel @AssistedInject constructor(
     }
 
     private fun showConfirmationMessage(message: String) = viewModelScope.launch {
-        toBuyEventChannel.send(ItemEvent.ShowConfirmationMessage(message))
+        toBuyEventChannel.send(ToBuyEvent.ShowConfirmationMessage(message))
     }
 
     fun onDeleteAllCompletedClick() = viewModelScope.launch {
-        toBuyEventChannel.send(ItemEvent.NavigateToDeleteAllScreen)
+        toBuyEventChannel.send(ToBuyEvent.NavigateToDeleteAllScreen)
     }
 
     @AssistedFactory

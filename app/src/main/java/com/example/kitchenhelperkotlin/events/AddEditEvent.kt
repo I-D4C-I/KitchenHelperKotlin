@@ -1,4 +1,4 @@
-package com.example.kitchenhelperkotlin.util
+package com.example.kitchenhelperkotlin.events
 
 sealed class AddEditEvent{
     data class ShowInvalidInputMessage(val msg: String) : AddEditEvent()
