@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-//TODO("Заменить setHasOptionsMenu")
 @AndroidEntryPoint
 class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClickListener {
 

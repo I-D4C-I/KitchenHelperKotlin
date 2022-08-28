@@ -100,6 +100,4 @@ class AddEditToBuyViewModel @AssistedInject constructor(
                 }
             }
     }
-
-
 }

@@ -37,10 +37,28 @@
         android:id="@+id/productsFragment"
         android:name="com.example.kitchenhelperkotlin.products.ProductsFragment"
         android:label="@string/ProductsList"
-        tools:layout="@layout/fragment_products" />
+        tools:layout="@layout/fragment_products" >
+        <action
+            android:id="@+id/action_productsFragment_to_addEditProductFragment"
+            app:destination="@id/addEditProductFragment" />
+    </fragment>
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.example.kitchenhelperkotlin.notifications.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/addEditProductFragment"
+        android:name="com.example.kitchenhelperkotlin.products.addedit.AddEditProductFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_add_edit_products">
+        <argument
+            android:name="product"
+            android:defaultValue="@null"
+            app:argType="com.example.kitchenhelperkotlin.products.Product"
+            app:nullable="true" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
 </navigation>

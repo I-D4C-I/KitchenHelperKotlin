@@ -1,30 +1,30 @@
 package com.example.kitchenhelperkotlin.products
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import android.os.Bundle
+import androidx.lifecycle.*
+import androidx.savedstate.SavedStateRegistryOwner
 import com.example.kitchenhelperkotlin.PreferencesRepository
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.events.ProductEvent
-import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
-@HiltViewModel
-class ProductViewModel @Inject constructor(
+class ProductViewModel @AssistedInject constructor(
     application: Application,
     private val productDao: ProductDao,
-    private val preferencesRepository: PreferencesRepository
+    private val preferencesRepository: PreferencesRepository,
+    @Assisted private val stateHandle: SavedStateHandle
 ) : AndroidViewModel(application) {
 
-    val searchQuery = MutableStateFlow("")
+    val searchQuery = stateHandle.getLiveData("searchQuery", "")
 
     private val preferencesFlow = preferencesRepository.preferencesProductFlow
 
@@ -32,7 +32,7 @@ class ProductViewModel @Inject constructor(
     val productEvent = productsEventChannel.receiveAsFlow()
 
     private val productsFlow = combine(
-        searchQuery,
+        searchQuery.asFlow(),
         preferencesFlow
     ) { query, filterPreferences ->
         Pair(query, filterPreferences)
@@ -46,8 +46,8 @@ class ProductViewModel @Inject constructor(
 
     val products = productsFlow.asLiveData()
 
-    fun onProductSelected(product: Product) {
-
+    fun onProductSelected(product: Product) = viewModelScope.launch {
+        productsEventChannel.send(ProductEvent.NavigateToEditProductScreen(product))
     }
 
     fun onProductSwiped(product: Product) = viewModelScope.launch {
@@ -57,6 +57,34 @@ class ProductViewModel @Inject constructor(
 
     fun onUndoDeleteClick(product: Product) = viewModelScope.launch {
         productDao.insert(product)
+    }
+
+    fun addNewProductClick() = viewModelScope.launch {
+        productsEventChannel.send(ProductEvent.NavigateToAddProductScreen)
+    }
+
+
+    @AssistedFactory
+    interface ProductModelFactory {
+        fun create(handle: SavedStateHandle): ProductViewModel
+    }
+
+    companion object {
+        fun provideFactory(
+            assistedFactory: ProductModelFactory,
+            owner: SavedStateRegistryOwner,
+            defaultArgs: Bundle? = null,
+        ): AbstractSavedStateViewModelFactory =
+            object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(
+                    key: String,
+                    modelClass: Class<T>,
+                    handle: SavedStateHandle
+                ): T {
+                    return assistedFactory.create(handle) as T
+                }
+            }
     }
 
 }

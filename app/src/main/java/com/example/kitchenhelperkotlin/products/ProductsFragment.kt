@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,14 +20,22 @@ import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentProductsBinding
 import com.example.kitchenhelperkotlin.events.ProductEvent
+import com.example.kitchenhelperkotlin.util.exhaustive
 import com.example.kitchenhelperkotlin.util.onQueryTextChanged
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.OnItemClickListener {
 
-    private val viewModel: ProductViewModel by viewModels()
+
+    @Inject
+    lateinit var factory: ProductViewModel.ProductModelFactory
+
+    private val viewModel: ProductViewModel by viewModels {
+        ProductViewModel.provideFactory(factory, this, arguments)
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -95,6 +104,10 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
                     viewModel.onProductSwiped(product)
                 }
             }).attachToRecyclerView(recycleViewProduct)
+
+            fabAddProduct.setOnClickListener {
+                viewModel.addNewProductClick()
+            }
         }
 
         viewModel.products.observe(viewLifecycleOwner) {
@@ -110,8 +123,23 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
                                 viewModel.onUndoDeleteClick(event.product)
                             }.show()
                     }
+                    is ProductEvent.NavigateToAddProductScreen -> {
+                        val acton =
+                            ProductsFragmentDirections.actionProductsFragmentToAddEditProductFragment(
+                                resources.getString(R.string.addNew), null
+                            )
+                        findNavController().navigate(acton)
+                    }
+                    is ProductEvent.NavigateToEditProductScreen -> {
+                        val acton =
+                            ProductsFragmentDirections.actionProductsFragmentToAddEditProductFragment(
+                                resources.getString(R.string.edit),
+                                event.product
+                            )
+                        findNavController().navigate(acton)
+                    }
                 }
-            }
+            }.exhaustive
         }
     }
 
