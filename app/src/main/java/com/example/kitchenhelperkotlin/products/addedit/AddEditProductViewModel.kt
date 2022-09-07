@@ -2,16 +2,20 @@ package com.example.kitchenhelperkotlin.products.addedit
 
 import android.app.Application
 import android.os.Bundle
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
+import com.example.kitchenhelperkotlin.R
+import com.example.kitchenhelperkotlin.events.AddEditEvent
 import com.example.kitchenhelperkotlin.products.Product
 import com.example.kitchenhelperkotlin.products.ProductDao
+import com.example.kitchenhelperkotlin.util.ADD_RESULT_OK
+import com.example.kitchenhelperkotlin.util.EDIT_RESULT_OK
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class AddEditProductViewModel @AssistedInject constructor(
@@ -34,12 +38,47 @@ class AddEditProductViewModel @AssistedInject constructor(
             stateHandle["productAmount"] = value
         }
 
-    var productDate = stateHandle.get<LocalDate>("productDate") ?: product?.date
+    var productDate = stateHandle.get<LocalDate>("productDate") ?: product?.date ?: LocalDate.now()
         set(value) {
             field = value
             stateHandle["productDate"] = value
         }
 
+    private val addEditProductEventChannel = Channel<AddEditEvent>()
+    val addEditProductEvent = addEditProductEventChannel.receiveAsFlow()
+
+    fun onSaveClick() {
+        if (productTitle.isBlank() || productAmount.isBlank()) {
+            showInvalidInputMessage(getApplication<Application>().resources.getString(R.string.retype))
+            return
+        }
+        if (product != null) {
+            val updatedProduct = product.copy(
+                title = productTitle,
+                amount = productAmount.toInt(),
+                date = productDate
+            )
+            updateProduct(updatedProduct)
+        } else {
+            val newProduct =
+                Product(title = productTitle, amount = productAmount.toInt(), date = productDate)
+            createProduct(newProduct)
+        }
+    }
+
+    private fun createProduct(newProduct: Product) = viewModelScope.launch {
+        productDao.insert(newProduct)
+        addEditProductEventChannel.send(AddEditEvent.NavigateBackWithResult(ADD_RESULT_OK))
+    }
+
+    private fun updateProduct(updatedProduct: Product) = viewModelScope.launch {
+        productDao.update(updatedProduct)
+        addEditProductEventChannel.send(AddEditEvent.NavigateBackWithResult(EDIT_RESULT_OK))
+    }
+
+    private fun showInvalidInputMessage(message: String) = viewModelScope.launch {
+        addEditProductEventChannel.send(AddEditEvent.ShowInvalidInputMessage(message))
+    }
 
     @AssistedFactory
     interface AddEditFactory {

@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -110,6 +111,11 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
             }
         }
 
+        setFragmentResultListener("add_edit_request") { _, bundle ->
+            val result = bundle.getInt("add_edit_result")
+            viewModel.onAddEditResult(result)
+        }
+
         viewModel.products.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
@@ -137,6 +143,9 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
                                 event.product
                             )
                         findNavController().navigate(acton)
+                    }
+                    is ProductEvent.ShowSavedConfirmationMessage -> {
+                        Snackbar.make(requireView(), event.message, Snackbar.LENGTH_SHORT).show()
                     }
                 }
             }.exhaustive

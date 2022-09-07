@@ -62,6 +62,7 @@ class AddEditToBuyFragment : Fragment(R.layout.fragment_add_edit_tobuy) {
                 when (event) {
                     is AddEditEvent.NavigateBackWithResult -> {
                         binding.eToBuyTitle.clearFocus()
+                        binding.eToBuyAmount.clearFocus()
                         setFragmentResult(
                             "add_edit_request",
                             bundleOf("add_edit_result" to event.result)
