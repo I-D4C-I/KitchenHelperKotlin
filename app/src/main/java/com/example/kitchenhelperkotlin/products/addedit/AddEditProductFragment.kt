@@ -1,8 +1,12 @@
 package com.example.kitchenhelperkotlin.products.addedit
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.DatePicker
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.kitchenhelperkotlin.R
@@ -27,6 +31,11 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val datePicker = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            date.set(year,month,dayOfMonth)
+            updateDate()
+        }
+
         val binding = FragmentAddEditProductsBinding.bind(view)
 
         binding.apply {
@@ -42,13 +51,20 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
                     viewModel.productDate!!.dayOfMonth,
                 )
             }
-            bExpirationDate.text = DateUtils.formatDateTime(
-                context,
-                date.timeInMillis,
-                DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR
-            )
+            updateDate()
+            bExpirationDate.setOnClickListener {
+                context?.let { it1 -> DatePickerDialog(it1,datePicker,date.get(Calendar.YEAR),date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH))
+                    .show()}
+            }
 
         }
     }
-
+    private fun updateDate() {
+        val bExpirationDate = view?.findViewById<Button>(R.id.bExpirationDate)
+        bExpirationDate?.text = DateUtils.formatDateTime(
+            context,
+            date.timeInMillis,
+            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR
+        )
+    }
 }
