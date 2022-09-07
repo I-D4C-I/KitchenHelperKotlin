@@ -66,6 +66,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bExpirationDate" />
 
+        <!-- TODO: Создать поле и кнопку для считывания штрих кода -->
         <!--
         <Button
             android:id="@+id/bSelectMeasure"

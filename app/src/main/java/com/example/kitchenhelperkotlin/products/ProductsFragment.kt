@@ -38,6 +38,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
         ProductViewModel.provideFactory(factory, this, arguments)
     }
 
+    private lateinit var searchView : SearchView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,7 +51,13 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
                 menuInflater.inflate(R.menu.fragment_product_menu, menu)
 
                 val searchItem = menu.findItem(R.id.actionSearch)
-                val searchView = searchItem.actionView as SearchView
+                searchView = searchItem.actionView as SearchView
+
+                val pendingQuery = viewModel.searchQuery.value
+                if(pendingQuery != null && pendingQuery.isNotEmpty()){
+                    searchItem.expandActionView()
+                    searchView.setQuery(pendingQuery, false)
+                }
 
                 searchView.onQueryTextChanged {
                     viewModel.searchQuery.value = it
@@ -154,5 +161,10 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
 
     override fun onItemClick(product: Product) {
         viewModel.onProductSelected(product)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        searchView.setOnQueryTextListener(null)
     }
 }
