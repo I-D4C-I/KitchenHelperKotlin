@@ -110,6 +110,7 @@
 
 
         <!-- TODO: Создать поле и кнопку для считывания штрих кода -->
+
         <!--
         <Button
             android:id="@+id/bSelectMeasure"

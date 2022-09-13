@@ -51,7 +51,9 @@ class ProductAdapter(
                 val between = ChronoUnit.DAYS.between(LocalDate.now(), product.date).toInt()
                 if (between < 7)
                     productLeftDays.setTextColor(Color.RED)
-                if (between <= 0)
+                if (between == 0)
+                    productLeftDays.text = itemView.context.getString(R.string.expiredToday)
+                if (between < 0)
                     productLeftDays.text = itemView.context.getString(R.string.expired)
                 else
                     productLeftDays.text = between.toString()

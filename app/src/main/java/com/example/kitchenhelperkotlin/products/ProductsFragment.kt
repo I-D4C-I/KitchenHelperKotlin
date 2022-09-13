@@ -96,10 +96,10 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
             }
 
             ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-                ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+                0,
                 ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
             ) {
-                //TODO: Необходим нормальный drag and drop
+                //TODO: Необходим нормальный drag and drop, ItemTouchHelper.UP or ItemTouchHelper.DOWN
                 var fromPosition = -1
                 var toPosition = -1
 
@@ -124,6 +124,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
                     super.onSelectedChanged(viewHolder, actionState)
                     if (actionState != ItemTouchHelper.ACTION_STATE_IDLE)
                         viewHolder?.itemView?.alpha = 0.5f
+
                     when (actionState){
                         ItemTouchHelper.ACTION_STATE_DRAG -> {
                             fromPosition = viewHolder?.adapterPosition!!
@@ -134,7 +135,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
                                 val productFrom = adapter.currentList[fromPosition]
                                 val productTo = adapter.currentList[toPosition]
 
-                                viewModel.swapData(productFrom,productTo)
+                                viewModel.onProductMoved(productFrom,productTo)
 
                                 toPosition = -1
                                 fromPosition = -1
