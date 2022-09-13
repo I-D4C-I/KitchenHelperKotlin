@@ -6,23 +6,80 @@
     android:layout_height="match_parent"
     tools:context=".products.addedit.AddEditProductFragment">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/eProductTitle"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/titleInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="36dp"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/black"
-            android:hint="@string/name"
-            android:textSize="24sp"
-            android:minHeight="48dp"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/eProductTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/name" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/amountInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="36dp"
+            app:errorEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/eProductAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/amount"
+                android:inputType="number" />
+            <!--TODO: Создай справо кнопку и привяжи, чтобы надпись не занимала все пространство не забдуь layout_width="0dp"-->
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--
+          <EditText
+              android:id="@+id/eProductTitle"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginHorizontal="36dp"
+              android:layout_marginTop="16dp"
+              android:backgroundTint="@color/black"
+              android:hint="@string/name"
+              android:textSize="24sp"
+              android:minHeight="48dp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+          <EditText
+              android:id="@+id/eProductAmount"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="24dp"
+              android:hint="@string/amount"
+              android:textAlignment="center"
+              android:inputType="number"
+              android:textColor="@color/black"
+              android:textSize="24sp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintHorizontal_bias="0.5"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/bExpirationDate" />
+  -->
 
         <TextView
             android:id="@+id/textView8"
@@ -36,7 +93,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.067"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/eProductTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/amountInputLayout" />
 
         <Button
             android:id="@+id/bExpirationDate"
@@ -48,23 +105,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toEndOf="@+id/textView8"
-            app:layout_constraintTop_toBottomOf="@+id/eProductTitle"
+            app:layout_constraintTop_toBottomOf="@+id/amountInputLayout"
             tools:text="date" />
 
-        <EditText
-            android:id="@+id/eProductAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:hint="@string/amount"
-            android:textAlignment="center"
-            android:inputType="number"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bExpirationDate" />
 
         <!-- TODO: Создать поле и кнопку для считывания штрих кода -->
         <!--
