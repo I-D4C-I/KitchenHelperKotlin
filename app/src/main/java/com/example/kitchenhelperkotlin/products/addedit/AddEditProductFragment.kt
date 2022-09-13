@@ -24,6 +24,7 @@ import java.util.*
 import javax.inject.Inject
 
 
+@Suppress("IMPLICIT_CAST_TO_ANY")
 @AndroidEntryPoint
 class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
 
@@ -39,7 +40,7 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val datePicker = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+        val datePicker = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             date.set(year, month, dayOfMonth)
             updateDate()
         }

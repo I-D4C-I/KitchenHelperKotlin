@@ -96,14 +96,19 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
             }
 
             ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-                0,
+                ItemTouchHelper.UP or ItemTouchHelper.DOWN,
                 ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
             ) {
+                //TODO: Необходим нормальный drag and drop
+                var fromPosition = -1
+                var toPosition = -1
+
                 override fun onMove(
                     recyclerView: RecyclerView,
                     source: RecyclerView.ViewHolder,
                     target: RecyclerView.ViewHolder
                 ): Boolean {
+                    toPosition = target.adapterPosition
                     return false
                 }
 
@@ -111,6 +116,41 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
                     val product = adapter.currentList[viewHolder.adapterPosition]
                     viewModel.onProductSwiped(product)
                 }
+
+                override fun onSelectedChanged(
+                    viewHolder: RecyclerView.ViewHolder?,
+                    actionState: Int
+                ) {
+                    super.onSelectedChanged(viewHolder, actionState)
+                    if (actionState != ItemTouchHelper.ACTION_STATE_IDLE)
+                        viewHolder?.itemView?.alpha = 0.5f
+                    when (actionState){
+                        ItemTouchHelper.ACTION_STATE_DRAG -> {
+                            fromPosition = viewHolder?.adapterPosition!!
+                        }
+                        ItemTouchHelper.ACTION_STATE_IDLE -> {
+                            if(fromPosition != -1 && toPosition != -1 && fromPosition != toPosition){
+
+                                val productFrom = adapter.currentList[fromPosition]
+                                val productTo = adapter.currentList[toPosition]
+
+                                viewModel.swapData(productFrom,productTo)
+
+                                toPosition = -1
+                                fromPosition = -1
+                            }
+                        }
+                    }
+                }
+
+                override fun clearView(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder
+                ) {
+                    super.clearView(recyclerView, viewHolder)
+                    viewHolder.itemView.alpha = 1f
+                }
+
             }).attachToRecyclerView(recycleViewProduct)
 
             fabAddProduct.setOnClickListener {

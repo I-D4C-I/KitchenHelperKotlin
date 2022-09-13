@@ -3,6 +3,7 @@ package com.example.kitchenhelperkotlin.products
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -55,9 +56,11 @@ class ProductAdapter(
                 else
                     productLeftDays.text = between.toString()
 
+                root.animation = AnimationUtils.loadAnimation(binding.root.context, R.anim.item_animation_from_bottom)
             }
         }
     }
+
 
     interface OnItemClickListener {
         fun onItemClick(product: Product)

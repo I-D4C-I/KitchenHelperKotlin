@@ -14,5 +14,4 @@ data class Product(
     val amount: Int,
     val date: LocalDate = LocalDate.now(),
     @PrimaryKey(autoGenerate = true) val id: Int = 0
-) : Parcelable {
-}
+) : Parcelable

@@ -85,6 +85,18 @@ class ProductViewModel @AssistedInject constructor(
         productsEventChannel.send(ProductEvent.ShowSavedConfirmationMessage(message))
     }
 
+    fun swapData(productFrom: Product, productTo: Product) = viewModelScope.launch {
+
+        var updatedProduct = productFrom.copy(
+            id = productTo.id
+        )
+        productDao.update(updatedProduct)
+        updatedProduct = productTo.copy(
+            id = productFrom.id
+        )
+        productDao.update(updatedProduct)
+    }
+
 
     @AssistedFactory
     interface ProductModelFactory {

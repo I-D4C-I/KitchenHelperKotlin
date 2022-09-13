@@ -17,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@Suppress("IMPLICIT_CAST_TO_ANY")
 @AndroidEntryPoint
 class AddEditToBuyFragment : Fragment(R.layout.fragment_add_edit_tobuy) {
 
