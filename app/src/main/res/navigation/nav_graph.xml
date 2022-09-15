@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_toBuyFragment_to_addEditToBuyFragment"
             app:destination="@id/addEditToBuyFragment" />
-        <deepLink
-            android:id="@+id/deepLink"
-            app:uri="myapp://example.com/tobuylist" />
     </fragment>
     <fragment
         android:id="@+id/addEditToBuyFragment"
@@ -50,7 +47,7 @@
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.example.kitchenhelperkotlin.notifications.NotificationFragment"
-        android:label="fragment_notification"
+        android:label="@string/notifications"
         tools:layout="@layout/fragment_notification" />
     <fragment
         android:id="@+id/addEditProductFragment"

@@ -49,15 +49,13 @@ class ProductAdapter(
                 productAmount.text = product.amount.toString()
 
                 val between = ChronoUnit.DAYS.between(LocalDate.now(), product.date).toInt()
+                productLeftDays.text = between.toString()
                 if (between < 7)
                     productLeftDays.setTextColor(Color.RED)
                 if (between == 0)
                     productLeftDays.text = itemView.context.getString(R.string.expiredToday)
                 if (between < 0)
                     productLeftDays.text = itemView.context.getString(R.string.expired)
-                else
-                    productLeftDays.text = between.toString()
-
                 root.animation = AnimationUtils.loadAnimation(binding.root.context, R.anim.item_animation_from_bottom)
             }
         }
