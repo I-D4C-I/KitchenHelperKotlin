@@ -1,10 +1,12 @@
 package com.example.kitchenhelperkotlin
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -40,7 +42,11 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navigationView.setupWithNavController(navController)
+    }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        findNavController(R.id.fragment_container).handleDeepLink(intent)
     }
 
     override fun onSupportNavigateUp(): Boolean {

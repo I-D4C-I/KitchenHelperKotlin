@@ -135,7 +135,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
                                 val productFrom = adapter.currentList[fromPosition]
                                 val productTo = adapter.currentList[toPosition]
 
-                                viewModel.onProductMoved(productFrom,productTo)
+                                //viewModel.onProductMoved(productFrom,productTo)
 
                                 toPosition = -1
                                 fromPosition = -1

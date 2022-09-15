@@ -85,11 +85,12 @@ class ProductViewModel @AssistedInject constructor(
         productsEventChannel.send(ProductEvent.ShowSavedConfirmationMessage(message))
     }
 
+/* TODO: Необходим нормальный drag and drop
     fun onProductMoved(productFrom: Product, productTo: Product) = viewModelScope.launch {
 
-        //TODO: Необходим нормальный drag and drop
-    }
 
+    }
+*/
 
     @AssistedFactory
     interface ProductModelFactory {

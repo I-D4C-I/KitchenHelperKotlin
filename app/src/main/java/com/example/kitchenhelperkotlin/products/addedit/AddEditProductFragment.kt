@@ -62,16 +62,13 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
             }
             updateDate()
             bExpirationDate.setOnClickListener {
-                context?.let { context ->
-                    DatePickerDialog(
-                        context,
-                        datePicker,
-                        date.get(Calendar.YEAR),
-                        date.get(Calendar.MONTH),
-                        date.get(Calendar.DAY_OF_MONTH)
-                    )
-                        .show()
-                }
+                DatePickerDialog(
+                    requireContext(),
+                    datePicker,
+                    date.get(Calendar.YEAR),
+                    date.get(Calendar.MONTH),
+                    date.get(Calendar.DAY_OF_MONTH)
+                ).show()
             }
 
             eProductTitle.addTextChangedListener {

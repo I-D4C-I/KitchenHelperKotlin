@@ -13,17 +13,20 @@
         <action
             android:id="@+id/action_toBuyFragment_to_addEditToBuyFragment"
             app:destination="@id/addEditToBuyFragment" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="myapp://example.com/tobuylist" />
     </fragment>
     <fragment
         android:id="@+id/addEditToBuyFragment"
         android:name="com.example.kitchenhelperkotlin.tobuy.addedit.AddEditToBuyFragment"
         android:label="{title}"
-        tools:layout="@layout/fragment_add_edit_tobuy" >
+        tools:layout="@layout/fragment_add_edit_tobuy">
         <argument
             android:name="toBuy"
+            android:defaultValue="@null"
             app:argType="com.example.kitchenhelperkotlin.tobuy.ToBuy"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
         <argument
             android:name="title"
             app:argType="string" />
@@ -32,12 +35,14 @@
         android:id="@+id/deleteAllDialogFragment"
         android:name="com.example.kitchenhelperkotlin.dialog.DeleteAllCompletedDialogFragment"
         android:label="DeleteAllDialogFragment" />
-    <action android:id="@+id/action_global_deleteAllDialogFragment" app:destination="@id/deleteAllDialogFragment" />
+    <action
+        android:id="@+id/action_global_deleteAllDialogFragment"
+        app:destination="@id/deleteAllDialogFragment" />
     <fragment
         android:id="@+id/productsFragment"
         android:name="com.example.kitchenhelperkotlin.products.ProductsFragment"
         android:label="@string/ProductsList"
-        tools:layout="@layout/fragment_products" >
+        tools:layout="@layout/fragment_products">
         <action
             android:id="@+id/action_productsFragment_to_addEditProductFragment"
             app:destination="@id/addEditProductFragment" />
