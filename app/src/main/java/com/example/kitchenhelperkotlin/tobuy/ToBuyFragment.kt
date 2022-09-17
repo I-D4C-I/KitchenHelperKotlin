@@ -21,6 +21,7 @@ import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentTobuyBinding
 import com.example.kitchenhelperkotlin.events.ToBuyEvent
+import com.example.kitchenhelperkotlin.util.NotificationHelper
 import com.example.kitchenhelperkotlin.util.exhaustive
 import com.example.kitchenhelperkotlin.util.onQueryTextChanged
 import com.google.android.material.snackbar.Snackbar
@@ -87,8 +88,15 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClic
                         viewModel.onCompletedClick(menuItem.isChecked)
                         true
                     }
-                    R.id.deleteComleted -> {
+                    R.id.deleteCompleted -> {
                         viewModel.onDeleteAllCompletedClick()
+                        true
+                    }
+                    R.id.actionNotification -> {
+                        //TODO: Открытие bottom sheet с выбором времени
+                        //viewModel.onCreateNotificationClick()
+                        val notificationHelper = NotificationHelper(requireContext(), findNavController())
+                        notificationHelper.sendNotification("Это из списка покупок", "Описание")
                         true
                     }
                     else -> false

@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_productsFragment_to_addEditProductFragment"
             app:destination="@id/addEditProductFragment" />
+        <action
+            android:id="@+id/action_productsFragment_to_addEditToBuyFragment"
+            app:destination="@id/addEditToBuyFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"

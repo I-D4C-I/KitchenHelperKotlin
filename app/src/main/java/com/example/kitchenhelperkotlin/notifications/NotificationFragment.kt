@@ -9,31 +9,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.kitchenhelperkotlin.KHApplication.Companion.CHANNEL_MAIN_ID
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.databinding.FragmentNotificationBinding
+import com.example.kitchenhelperkotlin.util.NotificationHelper
 
 class NotificationFragment : Fragment(R.layout.fragment_notification) {
 
-    private val notificationId = 101
-
-    private fun sendNotification( title: String = "Example Title", description : String = "Example Description") {
-        val navController = findNavController()
-
-        val pendingIntent = navController
-            .createDeepLink()
-            .setDestination(R.id.toBuyFragment)
-            .createPendingIntent()
-
-        val builder = NotificationCompat.Builder(requireContext(), CHANNEL_MAIN_ID)
-            .setSmallIcon(R.drawable.ic_notification) // TODO: Заменить иконку на иконку приложения
-            .setContentTitle(title)
-            .setContentText(description)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setCategory(NotificationCompat.CATEGORY_EVENT)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-        with(NotificationManagerCompat.from(requireContext())) {
-            notify(notificationId, builder.build())
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,7 +20,8 @@ class NotificationFragment : Fragment(R.layout.fragment_notification) {
 
         binding.apply {
             notify.setOnClickListener {
-                sendNotification(description = "Не забудьте купить продукты!")
+                val notificationHelper = NotificationHelper(requireContext(), findNavController())
+                notificationHelper.sendNotification(description = "Не забудьте купить продукты!")
             }
         }
     }

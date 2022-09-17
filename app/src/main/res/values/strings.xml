@@ -59,7 +59,7 @@
     <string name="editedToBuy">Покупка обновлена</string>
     <string name="deleteAllCompletedMessage">Вы уверены, что хотите удалить все завершенные покупки?</string>
     <!--Уведомления-->
-    <string name="addNotifications">Добавить уведомление</string>
+    <string name="addNotification">Добавить уведомление</string>
     <!--Помощь-->
     <!--Настройки-->
 </resources>

@@ -1,5 +1,6 @@
 package com.example.kitchenhelperkotlin
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -21,16 +22,20 @@ class KHApplication : Application() {
         createNotificationChannels()
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     private fun createNotificationChannels() {
-        val mainChannel = NotificationChannel(
-            Companion.CHANNEL_MAIN_ID,
-            "Main_Channel",
-            NotificationManager.IMPORTANCE_DEFAULT
-        ).apply {
-            description = "This is main Channel"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val mainChannel = NotificationChannel(
+                CHANNEL_MAIN_ID,
+                "Main_Channel",
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply {
+                description = "This is main Channel"
+            }
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mainChannel)
         }
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(mainChannel)
     }
 
 

@@ -27,8 +27,14 @@
         android:title="@string/hideCompleted"
         app:showAsAction="never" />
     <item
-        android:id="@+id/deleteComleted"
+        android:id="@+id/deleteCompleted"
         android:title="@string/deleteCompleted"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/actionNotification"
+        android:icon="@drawable/ic_notifications_white"
+        android:title="@string/addNotification"
+        app:showAsAction="ifRoom"/>
+
 
 </menu>

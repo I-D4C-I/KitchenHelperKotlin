@@ -178,19 +178,19 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
                             }.show()
                     }
                     is ProductEvent.NavigateToAddProductScreen -> {
-                        val acton =
+                        val action =
                             ProductsFragmentDirections.actionProductsFragmentToAddEditProductFragment(
                                 resources.getString(R.string.addNew), null
                             )
-                        findNavController().navigate(acton)
+                        findNavController().navigate(action)
                     }
                     is ProductEvent.NavigateToEditProductScreen -> {
-                        val acton =
+                        val action =
                             ProductsFragmentDirections.actionProductsFragmentToAddEditProductFragment(
                                 resources.getString(R.string.edit),
                                 event.product
                             )
-                        findNavController().navigate(acton)
+                        findNavController().navigate(action)
                     }
                     is ProductEvent.ShowSavedConfirmationMessage -> {
                         Snackbar.make(requireView(), event.message, Snackbar.LENGTH_SHORT).show()
