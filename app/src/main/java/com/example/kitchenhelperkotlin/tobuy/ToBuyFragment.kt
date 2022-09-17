@@ -17,19 +17,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.workDataOf
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentTobuyBinding
 import com.example.kitchenhelperkotlin.events.ToBuyEvent
-import com.example.kitchenhelperkotlin.util.*
+import com.example.kitchenhelperkotlin.notifications.NotificationBottomSheet
+import com.example.kitchenhelperkotlin.util.exhaustive
+import com.example.kitchenhelperkotlin.util.onQueryTextChanged
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -95,8 +93,7 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClic
                         true
                     }
                     R.id.actionNotification -> {
-                        //TODO: Открытие bottom sheet с выбором времени
-                        //viewModel.onCreateNotificationClick()
+                        viewModel.onCreateNotificationClick()
                         /*
                         val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
                             .setInitialDelay(5,TimeUnit.SECONDS)
@@ -188,6 +185,12 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClic
                         val action =
                             ToBuyFragmentDirections.actionGlobalDeleteAllDialogFragment()
                         findNavController().navigate(action)
+                    }
+                    is ToBuyEvent.ShowCreateNotificationBottomSheet -> {
+                        NotificationBottomSheet(viewModel).show(
+                            requireActivity().supportFragmentManager,
+                            "BottomSheet"
+                        )
                     }
                 }.exhaustive
             }

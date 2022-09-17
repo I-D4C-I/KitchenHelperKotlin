@@ -73,6 +73,10 @@ class ToBuyViewModel @AssistedInject constructor(
         toBuyEventChannel.send(ToBuyEvent.NavigateToAddScreen)
     }
 
+    fun onCreateNotificationClick() = viewModelScope.launch{
+        toBuyEventChannel.send(ToBuyEvent.ShowCreateNotificationBottomSheet)
+    }
+
     fun onAddEditResult(result: Int) {
         when (result) {
             ADD_RESULT_OK -> showConfirmationMessage(
