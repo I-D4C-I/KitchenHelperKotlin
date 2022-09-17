@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_toBuyFragment_to_addEditToBuyFragment"
             app:destination="@id/addEditToBuyFragment" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="myapp://example.com/tobuylist" />
     </fragment>
     <fragment
         android:id="@+id/addEditToBuyFragment"

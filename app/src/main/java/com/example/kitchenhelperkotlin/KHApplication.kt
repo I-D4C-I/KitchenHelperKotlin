@@ -6,15 +6,11 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import com.example.kitchenhelperkotlin.util.CHANNEL_MAIN_ID
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class KHApplication : Application() {
-
-    companion object {
-        //Создание каналов для уведомлений
-        const val CHANNEL_MAIN_ID = "channel_main"
-    }
 
     override fun onCreate() {
         super.onCreate()

@@ -17,17 +17,19 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentTobuyBinding
 import com.example.kitchenhelperkotlin.events.ToBuyEvent
-import com.example.kitchenhelperkotlin.util.NotificationHelper
-import com.example.kitchenhelperkotlin.util.exhaustive
-import com.example.kitchenhelperkotlin.util.onQueryTextChanged
+import com.example.kitchenhelperkotlin.util.*
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -95,8 +97,18 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClic
                     R.id.actionNotification -> {
                         //TODO: Открытие bottom sheet с выбором времени
                         //viewModel.onCreateNotificationClick()
-                        val notificationHelper = NotificationHelper(requireContext(), findNavController())
-                        notificationHelper.sendNotification("Это из списка покупок", "Описание")
+                        /*
+                        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+                            .setInitialDelay(5,TimeUnit.SECONDS)
+                            .setInputData(workDataOf(
+                                "title" to "Это worker",
+                                "description" to "Проверка работы backgroundWorker",
+                                "notificationId" to TOBUY_NOTIFICATION
+                            ))
+                            .build()
+                        WorkManager.getInstance(requireContext()).enqueue(workRequest)
+
+                         */
                         true
                     }
                     else -> false
