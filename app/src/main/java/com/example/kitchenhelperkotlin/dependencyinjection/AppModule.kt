@@ -3,6 +3,7 @@ package com.example.kitchenhelperkotlin.dependencyinjection
 import android.app.Application
 import androidx.room.Room
 import com.example.kitchenhelperkotlin.KHDatabase
+import com.example.kitchenhelperkotlin.util.MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,6 +27,7 @@ object AppModule {
     ) = Room.databaseBuilder(app, KHDatabase::class.java, "KH_database")
         .fallbackToDestructiveMigration()
         .addCallback(callback)
+        //.addMigrations(MIGRATION_1_2) Добавление миграции бд
         .build()
 
     @Provides
