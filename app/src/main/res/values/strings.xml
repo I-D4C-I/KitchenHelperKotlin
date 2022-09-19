@@ -62,6 +62,8 @@
     <string name="addNotification">Добавить уведомление</string>
     <string name="timeNotification">Время уведомления</string>
     <string name="notificationCreated">Уведомление создано</string>
+    <string name="notificationTitle">"Не забудьте купить продукты."</string>
+    <string name="notificationDescription">"Настало установленое время, нажмите на уведомление, чтобы увидеть список покупок."</string>
     <string name="descriptionNotification">Получите уведомление в удобное время, чтобы не забыть о ваших покупках.</string>
     <!--Помощь-->
     <!--Настройки-->

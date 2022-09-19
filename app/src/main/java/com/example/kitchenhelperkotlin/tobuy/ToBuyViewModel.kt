@@ -3,9 +3,9 @@ package com.example.kitchenhelperkotlin.tobuy
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
+import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
@@ -40,6 +40,8 @@ class ToBuyViewModel @AssistedInject constructor(
 
     private val toBuyEventChannel = Channel<ToBuyEvent>()
     val toBuyEvent = toBuyEventChannel.receiveAsFlow()
+
+    private val workManager = WorkManager.getInstance(application)
 
     private val toBuyFlow = combine(
         searchQuery.asFlow(),
@@ -85,25 +87,22 @@ class ToBuyViewModel @AssistedInject constructor(
         toBuyEventChannel.send(ToBuyEvent.ShowCreateNotificationBottomSheet)
     }
 
-    fun createNotification(context: Context, delayInSeconds : Long) = viewModelScope.launch {
+    fun createNotification(context: Context, delayInSeconds: Long) = viewModelScope.launch {
 
         val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
             .setInitialDelay(delayInSeconds, TimeUnit.SECONDS)
-            .setInputData(workDataOf(
-                "title" to "Это worker",
-                "description" to "Проверка работы backgroundWorker",
-                "notificationId" to TOBUY_NOTIFICATION
-            ))
-            .build()
-        WorkManager.getInstance(context).enqueue(workRequest)
-
-        toBuyEventChannel.send(
-            ToBuyEvent.ShowConfirmationMessage(
-                getApplication<Application>().resources.getString(
-                    R.string.notificationCreated
+            .setInputData(
+                workDataOf(
+                    "title" to getApplication<Application>().resources.getString(R.string.notificationTitle),
+                    "description" to getApplication<Application>().resources.getString(R.string.notificationDescription),
+                    "notificationId" to TOBUY_NOTIFICATION
                 )
             )
-        )
+            .build()
+        workManager.beginUniqueWork("TOBUY_NOTIFICATION", ExistingWorkPolicy.REPLACE, workRequest)
+            .enqueue()
+
+        toBuyEventChannel.send(ToBuyEvent.ShowCreateNotificationMessage("TOBUY_NOTIFICATION"))
     }
 
     fun onAddEditResult(result: Int) {
@@ -127,6 +126,10 @@ class ToBuyViewModel @AssistedInject constructor(
 
     fun onDeleteAllCompletedClick() = viewModelScope.launch {
         toBuyEventChannel.send(ToBuyEvent.NavigateToDeleteAllScreen)
+    }
+
+    fun onCancelNotificationClick(tag: String) = viewModelScope.launch{
+        workManager.cancelUniqueWork(tag)
     }
 
     @AssistedFactory

@@ -14,6 +14,9 @@ import java.util.*
 
 class NotificationBottomSheet(private val viewModel: ToBuyViewModel) : BottomSheetDialogFragment() {
 
+    //TODO: Добавить checkbox "Перенести на следующий день" и изменить метод bAddNotification.setOnClickListener согласно этому checkbox
+
+
     private val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault())
     private val formatter = SimpleDateFormat("HH:mm", Locale.getDefault())
 
@@ -63,12 +66,18 @@ class NotificationBottomSheet(private val viewModel: ToBuyViewModel) : BottomShe
             bAddNotification.setOnClickListener {
                 //Деление на 1000 превращает время в милисекундах в секунды
                 //Вычисляем разницу между целевым временем и текущим в секундах
+                //Если введено время до текущего времени на телефоне, уведомление переносится на следующий день
                 val today = Calendar.getInstance(TimeZone.getDefault())
-                val diff = (calendar.timeInMillis/1000L) - (today.timeInMillis/1000L)
+                if (calendar.get(Calendar.HOUR_OF_DAY) < today.get(Calendar.HOUR_OF_DAY))
+                    today.set(
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH),
+                        today.get(Calendar.DAY_OF_MONTH) + 1
+                    )
+                val diff = (calendar.timeInMillis / 1000L) - (today.timeInMillis / 1000L)
                 viewModel.createNotification(requireContext(), diff)
                 dismiss()
             }
-
         }
     }
 

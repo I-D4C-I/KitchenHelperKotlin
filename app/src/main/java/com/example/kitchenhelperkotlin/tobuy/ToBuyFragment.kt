@@ -180,6 +180,12 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClic
                             "BottomSheet"
                         )
                     }
+                    is ToBuyEvent.ShowCreateNotificationMessage -> {
+                        Snackbar.make(requireView(), R.string.notificationCreated, Snackbar.LENGTH_LONG)
+                            .setAction(R.string.undo) {
+                                viewModel.onCancelNotificationClick(event.tag)
+                            }.show()
+                    }
                 }.exhaustive
             }
         }
