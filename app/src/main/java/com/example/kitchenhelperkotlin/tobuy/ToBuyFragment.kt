@@ -94,18 +94,6 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClic
                     }
                     R.id.actionNotification -> {
                         viewModel.onCreateNotificationClick()
-                        /*
-                        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
-                            .setInitialDelay(5,TimeUnit.SECONDS)
-                            .setInputData(workDataOf(
-                                "title" to "Это worker",
-                                "description" to "Проверка работы backgroundWorker",
-                                "notificationId" to TOBUY_NOTIFICATION
-                            ))
-                            .build()
-                        WorkManager.getInstance(requireContext()).enqueue(workRequest)
-
-                         */
                         true
                     }
                     else -> false

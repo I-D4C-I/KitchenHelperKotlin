@@ -60,7 +60,8 @@
     <string name="deleteAllCompletedMessage">Вы уверены, что хотите удалить все завершенные покупки?</string>
     <!--Уведомления-->
     <string name="addNotification">Добавить уведомление</string>
-    <string name="timeNotification">Время</string>
+    <string name="timeNotification">Время уведомления</string>
+    <string name="notificationCreated">Уведомление создано</string>
     <string name="descriptionNotification">Получите уведомление в удобное время, чтобы не забыть о ваших покупках.</string>
     <!--Помощь-->
     <!--Настройки-->

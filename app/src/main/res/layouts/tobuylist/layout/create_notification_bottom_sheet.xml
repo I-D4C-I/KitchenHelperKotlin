@@ -17,16 +17,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/bSelectTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="18dp"
-        android:text="@string/timeNotification"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionText" />
-
-    <Button
         android:id="@+id/bAddNotification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,5 +25,26 @@
         android:text="@string/addToList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptionText" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="18dp"
+        app:endIconDrawable="@drawable/ic_clock_grey"
+        app:endIconMode="custom"
+        app:layout_constraintEnd_toStartOf="@+id/bAddNotification"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/eSelectTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="true"
+            android:focusable="false"
+            android:hint="@string/timeNotification" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

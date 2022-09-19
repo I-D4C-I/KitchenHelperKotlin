@@ -1,15 +1,22 @@
 package com.example.kitchenhelperkotlin.tobuy
 
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.example.kitchenhelperkotlin.PreferencesRepository
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
+import com.example.kitchenhelperkotlin.events.ToBuyEvent
 import com.example.kitchenhelperkotlin.util.ADD_RESULT_OK
 import com.example.kitchenhelperkotlin.util.EDIT_RESULT_OK
-import com.example.kitchenhelperkotlin.events.ToBuyEvent
+import com.example.kitchenhelperkotlin.util.NotificationWorker
+import com.example.kitchenhelperkotlin.util.TOBUY_NOTIFICATION
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -18,6 +25,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 class ToBuyViewModel @AssistedInject constructor(
     application: Application,
@@ -73,8 +81,29 @@ class ToBuyViewModel @AssistedInject constructor(
         toBuyEventChannel.send(ToBuyEvent.NavigateToAddScreen)
     }
 
-    fun onCreateNotificationClick() = viewModelScope.launch{
+    fun onCreateNotificationClick() = viewModelScope.launch {
         toBuyEventChannel.send(ToBuyEvent.ShowCreateNotificationBottomSheet)
+    }
+
+    fun createNotification(context: Context, delayInSeconds : Long) = viewModelScope.launch {
+
+        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+            .setInitialDelay(delayInSeconds, TimeUnit.SECONDS)
+            .setInputData(workDataOf(
+                "title" to "Это worker",
+                "description" to "Проверка работы backgroundWorker",
+                "notificationId" to TOBUY_NOTIFICATION
+            ))
+            .build()
+        WorkManager.getInstance(context).enqueue(workRequest)
+
+        toBuyEventChannel.send(
+            ToBuyEvent.ShowConfirmationMessage(
+                getApplication<Application>().resources.getString(
+                    R.string.notificationCreated
+                )
+            )
+        )
     }
 
     fun onAddEditResult(result: Int) {
