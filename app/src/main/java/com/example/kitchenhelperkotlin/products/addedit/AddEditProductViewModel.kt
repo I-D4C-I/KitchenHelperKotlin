@@ -48,7 +48,7 @@ class AddEditProductViewModel @AssistedInject constructor(
     val addEditProductEvent = addEditProductEventChannel.receiveAsFlow()
 
     fun onSaveClick() {
-        if (productTitle.isBlank() || productAmount.isBlank()) {
+        if (productTitle.isBlank() || (productAmount.isBlank() || productAmount == "null")) {
             showInvalidInputMessage(getApplication<Application>().resources.getString(R.string.retype))
             return
         }

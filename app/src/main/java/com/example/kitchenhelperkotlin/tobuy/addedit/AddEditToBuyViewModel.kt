@@ -47,7 +47,7 @@ class AddEditToBuyViewModel @AssistedInject constructor(
     val addEditToBuyEvent = addEditToBuyEventChannel.receiveAsFlow()
 
     fun onSaveClick() {
-        if (toBuyTitle.isBlank() || toBuyAmount.isBlank() ) {
+        if (toBuyTitle.isBlank() || (toBuyAmount.isBlank() || toBuyAmount == "null") ) {
             showInvalidInputMessage(getApplication<Application>().resources.getString(R.string.retype))
             return
         }
