@@ -14,3 +14,8 @@ const val TOBUY_NOTIFICATION = 101
 //Fragment Result Constant
 const val ADD_EDIT_REQUEST = "add_edit_request"
 const val ADD_EDIT_RESULT = "add_edit_result"
+
+//DeleteAllDialog Constants
+const val DELETE_ALL_COMPLETED = 0
+const val DELETE_ALL_PRODUCTS = 1
+const val DELETE_ALL_TOBUY = 2

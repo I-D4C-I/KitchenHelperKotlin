@@ -22,10 +22,7 @@ import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentTobuyBinding
 import com.example.kitchenhelperkotlin.events.ToBuyEvent
 import com.example.kitchenhelperkotlin.notifications.NotificationBottomSheet
-import com.example.kitchenhelperkotlin.util.ADD_EDIT_REQUEST
-import com.example.kitchenhelperkotlin.util.ADD_EDIT_RESULT
-import com.example.kitchenhelperkotlin.util.exhaustive
-import com.example.kitchenhelperkotlin.util.onQueryTextChanged
+import com.example.kitchenhelperkotlin.util.*
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -173,7 +170,8 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClic
                     }
                     is ToBuyEvent.NavigateToDeleteAllScreen -> {
                         val action =
-                            ToBuyFragmentDirections.actionGlobalDeleteAllDialogFragment()
+                            ToBuyFragmentDirections.actionGlobalDeleteAllDialogFragment(
+                                DELETE_ALL_COMPLETED)
                         findNavController().navigate(action)
                     }
                     is ToBuyEvent.ShowCreateNotificationBottomSheet -> {

@@ -34,7 +34,6 @@ interface ProductDao {
     @Query("select * from product_table where title like '%' || :searchQuery || '%' order by date")
     fun getProductsSortedByDate(searchQuery: String): Flow<List<Product>>
 
-    //TODO: Реализвовать очистку в настройках
     @Query("DELETE FROM product_table")
     suspend fun deleteAllProducts()
 

@@ -37,8 +37,12 @@
     </fragment>
     <dialog
         android:id="@+id/deleteAllDialogFragment"
-        android:name="com.example.kitchenhelperkotlin.dialog.DeleteAllCompletedDialogFragment"
-        android:label="DeleteAllDialogFragment" />
+        android:name="com.example.kitchenhelperkotlin.dialog.DeleteAllDialogFragment"
+        android:label="DeleteAllDialogFragment" >
+        <argument
+            android:name="dialogCode"
+            app:argType="integer" />
+    </dialog>
     <action
         android:id="@+id/action_global_deleteAllDialogFragment"
         app:destination="@id/deleteAllDialogFragment" />
@@ -68,4 +72,9 @@
             android:name="title"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.kitchenhelperkotlin.settings.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>
