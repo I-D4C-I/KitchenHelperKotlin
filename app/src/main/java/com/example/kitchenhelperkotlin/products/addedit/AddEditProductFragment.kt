@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.View
-import android.widget.Button
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -39,13 +38,22 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentAddEditProductsBinding.bind(view)
+
+        fun updateDate() {
+            binding.bExpirationDate.setText(
+                DateUtils.formatDateTime(
+                    context,
+                    date.timeInMillis,
+                    DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR
+                )
+            )
+        }
 
         val datePicker = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             date.set(year, month, dayOfMonth)
             updateDate()
         }
-
-        val binding = FragmentAddEditProductsBinding.bind(view)
 
         binding.apply {
             eProductTitle.setText(viewModel.productTitle)
@@ -104,15 +112,6 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
                 }.exhaustive
             }
         }
-    }
-
-    private fun updateDate() {
-        val bExpirationDate = view?.findViewById<Button>(R.id.bExpirationDate)
-        bExpirationDate?.text = DateUtils.formatDateTime(
-            context,
-            date.timeInMillis,
-            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR
-        )
     }
 
 }

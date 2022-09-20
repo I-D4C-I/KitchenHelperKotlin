@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 //TODO: Из-за добавления toBuyViewModel как параметра, при повороте экрана приложение вылетает. Нужно как-то передать информацию другим путем
-
+//TODO: Поробуй переделать на обыный dialogFragment и используй setFragmentResult
 @AndroidEntryPoint
 class NotificationBottomSheet(val toBuyViewModel: ToBuyViewModel) :
     BottomSheetDialogFragment() {
