@@ -7,4 +7,5 @@ sealed class ProductEvent {
     data class NavigateToEditProductScreen(val product: Product) : ProductEvent()
     data class ShowUndoDeleteMessage(val product: Product) : ProductEvent()
     data class ShowSavedConfirmationMessage(val message: String) : ProductEvent()
+    data class NavigateToAddToBuyScreen(val productTitle : String) : ProductEvent()
 }

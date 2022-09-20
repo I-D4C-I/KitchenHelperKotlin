@@ -38,7 +38,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
         ProductViewModel.provideFactory(factory, this, arguments)
     }
 
-    private lateinit var searchView : SearchView
+    private lateinit var searchView: SearchView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,7 +54,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
                 searchView = searchItem.actionView as SearchView
 
                 val pendingQuery = viewModel.searchQuery.value
-                if(pendingQuery != null && pendingQuery.isNotEmpty()){
+                if (pendingQuery != null && pendingQuery.isNotEmpty()) {
                     searchItem.expandActionView()
                     searchView.setQuery(pendingQuery, false)
                 }
@@ -125,12 +125,12 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
                     if (actionState != ItemTouchHelper.ACTION_STATE_IDLE)
                         viewHolder?.itemView?.alpha = 0.5f
 
-                    when (actionState){
+                    when (actionState) {
                         ItemTouchHelper.ACTION_STATE_DRAG -> {
                             fromPosition = viewHolder?.adapterPosition!!
                         }
                         ItemTouchHelper.ACTION_STATE_IDLE -> {
-                            if(fromPosition != -1 && toPosition != -1 && fromPosition != toPosition){
+                            if (fromPosition != -1 && toPosition != -1 && fromPosition != toPosition) {
                                 /*
                                 val productFrom = adapter.currentList[fromPosition]
                                 val productTo = adapter.currentList[toPosition]
@@ -197,6 +197,14 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
                     is ProductEvent.ShowSavedConfirmationMessage -> {
                         Snackbar.make(requireView(), event.message, Snackbar.LENGTH_SHORT).show()
                     }
+                    is ProductEvent.NavigateToAddToBuyScreen -> {
+                        val action =
+                            ProductsFragmentDirections.actionProductsFragmentToAddEditToBuyFragment(
+                                resources.getString(R.string.addNew),
+                                event.productTitle
+                            )
+                        findNavController().navigate(action)
+                    }
                 }
             }.exhaustive
         }
@@ -204,6 +212,10 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
 
     override fun onItemClick(product: Product) {
         viewModel.onProductSelected(product)
+    }
+
+    override fun onAddToBuyListClick(productTitle: String) {
+        viewModel.onProductToBuyListClick(productTitle)
     }
 
     override fun onDestroyView() {

@@ -42,6 +42,9 @@ class AddEditToBuyFragment : Fragment(R.layout.fragment_add_edit_tobuy) {
             if (viewModel.toBuyAmount == "null")
                 eToBuyAmount.setText("")
 
+            if (viewModel.productToBuy != null)
+                eToBuyTitle.setText(viewModel.productToBuy)
+
             cbImportant.isChecked = viewModel.toBuyImportance
             cbImportant.jumpDrawablesToCurrentState()
 

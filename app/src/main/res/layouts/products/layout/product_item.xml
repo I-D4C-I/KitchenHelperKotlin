@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginHorizontal="8dp"
     android:layout_marginTop="8dp">
 
@@ -11,13 +11,15 @@
         android:layout_height="wrap_content"
         android:padding="8dp">
 
-        <ImageView
-            android:id="@+id/handle"
+        <ImageButton
+            android:id="@+id/bShowAddToBuy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_reorder"/>
+            android:contentDescription="@string/addToList"
+            android:minHeight="48dp"
+            android:src="@drawable/ic_addtobuylist_black" />
 
         <TextView
             android:id="@+id/productAmount"
@@ -25,9 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginHorizontal="8dp"
-            android:layout_toStartOf="@+id/handle"
-            tools:text="Amount"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:layout_toStartOf="@+id/bShowAddToBuy"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            tools:text="Amount" />
 
         <TextView
             android:id="@+id/productTitle"
@@ -37,15 +39,15 @@
             android:layout_toStartOf="@+id/productAmount"
             android:ellipsize="end"
             android:maxLines="1"
-            tools:text="Title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            tools:text="Title" />
 
         <TextView
+            android:id="@+id/daysleft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/daysleft"
-            android:text="@string/daysLeft"
-            android:layout_below="@+id/productTitle"/>
+            android:layout_below="@+id/productTitle"
+            android:text="@string/daysLeft" />
 
         <TextView
             android:id="@+id/productLeftDays"

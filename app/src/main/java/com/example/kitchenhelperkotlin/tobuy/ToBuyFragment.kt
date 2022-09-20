@@ -163,7 +163,7 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClic
                     is ToBuyEvent.NavigateToEditScreen -> {
                         val action =
                             ToBuyFragmentDirections.actionToBuyFragmentToAddEditToBuyFragment(
-                                resources.getString(R.string.edit),
+                                resources.getString(R.string.edit), null,
                                 event.toBuy
                             )
                         findNavController().navigate(action)

@@ -85,10 +85,13 @@ class ProductViewModel @AssistedInject constructor(
         productsEventChannel.send(ProductEvent.ShowSavedConfirmationMessage(message))
     }
 
+    fun onProductToBuyListClick(productTitle: String) = viewModelScope.launch{
+        productsEventChannel.send(ProductEvent.NavigateToAddToBuyScreen(productTitle))
+    }
+
 /* TODO: Необходим нормальный drag and drop
+
     fun onProductMoved(productFrom: Product, productTo: Product) = viewModelScope.launch {
-
-
     }
 */
 

@@ -30,6 +30,10 @@
         <argument
             android:name="title"
             app:argType="string" />
+        <argument
+            android:name="productTitle"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <dialog
         android:id="@+id/deleteAllDialogFragment"

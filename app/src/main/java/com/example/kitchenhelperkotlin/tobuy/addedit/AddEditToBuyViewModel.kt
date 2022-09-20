@@ -23,9 +23,11 @@ class AddEditToBuyViewModel @AssistedInject constructor(
     @Assisted val stateHandle: SavedStateHandle
 ) : AndroidViewModel(application) {
 
+    var productToBuy = stateHandle.get<String>("productTitle")
+
     val toBuy = stateHandle.get<ToBuy>("toBuy")
 
-    var toBuyTitle = stateHandle.get<String>("toBuyTitle") ?: toBuy?.title ?: ""
+    var toBuyTitle = stateHandle.get<String>("toBuyTitle") ?: toBuy?.title ?: productToBuy ?: ""
         set(value) {
             field = value
             stateHandle["toBuyTitle"] = value
@@ -45,7 +47,7 @@ class AddEditToBuyViewModel @AssistedInject constructor(
     val addEditToBuyEvent = addEditToBuyEventChannel.receiveAsFlow()
 
     fun onSaveClick() {
-        if (toBuyTitle.isBlank() || toBuyAmount.isBlank()) {
+        if (toBuyTitle.isBlank() || toBuyAmount.isBlank() ) {
             showInvalidInputMessage(getApplication<Application>().resources.getString(R.string.retype))
             return
         }

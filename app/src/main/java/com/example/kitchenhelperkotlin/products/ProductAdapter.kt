@@ -40,6 +40,7 @@ class ProductAdapter(
                         listener.onItemClick(product)
                     }
                 }
+
             }
         }
 
@@ -56,7 +57,16 @@ class ProductAdapter(
                     productLeftDays.text = itemView.context.getString(R.string.expiredToday)
                 if (between < 0)
                     productLeftDays.text = itemView.context.getString(R.string.expired)
-                root.animation = AnimationUtils.loadAnimation(binding.root.context, R.anim.item_animation_from_bottom)
+
+                bShowAddToBuy.setOnClickListener {
+                    listener.onAddToBuyListClick(product.title)
+                }
+
+
+                root.animation = AnimationUtils.loadAnimation(
+                    binding.root.context,
+                    R.anim.item_animation_from_bottom
+                )
             }
         }
     }
@@ -64,6 +74,7 @@ class ProductAdapter(
 
     interface OnItemClickListener {
         fun onItemClick(product: Product)
+        fun onAddToBuyListClick(productTitle: String)
     }
 
     class DiffCallBack : DiffUtil.ItemCallback<Product>() {
