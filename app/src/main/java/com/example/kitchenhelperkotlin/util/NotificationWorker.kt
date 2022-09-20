@@ -1,15 +1,16 @@
 package com.example.kitchenhelperkotlin.util
 
 import android.content.Context
+import androidx.work.CoroutineWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 
 class NotificationWorker(
     val context: Context,
     params: WorkerParameters,
-) : Worker(context, params) {
+) : CoroutineWorker(context, params) {
 
-    override fun doWork(): Result {
+    override suspend fun doWork(): Result {
         NotificationHelper(context).sendNotification(
             inputData.getString("title").toString(),
             inputData.getString("description").toString(),
