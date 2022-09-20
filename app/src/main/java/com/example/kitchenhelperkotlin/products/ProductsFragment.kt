@@ -131,14 +131,16 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductAdapter.On
                         }
                         ItemTouchHelper.ACTION_STATE_IDLE -> {
                             if(fromPosition != -1 && toPosition != -1 && fromPosition != toPosition){
-
+                                /*
                                 val productFrom = adapter.currentList[fromPosition]
                                 val productTo = adapter.currentList[toPosition]
 
-                                //viewModel.onProductMoved(productFrom,productTo)
+                                viewModel.onProductMoved(productFrom,productTo)
 
                                 toPosition = -1
                                 fromPosition = -1
+
+                                 */
                             }
                         }
                     }

@@ -1,7 +1,6 @@
 package com.example.kitchenhelperkotlin.tobuy
 
 import android.app.Application
-import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
@@ -87,7 +86,7 @@ class ToBuyViewModel @AssistedInject constructor(
         toBuyEventChannel.send(ToBuyEvent.ShowCreateNotificationBottomSheet)
     }
 
-    fun createNotification(context: Context, delayInSeconds: Long) = viewModelScope.launch {
+    fun createNotification(delayInSeconds: Long) = viewModelScope.launch {
 
         val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
             .setInitialDelay(delayInSeconds, TimeUnit.SECONDS)
@@ -128,7 +127,7 @@ class ToBuyViewModel @AssistedInject constructor(
         toBuyEventChannel.send(ToBuyEvent.NavigateToDeleteAllScreen)
     }
 
-    fun onCancelNotificationClick(tag: String) = viewModelScope.launch{
+    fun onCancelNotificationClick(tag: String) = viewModelScope.launch {
         workManager.cancelUniqueWork(tag)
     }
 

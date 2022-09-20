@@ -5,26 +5,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.databinding.CreateNotificationBottomSheetBinding
+import com.example.kitchenhelperkotlin.events.NotificationBottomSheetEvent
 import com.example.kitchenhelperkotlin.tobuy.ToBuyViewModel
+import com.example.kitchenhelperkotlin.util.exhaustive
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import java.text.SimpleDateFormat
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-class NotificationBottomSheet(private val viewModel: ToBuyViewModel) : BottomSheetDialogFragment() {
+//TODO: Из-за добавления toBuyViewModel как параметра, при повороте экрана приложение вылетает. Нужно как-то передать информацию другим путем
 
-    //TODO: Добавить checkbox "Перенести на следующий день" и изменить метод bAddNotification.setOnClickListener согласно этому checkbox
+@AndroidEntryPoint
+class NotificationBottomSheet(val toBuyViewModel: ToBuyViewModel) :
+    BottomSheetDialogFragment() {
 
-
-    private val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault())
-    private val formatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+    private val viewModel: NotificationBottomSheetViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.create_notification_bottom_sheet, container, false)
     }
 
@@ -32,53 +38,47 @@ class NotificationBottomSheet(private val viewModel: ToBuyViewModel) : BottomShe
         super.onViewCreated(view, savedInstanceState)
         val binding = CreateNotificationBottomSheetBinding.bind(view)
 
-        fun updateDate() {
-            binding.eSelectTime.setText(
-                formatter.format(calendar.time)
-            )
-        }
-
-        val timePiker = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            calendar.set(
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH),
-                hourOfDay,
-                minute,
-                0
-            )
-            updateDate()
-        }
 
         binding.apply {
-            updateDate()
-
+            viewModel.callUpdateTime()
             eSelectTime.setOnClickListener {
-                TimePickerDialog(
-                    requireContext(),
-                    timePiker,
-                    calendar.get(Calendar.HOUR_OF_DAY),
-                    calendar.get(Calendar.MINUTE),
-                    true
-                ).show()
+                viewModel.onSelectTimeClick()
             }
-
+            cbShowOnNextDay.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.showOnNextDay = isChecked
+            }
             bAddNotification.setOnClickListener {
-                //Деление на 1000 превращает время в милисекундах в секунды
-                //Вычисляем разницу между целевым временем и текущим в секундах
-                //Если введено время до текущего времени на телефоне, уведомление переносится на следующий день
-                val today = Calendar.getInstance(TimeZone.getDefault())
-                if (calendar.get(Calendar.HOUR_OF_DAY) < today.get(Calendar.HOUR_OF_DAY))
-                    today.set(
-                        today.get(Calendar.YEAR),
-                        today.get(Calendar.MONTH),
-                        today.get(Calendar.DAY_OF_MONTH) + 1
-                    )
-                val diff = (calendar.timeInMillis / 1000L) - (today.timeInMillis / 1000L)
-                viewModel.createNotification(requireContext(), diff)
-                dismiss()
+                viewModel.addNotificationClick()
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.bottomSheetEvent.collect { event ->
+                when (event) {
+                    is NotificationBottomSheetEvent.UpdateTime -> {
+                        binding.eSelectTime.setText(
+                            viewModel.formatter.format(viewModel.calendar.time)
+                        )
+                    }
+                    is NotificationBottomSheetEvent.ShowTimePickerDialog -> {
+                        TimePickerDialog(
+                            requireContext(),
+                            viewModel.timePiker,
+                            viewModel.calendar.get(Calendar.HOUR_OF_DAY),
+                            viewModel.calendar.get(Calendar.MINUTE),
+                            true
+                        ).show()
+                    }
+                    is NotificationBottomSheetEvent.ShowInvalidInputMessage -> {
+                        Toast.makeText(requireContext(), R.string.retype, Toast.LENGTH_LONG).show()
+                    }
+                    is NotificationBottomSheetEvent.NavigateBackWithResult -> {
+                        toBuyViewModel.createNotification(event.diff)
+                        dismiss()
+                    }
+
+                }.exhaustive
             }
         }
     }
-
 }
