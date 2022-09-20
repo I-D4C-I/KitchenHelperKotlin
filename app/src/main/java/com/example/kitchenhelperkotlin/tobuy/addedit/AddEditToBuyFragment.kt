@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.databinding.FragmentAddEditTobuyBinding
 import com.example.kitchenhelperkotlin.events.AddEditEvent
+import com.example.kitchenhelperkotlin.util.ADD_EDIT_REQUEST
+import com.example.kitchenhelperkotlin.util.ADD_EDIT_RESULT
 import com.example.kitchenhelperkotlin.util.exhaustive
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,8 +66,8 @@ class AddEditToBuyFragment : Fragment(R.layout.fragment_add_edit_tobuy) {
                         binding.eToBuyTitle.clearFocus()
                         binding.eToBuyAmount.clearFocus()
                         setFragmentResult(
-                            "add_edit_request",
-                            bundleOf("add_edit_result" to event.result)
+                            ADD_EDIT_REQUEST,
+                            bundleOf(ADD_EDIT_RESULT to event.result)
                         )
                         findNavController().popBackStack()
                     }

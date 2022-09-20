@@ -22,6 +22,8 @@ import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentTobuyBinding
 import com.example.kitchenhelperkotlin.events.ToBuyEvent
 import com.example.kitchenhelperkotlin.notifications.NotificationBottomSheet
+import com.example.kitchenhelperkotlin.util.ADD_EDIT_REQUEST
+import com.example.kitchenhelperkotlin.util.ADD_EDIT_RESULT
 import com.example.kitchenhelperkotlin.util.exhaustive
 import com.example.kitchenhelperkotlin.util.onQueryTextChanged
 import com.google.android.material.snackbar.Snackbar
@@ -132,8 +134,8 @@ class ToBuyFragment : Fragment(R.layout.fragment_tobuy), ToBuyAdapter.OnItemClic
             }
         }
 
-        setFragmentResultListener("add_edit_request") { _, bundle ->
-            val result = bundle.getInt("add_edit_result")
+        setFragmentResultListener(ADD_EDIT_REQUEST) { _, bundle ->
+            val result = bundle.getInt(ADD_EDIT_RESULT)
             viewModel.onAddEditResult(result)
         }
 
