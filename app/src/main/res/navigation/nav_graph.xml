@@ -51,11 +51,6 @@
             app:destination="@id/addEditToBuyFragment" />
     </fragment>
     <fragment
-        android:id="@+id/notificationFragment"
-        android:name="com.example.kitchenhelperkotlin.notifications.NotificationFragment"
-        android:label="@string/notifications"
-        tools:layout="@layout/fragment_notification" />
-    <fragment
         android:id="@+id/addEditProductFragment"
         android:name="com.example.kitchenhelperkotlin.products.addedit.AddEditProductFragment"
         android:label="{title}"

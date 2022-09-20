@@ -16,10 +16,6 @@
             android:id="@+id/toBuyFragment"
             android:icon="@drawable/ic_to_buy_list"
             android:title="@string/ToBuyList" />
-        <item
-            android:id="@+id/notificationFragment"
-            android:icon="@drawable/ic_notification"
-            android:title="@string/notifications" />
     </group>
     <item android:title="@string/additions">
         <menu>
