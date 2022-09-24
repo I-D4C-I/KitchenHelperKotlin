@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.findNavController()
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.toBuyFragment, R.id.productsFragment),
+            setOf(R.id.toBuyFragment, R.id.productsFragment, R.id.recipeFragment, R.id.settingsFragment),
             drawerLayout
         )
         setSupportActionBar(toolbar)

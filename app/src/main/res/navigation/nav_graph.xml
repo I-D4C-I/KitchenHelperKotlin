@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/toBuyFragment"
         android:name="com.example.kitchenhelperkotlin.tobuy.ToBuyFragment"
-        android:label="@string/ToBuyList"
+        android:label="@string/toBuyList"
         tools:layout="@layout/fragment_tobuy">
         <action
             android:id="@+id/action_toBuyFragment_to_addEditToBuyFragment"
@@ -49,7 +49,7 @@
     <fragment
         android:id="@+id/productsFragment"
         android:name="com.example.kitchenhelperkotlin.products.ProductsFragment"
-        android:label="@string/ProductsList"
+        android:label="@string/productsList"
         tools:layout="@layout/fragment_products">
         <action
             android:id="@+id/action_productsFragment_to_addEditProductFragment"
@@ -77,4 +77,9 @@
         android:name="com.example.kitchenhelperkotlin.settings.SettingsFragment"
         android:label="@string/settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.example.kitchenhelperkotlin.recipe.RecipeFragment"
+        android:label="@string/recipeBook"
+        tools:layout="@layout/fragment_recipe" />
 </navigation>

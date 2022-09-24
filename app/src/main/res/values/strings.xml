@@ -1,7 +1,7 @@
 <resources>
     <!--Общее-->
-    <string name="app_name">My Application</string>
-    <string name="version">Version 0.1</string>
+    <string name="app_name">Кухонный помощник</string>
+    <string name="version">Version 1</string>
     <string name="retype">"Повторите ввод"</string>
     <string name="edit">Изменить</string>
     <string name="name">Название</string>
@@ -19,7 +19,7 @@
     <string name="navigation_drawer_open">Открыть боковое меню</string>
     <string name="navigation_drawer_close">Закрыть боковое меню</string>
     <string name="recipeBook">Книга рецептов</string>
-    <string name="ToBuyList">Список покупок</string>
+    <string name="toBuyList">Список покупок</string>
     <string name="notifications">Уведомления</string>
     <string name="additions">Дополнительно</string>
     <string name="help">Помощь</string>
@@ -27,15 +27,15 @@
     <string name="save">Сохранить</string>
     <string name="cancel">Отменить</string>
     <!--Продукты-->
-    <string name="AddNewProduct">Продукт</string>
-    <string name="AddNewHashCode">Добавить</string>
+    <string name="addNewProduct">Продукт</string>
+    <string name="addNewHashCode">Добавить</string>
     <string name="addProduct">Добавить продукт</string>
-    <string name="ProductsList">Продукты</string>
-    <string name="CategoryList">Категории</string>
+    <string name="productsList">Продукты</string>
+    <string name="categoryList">Категории</string>
     <string name="productHashCode">Штрих-код продукта</string>
-    <string name="ExpirationDate">Годен до</string>
-    <string name="UnitOfMeasure">Ед.Изм.</string>
-    <string name="Category">Категория</string>
+    <string name="expirationDate">Годен до</string>
+    <string name="unitOfMeasure">Ед.Изм.</string>
+    <string name="category">Категория</string>
     <string name="deleteAllProducts">Удалить все продукты</string>
     <string name="productDeleted">Продукт удален</string>
     <string name="productAdded">Продукт добавлен</string>
@@ -50,6 +50,7 @@
     <string name="addRecipe">Добавить рецепт</string>
     <string name="startCooking">Начать готовить</string>
     <string name="description">Описание</string>
+    <string name="favorite">Любимый</string>
     <!--Список покупок-->
     <string name="addToList">Добавить</string>
     <string name="important">Важное</string>

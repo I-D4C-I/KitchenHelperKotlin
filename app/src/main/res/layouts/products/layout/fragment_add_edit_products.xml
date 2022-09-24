@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:enabled="true"
                 android:focusable="false"
-                android:hint="@string/ExpirationDate" />
+                android:hint="@string/expirationDate" />
 
         </com.google.android.material.textfield.TextInputLayout>
         <!--
