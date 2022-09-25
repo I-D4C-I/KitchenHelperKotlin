@@ -3,7 +3,6 @@ package com.example.kitchenhelperkotlin.dependencyinjection
 import android.app.Application
 import androidx.room.Room
 import com.example.kitchenhelperkotlin.KHDatabase
-import com.example.kitchenhelperkotlin.util.MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,7 +33,10 @@ object AppModule {
     fun provideToBuyDao(db: KHDatabase) = db.toBuyDao()
 
     @Provides
-    fun provideProductDao(db: KHDatabase) = db.ProductDao()
+    fun provideProductDao(db: KHDatabase) = db.productDao()
+
+    @Provides
+    fun provideRecipeDao(db: KHDatabase) = db.recipeDao()
 
     @ApplicationScope
     @Provides

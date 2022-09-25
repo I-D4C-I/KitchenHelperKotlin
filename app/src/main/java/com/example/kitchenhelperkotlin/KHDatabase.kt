@@ -7,6 +7,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.kitchenhelperkotlin.dependencyinjection.ApplicationScope
 import com.example.kitchenhelperkotlin.products.Product
 import com.example.kitchenhelperkotlin.products.ProductDao
+import com.example.kitchenhelperkotlin.recipe.Recipe
+import com.example.kitchenhelperkotlin.recipe.RecipeDao
 import com.example.kitchenhelperkotlin.tobuy.ToBuy
 import com.example.kitchenhelperkotlin.tobuy.ToBuyDao
 import com.example.kitchenhelperkotlin.util.Converters
@@ -17,12 +19,13 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 
-@Database(entities = [ToBuy::class, Product::class], version = 1)
+@Database(entities = [ToBuy::class, Product::class, Recipe::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class KHDatabase : RoomDatabase() {
 
     abstract fun toBuyDao(): ToBuyDao
-    abstract fun ProductDao(): ProductDao
+    abstract fun productDao(): ProductDao
+    abstract fun recipeDao(): RecipeDao
 
     class Callback @Inject constructor(
         private val database: Provider<KHDatabase>,
@@ -32,7 +35,8 @@ abstract class KHDatabase : RoomDatabase() {
             super.onCreate(db)
 
             val toBuyDao = database.get().toBuyDao()
-            val productDao = database.get().ProductDao()
+            val productDao = database.get().productDao()
+            val recipeDao = database.get().recipeDao()
             applicationScope.launch {
                 toBuyDao.insert(ToBuy(title = "Call Mom", amount = 3))
                 toBuyDao.insert(ToBuy(title = "Feed Cat", amount = 2, important = true))
@@ -67,6 +71,9 @@ abstract class KHDatabase : RoomDatabase() {
                         LocalDate.now().plusMonths(1)
                     )
                 )
+                recipeDao.insert(Recipe(title = "Example recipe 1", false, "Note Example 1"))
+                recipeDao.insert(Recipe(title = "Example recipe 2", true, "Note Example 2"))
+                recipeDao.insert(Recipe(title = "Example recipe 3", false, "Note Example 3"))
             }
         }
     }
