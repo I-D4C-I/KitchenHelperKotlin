@@ -11,6 +11,5 @@ data class Recipe(
     val title : String,
     val favorite : Boolean = false,
     val note : String,
-    val timestamp: Long = System.currentTimeMillis(),
     @PrimaryKey(autoGenerate = true) val id : Int = 0
 ) : Parcelable

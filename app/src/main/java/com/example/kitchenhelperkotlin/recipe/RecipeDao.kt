@@ -21,7 +21,7 @@ interface RecipeDao {
     @Delete
     suspend fun delete(recipe: Recipe)
 
-    @Query ("select * from recipe_table")
-    fun getRecipes() : Flow<List<Recipe>>
+    @Query ("select * from recipe_table where title like '%' || :searchQuery || '%' order by favorite desc")
+    fun getRecipes(searchQuery : String) : Flow<List<Recipe>>
 
 }
