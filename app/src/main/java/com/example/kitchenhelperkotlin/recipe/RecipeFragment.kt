@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kitchenhelperkotlin.R
+import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentRecipeBinding
 import com.example.kitchenhelperkotlin.util.exhaustive
 import com.example.kitchenhelperkotlin.util.onQueryTextChanged
@@ -45,11 +46,11 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                return when (menuItem.itemId){
                     R.id.actionSortDefault -> {
-
+                        viewModel.sortOrder.value = SortOrder.DEFAULT
                         true
                     }
                     R.id.actionSortByName -> {
-
+                        viewModel.sortOrder.value = SortOrder.BY_NAME
                         true
                     }
                    else -> false
