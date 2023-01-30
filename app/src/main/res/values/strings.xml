@@ -51,6 +51,8 @@
     <string name="description">Описание</string>
     <string name="favorite">Любимый</string>
     <string name="recipeDeleted">Рецепт удален</string>
+    <string name="addedRecipe">Рецепт добален</string>
+    <string name="editedRecipe">Рецепт обновлен</string>
     <!--Список покупок-->
     <string name="addToList">Добавить</string>
     <string name="important">Важное</string>

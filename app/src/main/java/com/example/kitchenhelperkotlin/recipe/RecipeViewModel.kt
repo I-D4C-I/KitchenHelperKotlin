@@ -5,8 +5,11 @@ import android.os.Bundle
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.kitchenhelperkotlin.PreferencesRepository
+import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.events.RecipeEvent
+import com.example.kitchenhelperkotlin.util.ADD_RESULT_OK
+import com.example.kitchenhelperkotlin.util.EDIT_RESULT_OK
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -59,6 +62,25 @@ class RecipeViewModel @AssistedInject constructor(
 
     fun onAddNewRecipeClick() = viewModelScope.launch {
         recipeEventChannel.send(RecipeEvent.NavigateToAddRecipeScreen)
+    }
+
+    fun onAddEditResult(result: Int) {
+        when (result) {
+            ADD_RESULT_OK -> showConfirmationMessage(
+                getApplication<Application>().resources.getString(
+                    R.string.addedRecipe
+                )
+            )
+            EDIT_RESULT_OK -> showConfirmationMessage(
+                getApplication<Application>().resources.getString(
+                    R.string.editedRecipe
+                )
+            )
+        }
+    }
+
+    private fun showConfirmationMessage(text: String) = viewModelScope.launch {
+        recipeEventChannel.send(RecipeEvent.ShowSavedConfirmationMessage(text))
     }
 
 

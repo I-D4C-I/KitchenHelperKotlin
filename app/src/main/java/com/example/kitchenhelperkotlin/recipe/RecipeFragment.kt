@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -97,6 +98,11 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemC
             }
         }
 
+        setFragmentResultListener("add_edit_request"){ _, bundle ->
+            val result = bundle.getInt("add_edit_result")
+            viewModel.onAddEditResult(result)
+        }
+
         viewModel.recipes.observe(viewLifecycleOwner) {
             recipeAdapter.submitList(it)
         }
@@ -117,6 +123,9 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemC
                     is RecipeEvent.NavigateToEditRecipeScreen -> {
                         val action = RecipeFragmentDirections.actionRecipeFragmentToAddEditRecipeFragment(resources.getString(R.string.edit), event.recipe )
                         findNavController().navigate(action)
+                    }
+                    is RecipeEvent.ShowSavedConfirmationMessage -> {
+                      Snackbar.make(requireView(), event.message, Snackbar.LENGTH_SHORT).show()
                     }
                 }.exhaustive
             }

@@ -6,4 +6,5 @@ sealed class RecipeEvent{
     object NavigateToAddRecipeScreen : RecipeEvent()
     data class NavigateToEditRecipeScreen(val recipe: Recipe) : RecipeEvent()
     data class ShowUndoDeleteMessage(val recipe : Recipe) : RecipeEvent()
+    data class ShowSavedConfirmationMessage(val message: String) : RecipeEvent()
 }

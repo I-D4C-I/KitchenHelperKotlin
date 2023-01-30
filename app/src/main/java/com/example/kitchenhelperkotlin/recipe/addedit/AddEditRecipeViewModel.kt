@@ -2,16 +2,20 @@ package com.example.kitchenhelperkotlin.recipe.addedit
 
 import android.app.Application
 import android.os.Bundle
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
+import com.example.kitchenhelperkotlin.R
+import com.example.kitchenhelperkotlin.events.AddEditEvent
 import com.example.kitchenhelperkotlin.recipe.Recipe
 import com.example.kitchenhelperkotlin.recipe.RecipeDao
+import com.example.kitchenhelperkotlin.util.ADD_RESULT_OK
+import com.example.kitchenhelperkotlin.util.EDIT_RESULT_OK
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 
 class AddEditRecipeViewModel @AssistedInject constructor(
     application: Application,
@@ -38,6 +42,39 @@ class AddEditRecipeViewModel @AssistedInject constructor(
             field = value
             state["recipeNote"] = value
         }
+
+    private val addEditRecipeEventChannel = Channel<AddEditEvent>()
+    val addEditRecipeEvent = addEditRecipeEventChannel.receiveAsFlow()
+
+    fun onSaveClick() {
+        if (recipeTitle.isBlank() || recipeNote.isBlank()) {
+            showInvalidMessage(getApplication<Application>().resources.getString(R.string.retype))
+            return
+        }
+        if (recipe != null) {
+            val updatedRecipe =
+                recipe.copy(title = recipeTitle, favorite = recipeFavorite, note = recipeNote)
+            updateRecipe(updatedRecipe)
+        } else {
+            val newRecipe =
+                Recipe(title = recipeTitle, favorite = recipeFavorite, note = recipeNote)
+            createRecipe(newRecipe)
+        }
+    }
+
+    private fun showInvalidMessage(text: String) = viewModelScope.launch {
+        addEditRecipeEventChannel.send(AddEditEvent.ShowInvalidInputMessage(text))
+    }
+
+    private fun createRecipe(recipe: Recipe) = viewModelScope.launch {
+        recipeDao.insert(recipe)
+        addEditRecipeEventChannel.send(AddEditEvent.NavigateBackWithResult(ADD_RESULT_OK))
+    }
+
+    private fun updateRecipe(recipe: Recipe) = viewModelScope.launch {
+        recipeDao.update(recipe)
+        addEditRecipeEventChannel.send(AddEditEvent.NavigateBackWithResult(EDIT_RESULT_OK))
+    }
 
     @AssistedFactory
     interface AddEditFactory {
