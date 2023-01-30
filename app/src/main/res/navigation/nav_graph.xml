@@ -81,5 +81,23 @@
         android:id="@+id/recipeFragment"
         android:name="com.example.kitchenhelperkotlin.recipe.RecipeFragment"
         android:label="@string/recipeBook"
-        tools:layout="@layout/fragment_recipe" />
+        tools:layout="@layout/fragment_recipe" >
+        <action
+            android:id="@+id/action_recipeFragment_to_addEditRecipeFragment"
+            app:destination="@id/addEditRecipeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditRecipeFragment"
+        android:name="com.example.kitchenhelperkotlin.recipe.addedit.AddEditRecipeFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_add_edit_recipe" >
+        <argument
+            android:name="recipe"
+            app:argType="com.example.kitchenhelperkotlin.recipe.Recipe"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
 </navigation>

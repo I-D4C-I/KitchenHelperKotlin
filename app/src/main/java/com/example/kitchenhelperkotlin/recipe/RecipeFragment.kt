@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,14 +20,21 @@ import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentRecipeBinding
 import com.example.kitchenhelperkotlin.events.RecipeEvent
+import com.example.kitchenhelperkotlin.util.exhaustive
 import com.example.kitchenhelperkotlin.util.onQueryTextChanged
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemClickListener {
 
-    private val viewModel: RecipeViewModel by viewModels()
+    @Inject
+    lateinit var factory: RecipeViewModel.ProductModelFactory
+
+    private val viewModel: RecipeViewModel by viewModels {
+        RecipeViewModel.provideFactory(factory, this, arguments)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -83,6 +91,10 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemC
                     viewModel.onRecipeSwiped(recipe)
                 }
             }).attachToRecyclerView(recycleViewRecipe)
+
+            fabAddRecipe.setOnClickListener {
+                viewModel.onAddNewRecipeClick()
+            }
         }
 
         viewModel.recipes.observe(viewLifecycleOwner) {
@@ -98,7 +110,15 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemC
                                 viewModel.onUndoDeleteClick(event.recipe)
                             }.show()
                     }
-                }
+                    is RecipeEvent.NavigateToAddRecipeScreen -> {
+                        val action = RecipeFragmentDirections.actionRecipeFragmentToAddEditRecipeFragment(resources.getString(R.string.addNew), null)
+                        findNavController().navigate(action)
+                    }
+                    is RecipeEvent.NavigateToEditRecipeScreen -> {
+                        val action = RecipeFragmentDirections.actionRecipeFragmentToAddEditRecipeFragment(resources.getString(R.string.edit), event.recipe )
+                        findNavController().navigate(action)
+                    }
+                }.exhaustive
             }
         }
     }

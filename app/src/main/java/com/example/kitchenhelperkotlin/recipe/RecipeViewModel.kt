@@ -1,34 +1,37 @@
 package com.example.kitchenhelperkotlin.recipe
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import android.os.Bundle
+import androidx.lifecycle.*
+import androidx.savedstate.SavedStateRegistryOwner
 import com.example.kitchenhelperkotlin.PreferencesRepository
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.events.RecipeEvent
-import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class RecipeViewModel @Inject constructor(
+class RecipeViewModel @AssistedInject constructor(
+    application: Application,
     private val recipeDao: RecipeDao,
-    private val preferencesRepository: PreferencesRepository
-) : ViewModel() {
+    private val preferencesRepository: PreferencesRepository,
+    @Assisted private val state: SavedStateHandle
+) : AndroidViewModel(application) {
 
-    val searchQuery = MutableStateFlow("")
+    val searchQuery = state.getLiveData("searchQuery", "")
+
     private val preferencesFlow = preferencesRepository.preferencesRecipeFlow
 
     private val recipeEventChannel = Channel<RecipeEvent>()
     val recipeEvent = recipeEventChannel.receiveAsFlow()
 
     private val recipeFlow = combine(
-        searchQuery, preferencesFlow
+        searchQuery.asFlow(), preferencesFlow
     ) { query, preferencesFlow ->
         Pair(query, preferencesFlow)
     }.flatMapLatest { (query, preferencesFlow) ->
@@ -41,8 +44,8 @@ class RecipeViewModel @Inject constructor(
         preferencesRepository.updateRecipeSortOrder(sortOrder)
     }
 
-    fun onRecipeSelected(recipe: Recipe) {
-
+    fun onRecipeSelected(recipe: Recipe) = viewModelScope.launch {
+        recipeEventChannel.send(RecipeEvent.NavigateToEditRecipeScreen(recipe))
     }
 
     fun onRecipeSwiped(recipe: Recipe) = viewModelScope.launch {
@@ -52,5 +55,33 @@ class RecipeViewModel @Inject constructor(
 
     fun onUndoDeleteClick(recipe: Recipe) = viewModelScope.launch {
         recipeDao.insert(recipe)
+    }
+
+    fun onAddNewRecipeClick() = viewModelScope.launch {
+        recipeEventChannel.send(RecipeEvent.NavigateToAddRecipeScreen)
+    }
+
+
+    @AssistedFactory
+    interface ProductModelFactory {
+        fun create(handle: SavedStateHandle): RecipeViewModel
+    }
+
+    companion object {
+        fun provideFactory(
+            assistedFactory: ProductModelFactory,
+            owner: SavedStateRegistryOwner,
+            defaultArgs: Bundle? = null,
+        ): AbstractSavedStateViewModelFactory =
+            object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(
+                    key: String,
+                    modelClass: Class<T>,
+                    handle: SavedStateHandle
+                ): T {
+                    return assistedFactory.create(handle) as T
+                }
+            }
     }
 }

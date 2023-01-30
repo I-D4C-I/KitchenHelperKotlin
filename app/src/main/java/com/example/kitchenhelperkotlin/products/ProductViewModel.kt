@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-
 class ProductViewModel @AssistedInject constructor(
     application: Application,
     private val productDao: ProductDao,
