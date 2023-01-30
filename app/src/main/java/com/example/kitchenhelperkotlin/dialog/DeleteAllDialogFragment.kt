@@ -9,6 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.util.DELETE_ALL_COMPLETED
 import com.example.kitchenhelperkotlin.util.DELETE_ALL_PRODUCTS
+import com.example.kitchenhelperkotlin.util.DELETE_ALL_RECIPE
 import com.example.kitchenhelperkotlin.util.DELETE_ALL_TOBUY
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,6 +42,12 @@ class DeleteAllDialogFragment : DialogFragment() {
                 dialogBuilder.setMessage(resources.getString(R.string.deleteAllToBuyMessage))
                     .setPositiveButton(resources.getString(R.string.confirm)) { _, _ ->
                         viewModel.onConfirmDeleteToBuyClick()
+                    }
+            }
+            DELETE_ALL_RECIPE -> {
+                dialogBuilder.setMessage(resources.getString(R.string.deleteAllRecipeMessage))
+                    .setPositiveButton(resources.getString(R.string.confirm)) { _, _ ->
+                        viewModel.onConfirmDeleteRecipeClick()
                     }
             }
         }

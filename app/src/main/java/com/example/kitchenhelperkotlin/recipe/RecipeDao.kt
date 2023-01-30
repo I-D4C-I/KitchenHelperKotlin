@@ -29,4 +29,7 @@ interface RecipeDao {
             SortOrder.BY_NAME -> getRecipesSortedByName(searchQuery)
             SortOrder.BY_DATE -> getRecipesSortedByName(searchQuery)//заглушка, не должна работать
         }
+
+    @Query("delete from recipe_table")
+    suspend fun deleteAllRecipe()
 }

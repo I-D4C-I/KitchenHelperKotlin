@@ -19,3 +19,4 @@ const val ADD_EDIT_RESULT = "add_edit_result"
 const val DELETE_ALL_COMPLETED = 0
 const val DELETE_ALL_PRODUCTS = 1
 const val DELETE_ALL_TOBUY = 2
+const val DELETE_ALL_RECIPE = 3

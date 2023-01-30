@@ -53,6 +53,7 @@
     <string name="recipeDeleted">Рецепт удален</string>
     <string name="addedRecipe">Рецепт добален</string>
     <string name="editedRecipe">Рецепт обновлен</string>
+    <string name="deleteAllRecipeMessage">Вы уверены, что хотите очистить список рецептов?</string>
     <!--Список покупок-->
     <string name="addToList">Добавить</string>
     <string name="important">Важное</string>
@@ -75,5 +76,6 @@
     <!--Настройки-->
     <string name="clearProducts">Удалить все продукты</string>
     <string name="clearToBuy">Удалить всё из списка покупок</string>
+    <string name="clearRecipe">Удалить все рецепты</string>
     <string name="tableData">Данные в приложении</string>
 </resources>

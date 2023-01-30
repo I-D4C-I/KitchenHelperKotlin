@@ -4,6 +4,7 @@ package com.example.kitchenhelperkotlin.dialog
 import androidx.lifecycle.ViewModel
 import com.example.kitchenhelperkotlin.dependencyinjection.ApplicationScope
 import com.example.kitchenhelperkotlin.products.ProductDao
+import com.example.kitchenhelperkotlin.recipe.RecipeDao
 import com.example.kitchenhelperkotlin.tobuy.ToBuyDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -14,6 +15,7 @@ import javax.inject.Inject
 class DeleteAllViewModel @Inject constructor(
     private val toBuyDao: ToBuyDao,
     private val productDao: ProductDao,
+    private  val recipeDao: RecipeDao,
     @ApplicationScope private val applicationScope: CoroutineScope
 ) : ViewModel() {
 
@@ -27,5 +29,9 @@ class DeleteAllViewModel @Inject constructor(
 
     fun onConfirmDeleteToBuyClick() = applicationScope.launch {
         toBuyDao.deleteAllToBuy()
+    }
+
+    fun onConfirmDeleteRecipeClick()  = applicationScope.launch {
+        recipeDao.deleteAllRecipe()
     }
 }

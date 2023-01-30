@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.databinding.FragmentSettingsBinding
 import com.example.kitchenhelperkotlin.util.DELETE_ALL_PRODUCTS
+import com.example.kitchenhelperkotlin.util.DELETE_ALL_RECIPE
 import com.example.kitchenhelperkotlin.util.DELETE_ALL_TOBUY
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +28,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             bClearAllToBuy.setOnClickListener {
                 val action =
                     SettingsFragmentDirections.actionGlobalDeleteAllDialogFragment(DELETE_ALL_TOBUY)
+                findNavController().navigate(action)
+            }
+            bClearAllRecipe.setOnClickListener {
+                val action =
+                    SettingsFragmentDirections.actionGlobalDeleteAllDialogFragment(DELETE_ALL_RECIPE)
                 findNavController().navigate(action)
             }
         }
