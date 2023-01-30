@@ -10,10 +10,33 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.databinding.RecipeItemBinding
 
-class RecipeAdapter : ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(DiffCallback()) {
+class RecipeAdapter(private val listener: OnItemClickListener) :
+    ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(DiffCallback()) {
 
-    class RecipeViewHolder(private val binding: RecipeItemBinding) :
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
+        val binding = RecipeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return RecipeViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
+        val currentItem = getItem(position)
+        holder.bind(currentItem)
+    }
+
+    inner class RecipeViewHolder(private val binding: RecipeItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.apply {
+                root.setOnClickListener {
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val recipe = getItem(position)
+                        listener.onItemClick(recipe)
+                    }
+                }
+            }
+        }
 
         fun bind(recipe: Recipe) {
             binding.apply {
@@ -29,14 +52,8 @@ class RecipeAdapter : ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(DiffCa
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        val binding = RecipeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RecipeViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        val currentItem = getItem(position)
-        holder.bind(currentItem)
+    interface OnItemClickListener {
+        fun onItemClick(recipe: Recipe)
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Recipe>() {

@@ -29,10 +29,13 @@ class RecipeViewModel @Inject constructor(
         recipeDao.getRecipes(query, preferencesFlow.sortOrder)
     }
 
+    val recipes = recipeFlow.asLiveData()
+
     fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
         preferencesRepository.updateRecipeSortOrder(sortOrder)
     }
 
-    val recipes = recipeFlow.asLiveData()
+    fun onRecipeSelected(recipe: Recipe) {
 
+    }
 }

@@ -19,7 +19,7 @@ import com.example.kitchenhelperkotlin.util.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RecipeFragment : Fragment(R.layout.fragment_recipe) {
+class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemClickListener {
 
     private val viewModel: RecipeViewModel by viewModels()
 
@@ -56,7 +56,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        val recipeAdapter = RecipeAdapter()
+        val recipeAdapter = RecipeAdapter(this)
         binding.apply {
             recycleViewRecipe.apply {
                 adapter = recipeAdapter
@@ -70,4 +70,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         }
     }
 
+    override fun onItemClick(recipe: Recipe) {
+        viewModel.onRecipeSelected(recipe)
+    }
 }
