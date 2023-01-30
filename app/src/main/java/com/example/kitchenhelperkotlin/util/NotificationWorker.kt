@@ -2,7 +2,6 @@ package com.example.kitchenhelperkotlin.util
 
 import android.content.Context
 import androidx.work.CoroutineWorker
-import androidx.work.Worker
 import androidx.work.WorkerParameters
 
 class NotificationWorker(
@@ -18,5 +17,4 @@ class NotificationWorker(
         )
         return Result.success()
     }
-
 }

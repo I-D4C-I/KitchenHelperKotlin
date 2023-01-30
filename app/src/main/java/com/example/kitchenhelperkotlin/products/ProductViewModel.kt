@@ -117,5 +117,4 @@ class ProductViewModel @AssistedInject constructor(
                 }
             }
     }
-
 }

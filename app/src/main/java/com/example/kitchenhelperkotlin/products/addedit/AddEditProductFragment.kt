@@ -113,5 +113,4 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
             }
         }
     }
-
 }

@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentRecipeBinding
-import com.example.kitchenhelperkotlin.util.exhaustive
 import com.example.kitchenhelperkotlin.util.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,7 +56,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
                }
             }
 
-        })
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         val recipeAdapter = RecipeAdapter()
         binding.apply {

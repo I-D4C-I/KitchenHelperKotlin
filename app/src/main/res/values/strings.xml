@@ -42,7 +42,6 @@
     <string name="productEdited">Продукт изменен</string>
     <string name="daysLeft">Осталось дней:</string>
     <string name="expired">Срок годности истек</string>
-    <string name="expiredToday">Срок годности истекает сегодня</string>
     <string name="addedProduct">Продукт добален</string>
     <string name="editedProduct">Продукт обновлен</string>
     <string name="deleteAllProductsMessage">Вы уверены, что хотите очистить список продуктов?</string>

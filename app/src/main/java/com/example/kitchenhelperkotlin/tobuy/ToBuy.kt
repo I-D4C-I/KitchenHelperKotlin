@@ -14,6 +14,4 @@ data class ToBuy (
     val completed: Boolean = false,
     val timestamp: Long = System.currentTimeMillis(),
     @PrimaryKey(autoGenerate = true) val id: Int = 0
-) : Parcelable {
-
-}
+) : Parcelable

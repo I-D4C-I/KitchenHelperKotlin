@@ -1,6 +1,5 @@
 package com.example.kitchenhelperkotlin.events
 
-import com.example.kitchenhelperkotlin.products.Product
 import com.example.kitchenhelperkotlin.tobuy.ToBuy
 
 sealed class ToBuyEvent {

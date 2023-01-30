@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.navigation.NavController
 import com.example.kitchenhelperkotlin.R
 
 class NotificationHelper(val context: Context) {
@@ -23,7 +22,12 @@ class NotificationHelper(val context: Context) {
         val intent = Intent(Intent.ACTION_VIEW, uri).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         /*
         val pendingIntent = navController
@@ -44,5 +48,4 @@ class NotificationHelper(val context: Context) {
             notify(notificationId, builder.build())
         }
     }
-
 }

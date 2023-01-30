@@ -33,6 +33,4 @@ class KHApplication : Application() {
             notificationManager.createNotificationChannel(mainChannel)
         }
     }
-
-
 }
