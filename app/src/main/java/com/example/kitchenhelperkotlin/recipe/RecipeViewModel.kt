@@ -5,10 +5,13 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.kitchenhelperkotlin.PreferencesRepository
 import com.example.kitchenhelperkotlin.SortOrder
+import com.example.kitchenhelperkotlin.events.RecipeEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +22,10 @@ class RecipeViewModel @Inject constructor(
 ) : ViewModel() {
 
     val searchQuery = MutableStateFlow("")
-    val preferencesFlow = preferencesRepository.preferencesRecipeFlow
+    private val preferencesFlow = preferencesRepository.preferencesRecipeFlow
+
+    private val recipeEventChannel = Channel<RecipeEvent>()
+    val recipeEvent = recipeEventChannel.receiveAsFlow()
 
     private val recipeFlow = combine(
         searchQuery, preferencesFlow
@@ -37,5 +43,14 @@ class RecipeViewModel @Inject constructor(
 
     fun onRecipeSelected(recipe: Recipe) {
 
+    }
+
+    fun onRecipeSwiped(recipe: Recipe) = viewModelScope.launch {
+        recipeDao.delete(recipe)
+        recipeEventChannel.send(RecipeEvent.ShowUndoDeleteMessage(recipe))
+    }
+
+    fun onUndoDeleteClick(recipe: Recipe) = viewModelScope.launch {
+        recipeDao.insert(recipe)
     }
 }

@@ -50,6 +50,7 @@
     <string name="startCooking">Начать готовить</string>
     <string name="description">Описание</string>
     <string name="favorite">Любимый</string>
+    <string name="recipeDeleted">Рецепт удален</string>
     <!--Список покупок-->
     <string name="addToList">Добавить</string>
     <string name="important">Важное</string>
