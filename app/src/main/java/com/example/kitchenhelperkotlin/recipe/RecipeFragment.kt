@@ -37,6 +37,8 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemC
         RecipeViewModel.provideFactory(factory, this, arguments)
     }
 
+    private lateinit var searchView : SearchView
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentRecipeBinding.bind(view)
@@ -47,7 +49,13 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemC
                 menuInflater.inflate(R.menu.fragment_recipe_menu, menu)
 
                 val searchItem = menu.findItem(R.id.actionSearch)
-                val searchView = searchItem.actionView as SearchView
+                searchView = searchItem.actionView as SearchView
+
+                val pendingQuery = viewModel.searchQuery.value
+                if (pendingQuery!= null && pendingQuery.isNotEmpty()){
+                    searchItem.expandActionView()
+                    searchView.setQuery(pendingQuery,false)
+                }
 
                 searchView.onQueryTextChanged {
                     viewModel.searchQuery.value = it
@@ -130,6 +138,11 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemC
                 }.exhaustive
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        searchView.setOnQueryTextListener(null)
     }
 
     override fun onItemClick(recipe: Recipe) {
