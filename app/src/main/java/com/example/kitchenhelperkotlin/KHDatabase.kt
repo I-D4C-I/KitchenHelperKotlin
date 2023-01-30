@@ -18,7 +18,6 @@ import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Provider
 
-
 @Database(entities = [ToBuy::class, Product::class, Recipe::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class KHDatabase : RoomDatabase() {
@@ -38,11 +37,11 @@ abstract class KHDatabase : RoomDatabase() {
             val productDao = database.get().productDao()
             val recipeDao = database.get().recipeDao()
             applicationScope.launch {
-                toBuyDao.insert(ToBuy(title = "Call Mom", amount = 3))
-                toBuyDao.insert(ToBuy(title = "Feed Cat", amount = 2, important = true))
+                toBuyDao.insert(ToBuy(title = "Bread", amount = 3))
+                toBuyDao.insert(ToBuy(title = "Milk", amount = 2, important = true))
                 toBuyDao.insert(
                     ToBuy(
-                        title = "Call Elon Musk",
+                        title = "Apples",
                         amount = 13,
                         important = false,
                         completed = true
@@ -50,7 +49,7 @@ abstract class KHDatabase : RoomDatabase() {
                 )
                 toBuyDao.insert(
                     ToBuy(
-                        title = "Wash a dishes",
+                        title = "Sauce",
                         amount = 23,
                         important = true,
                         completed = true
@@ -66,7 +65,7 @@ abstract class KHDatabase : RoomDatabase() {
                 )
                 productDao.insert(
                     Product(
-                        title = "Bacon",
+                        title = "Meat",
                         amount = 15,
                         LocalDate.now().plusMonths(1)
                     )

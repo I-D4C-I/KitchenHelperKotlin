@@ -20,19 +20,38 @@ data class ToBuyPreferences(val sortOrder: SortOrder, val hideCompleted: Boolean
 
 data class ProductPreferences(val sortOrder: SortOrder)
 
+data class RecipePreferences(val sortOrder: SortOrder)
+
 @Singleton
 class PreferencesRepository @Inject constructor(@ApplicationContext context: Context) {
 
     //Иницализация
     private val toBuyDataStore = context.createDataStore("toBuy_preferences")
     private val productDataStore = context.createDataStore("product_preferences")
+    private val recipeDataStore = context.createDataStore("recipe_preferences")
 
     //Чтение текущих настроек
 
-    val preferencesProductFlow = productDataStore.data
-        .catch {  exception ->
+    val preferencesRecipeFlow = recipeDataStore.data
+        .catch { exception ->
             if (exception is IOException) {
-                Log.e(TAG, "Ошибка в чтении персональных настройек ", exception)
+                Log.e(TAG, "Ошибка в чтении персональных настроек ", exception)
+                emit(emptyPreferences())
+            } else {
+                throw  exception
+            }
+        }
+        .map { preferences ->
+            val sortOrder = SortOrder.valueOf(
+                preferences[PreferencesKeys.SORT_ORDER] ?: SortOrder.DEFAULT.name
+            )
+            RecipePreferences(sortOrder)
+        }
+
+    val preferencesProductFlow = productDataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                Log.e(TAG, "Ошибка в чтении персональных настроек ", exception)
                 emit(emptyPreferences())
             } else {
                 throw  exception
@@ -45,10 +64,10 @@ class PreferencesRepository @Inject constructor(@ApplicationContext context: Con
             ProductPreferences(sortOrder)
         }
 
-    val preferencesFlow = toBuyDataStore.data
+    val preferencesToBuyFlow = toBuyDataStore.data
         .catch { exception ->
             if (exception is IOException) {
-                Log.e(TAG, "Ошибка в чтении персональных настройек ", exception)
+                Log.e(TAG, "Ошибка в чтении персональных настроек ", exception)
                 emit(emptyPreferences())
             } else {
                 throw  exception
@@ -64,14 +83,20 @@ class PreferencesRepository @Inject constructor(@ApplicationContext context: Con
 
     //Установка настроек
 
-    suspend fun updateProductSortOrder(sortOrder: SortOrder){
-        productDataStore.edit {  preferences ->
+    suspend fun updateProductSortOrder(sortOrder: SortOrder) {
+        productDataStore.edit { preferences ->
             preferences[PreferencesKeys.SORT_ORDER] = sortOrder.name
         }
     }
 
     suspend fun updateToBuySortOrder(sortOrder: SortOrder) {
         toBuyDataStore.edit { preferences ->
+            preferences[PreferencesKeys.SORT_ORDER] = sortOrder.name
+        }
+    }
+
+    suspend fun updateRecipeSortOrder(sortOrder: SortOrder){
+        recipeDataStore.edit { preferences ->
             preferences[PreferencesKeys.SORT_ORDER] = sortOrder.name
         }
     }

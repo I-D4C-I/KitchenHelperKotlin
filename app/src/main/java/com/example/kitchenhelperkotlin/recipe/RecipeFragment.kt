@@ -21,13 +21,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
-    private val viewModel : RecipeViewModel by viewModels()
+    private val viewModel: RecipeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentRecipeBinding.bind(view)
 
-        val menuHost : MenuHost = requireActivity()
+        val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.fragment_recipe_menu, menu)
@@ -38,22 +38,20 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
                 searchView.onQueryTextChanged {
                     viewModel.searchQuery.value = it
                 }
-
-
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-               return when (menuItem.itemId){
+                return when (menuItem.itemId) {
                     R.id.actionSortDefault -> {
-                        viewModel.sortOrder.value = SortOrder.DEFAULT
+                        viewModel.onSortOrderSelected(SortOrder.DEFAULT)
                         true
                     }
                     R.id.actionSortByName -> {
-                        viewModel.sortOrder.value = SortOrder.BY_NAME
+                        viewModel.onSortOrderSelected(SortOrder.BY_NAME)
                         true
                     }
-                   else -> false
-               }
+                    else -> false
+                }
             }
 
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
@@ -67,7 +65,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             }
         }
 
-        viewModel.recipes.observe(viewLifecycleOwner){
+        viewModel.recipes.observe(viewLifecycleOwner) {
             recipeAdapter.submitList(it)
         }
     }

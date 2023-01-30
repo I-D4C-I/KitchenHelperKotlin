@@ -35,7 +35,7 @@ class ToBuyViewModel @AssistedInject constructor(
 
     val searchQuery = savedState.getLiveData("searchQuery", "")
 
-    val preferencesFlow = preferences.preferencesFlow
+    val preferencesFlow = preferences.preferencesToBuyFlow
 
     private val toBuyEventChannel = Channel<ToBuyEvent>()
     val toBuyEvent = toBuyEventChannel.receiveAsFlow()
