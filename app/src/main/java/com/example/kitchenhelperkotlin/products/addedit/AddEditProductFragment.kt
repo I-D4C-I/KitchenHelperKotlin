@@ -58,17 +58,20 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
         binding.apply {
             eProductTitle.setText(viewModel.productTitle)
 
-            if (viewModel.product != null)
+            if (viewModel.product != null) {
                 eProductAmount.setText(viewModel.productAmount)
 
-            if (viewModel.product != null) {
                 date.set(
                     viewModel.productDate!!.year,
                     viewModel.productDate!!.monthValue - 1,
                     viewModel.productDate!!.dayOfMonth,
                 )
+            } else {
+                eProductAmount.setText("0")
             }
+
             updateDate()
+
             bExpirationDate.setOnClickListener {
                 DatePickerDialog(
                     requireContext(),
@@ -89,6 +92,19 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
                 viewModel.productDate =
                     LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalDate()
             }
+
+            bIncreaseAmount.setOnClickListener {
+                val amount = eProductAmount.text.toString().toInt() + 1
+                eProductAmount.setText(amount.toString())
+            }
+
+            bDecreaseAmount.setOnClickListener {
+                var amount = eProductAmount.text.toString().toInt() - 1
+                if(amount <= 0)
+                    amount = 0
+                eProductAmount.setText(amount.toString())
+            }
+
             saveProduct.setOnClickListener {
                 viewModel.onSaveClick()
             }

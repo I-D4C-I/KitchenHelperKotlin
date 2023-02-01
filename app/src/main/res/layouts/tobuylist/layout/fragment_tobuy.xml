@@ -19,7 +19,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:contentDescription="@string/addToList"
-        android:src="@drawable/ic_add" />
+        android:src="@drawable/ic_add_24" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

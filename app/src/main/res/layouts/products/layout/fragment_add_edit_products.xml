@@ -8,6 +8,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -33,11 +34,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/amountInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="36dp"
+            android:layout_marginHorizontal="18dp"
             app:errorEnabled="true"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/bDecreaseAmount"
+            app:layout_constraintStart_toEndOf="@+id/bIncreaseAmount"
             app:layout_constraintTop_toBottomOf="@+id/titleInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -49,6 +51,39 @@
             <!--TODO: Создай справо кнопку и привяжи, чтобы надпись не занимала все пространство не забдуь layout_width="0dp"-->
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <!--TODO: Анимация нажатия кнопки-->
+        <ImageButton
+            android:id="@+id/bIncreaseAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/round_corner"
+            android:contentDescription="@string/increaseButton"
+            android:elevation="16dp"
+            android:padding="1dp"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:src="@drawable/ic_add_48"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleInputLayout" />
+
+        <ImageButton
+            android:id="@+id/bDecreaseAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="36dp"
+            android:background="@drawable/round_corner"
+            android:contentDescription="@string/decreaseButton"
+            android:elevation="16dp"
+            android:padding="1dp"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:src="@drawable/ic_minus_48"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleInputLayout" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -73,6 +108,8 @@
                 android:hint="@string/expirationDate" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+
         <!--
                 <TextView
                     android:id="@+id/textView8"
