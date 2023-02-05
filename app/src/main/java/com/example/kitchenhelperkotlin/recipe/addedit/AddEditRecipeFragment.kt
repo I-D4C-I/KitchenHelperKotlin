@@ -52,6 +52,8 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
             }
 
             saveRecipe.setOnClickListener {
+                eRecipeTitle.clearFocus()
+                eRecipeDescription.clearFocus()
                 viewModel.onSaveClick()
             }
         }

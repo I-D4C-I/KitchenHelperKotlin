@@ -1,7 +1,7 @@
 <resources>
     <!--Общее-->
     <string name="app_name">Кухонный помощник</string>
-    <string name="version">Version 1.1</string>
+    <string name="version">Version 1.2</string>
     <string name="retype">"Повторите ввод"</string>
     <string name="edit">Изменить</string>
     <string name="name">Название</string>

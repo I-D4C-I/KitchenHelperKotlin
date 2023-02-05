@@ -106,6 +106,8 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
             }
 
             saveProduct.setOnClickListener {
+                eProductTitle.clearFocus()
+                eProductAmount.clearFocus()
                 viewModel.onSaveClick()
             }
         }

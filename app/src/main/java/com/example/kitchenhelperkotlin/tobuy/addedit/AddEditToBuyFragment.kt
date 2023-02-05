@@ -58,6 +58,8 @@ class AddEditToBuyFragment : Fragment(R.layout.fragment_add_edit_tobuy) {
                 viewModel.toBuyImportance = isChecked
             }
             saveToBuy.setOnClickListener {
+                eToBuyTitle.clearFocus()
+                eToBuyAmount.clearFocus()
                 viewModel.onSaveClick()
             }
         }

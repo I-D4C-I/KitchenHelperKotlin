@@ -48,7 +48,6 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/amount"
                 android:inputType="number" />
-            <!--TODO: Создай справо кнопку и привяжи, чтобы надпись не занимала все пространство не забдуь layout_width="0dp"-->
 
         </com.google.android.material.textfield.TextInputLayout>
 
