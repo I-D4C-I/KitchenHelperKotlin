@@ -60,8 +60,12 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
         }
 
 
+        val measureArray = ArrayList<String>(Measure.values().size)
+        for (measure in Measure.values())
+            measureArray.add(measure.unit)
+
         val measureAdapter =
-            ArrayAdapter(requireContext(), R.layout.measure_spinner_item, Measure.values())
+            ArrayAdapter(requireContext(), R.layout.measure_spinner_item, measureArray)
         measureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         binding.apply {
@@ -114,7 +118,7 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
                     position: Int,
                     p3: Long
                 ) {
-                    viewModel.productMeasure = adapter?.getItemAtPosition(position) as Measure
+                    viewModel.productMeasure = Measure.values()[position]
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {

@@ -12,5 +12,4 @@ enum class Measure(val unit: String) {
     ml("мЛ"),
     stuff("Шт"),
     pack("Уп");
-
 }
