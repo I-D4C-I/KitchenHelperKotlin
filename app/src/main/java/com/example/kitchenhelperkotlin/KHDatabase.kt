@@ -7,6 +7,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.kitchenhelperkotlin.dependencyinjection.ApplicationScope
 import com.example.kitchenhelperkotlin.products.Product
 import com.example.kitchenhelperkotlin.products.ProductDao
+import com.example.kitchenhelperkotlin.products.UnitOfMeasure.Measure
 import com.example.kitchenhelperkotlin.recipe.Recipe
 import com.example.kitchenhelperkotlin.recipe.RecipeDao
 import com.example.kitchenhelperkotlin.tobuy.ToBuy
@@ -55,19 +56,20 @@ abstract class KHDatabase : RoomDatabase() {
                         completed = true
                     )
                 )
-                productDao.insert(Product(title = "Bread", amount = 5))
+                productDao.insert(Product(title = "Bread", amount = 5, measure = Measure.pack))
                 productDao.insert(
                     Product(
                         title = "Milk",
                         amount = 15,
-                        LocalDate.now().plusWeeks(1)
-                    )
+                        date = LocalDate.now().plusWeeks(1)
+                    , measure = Measure.l)
                 )
                 productDao.insert(
                     Product(
                         title = "Meat",
                         amount = 15,
-                        LocalDate.now().plusMonths(1)
+                        date = LocalDate.now().plusMonths(1),
+                        measure = Measure.kg
                     )
                 )
                 recipeDao.insert(Recipe(title = "Example recipe 1", false, "Note Example 1"))

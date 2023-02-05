@@ -56,6 +56,8 @@ class ProductAdapter(
                 if (between <= 0)
                     productLeftDays.text = itemView.context.getString(R.string.expired)
 
+                productMeasure.text = product.measure.unit
+
                 bShowAddToBuy.setOnClickListener {
                     listener.onAddToBuyListClick(product.title)
                 }
