@@ -97,10 +97,15 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
                 val amount = eProductAmount.text.toString().toInt() + 1
                 eProductAmount.setText(amount.toString())
             }
-
+/*
+            root.animation = AnimationUtils.loadAnimation(
+                binding.root.context,
+                R.anim.item_animation_from_bottom
+            )
+*/
             bDecreaseAmount.setOnClickListener {
                 var amount = eProductAmount.text.toString().toInt() - 1
-                if(amount <= 0)
+                if (amount <= 0)
                     amount = 0
                 eProductAmount.setText(amount.toString())
             }

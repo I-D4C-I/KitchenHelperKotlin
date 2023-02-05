@@ -11,26 +11,6 @@
         android:layout_height="wrap_content"
         android:padding="8dp">
 
-        <ImageButton
-            android:id="@+id/bShowAddToBuy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:contentDescription="@string/addToList"
-            android:minHeight="48dp"
-            android:src="@drawable/ic_addtobuylist_black" />
-
-        <TextView
-            android:id="@+id/productAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginHorizontal="8dp"
-            android:layout_toStartOf="@+id/bShowAddToBuy"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            tools:text="Amount" />
-
         <TextView
             android:id="@+id/productTitle"
             android:layout_width="wrap_content"
@@ -41,6 +21,27 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             tools:text="Title" />
+
+        <TextView
+            android:id="@+id/productAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginHorizontal="8dp"
+            android:layout_toStartOf="@+id/productMeasure"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            tools:text="Amount" />
+
+        <TextView
+            android:id="@+id/productMeasure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@+id/bShowAddToBuy"
+            android:text="@string/measure"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/daysleft"
@@ -57,6 +58,16 @@
             android:layout_marginHorizontal="8dp"
             android:layout_toEndOf="@+id/daysleft"
             tools:text="Days" />
+
+        <ImageButton
+            android:id="@+id/bShowAddToBuy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/addToList"
+            android:minHeight="48dp"
+            android:src="@drawable/ic_addtobuylist_black" />
 
     </RelativeLayout>
 
