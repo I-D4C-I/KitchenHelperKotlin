@@ -8,6 +8,7 @@ import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.events.AddEditEvent
 import com.example.kitchenhelperkotlin.products.Product
 import com.example.kitchenhelperkotlin.products.ProductDao
+import com.example.kitchenhelperkotlin.products.UnitOfMeasure.Measure
 import com.example.kitchenhelperkotlin.util.ADD_RESULT_OK
 import com.example.kitchenhelperkotlin.util.EDIT_RESULT_OK
 import dagger.assisted.Assisted
@@ -44,6 +45,9 @@ class AddEditProductViewModel @AssistedInject constructor(
             stateHandle["productDate"] = value
         }
 
+    var productMeasure =
+        stateHandle.get<Measure>("productMeasure") ?: product?.measure ?: Measure.kg
+
     private val addEditProductEventChannel = Channel<AddEditEvent>()
     val addEditProductEvent = addEditProductEventChannel.receiveAsFlow()
 
@@ -56,12 +60,18 @@ class AddEditProductViewModel @AssistedInject constructor(
             val updatedProduct = product.copy(
                 title = productTitle,
                 amount = productAmount.toInt(),
-                date = productDate
+                date = productDate,
+                measure = productMeasure
             )
             updateProduct(updatedProduct)
         } else {
             val newProduct =
-                Product(title = productTitle, amount = productAmount.toInt(), date = productDate)
+                Product(
+                    title = productTitle,
+                    amount = productAmount.toInt(),
+                    date = productDate,
+                    measure = productMeasure
+                )
             createProduct(newProduct)
         }
     }

@@ -4,6 +4,9 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -14,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.databinding.FragmentAddEditProductsBinding
 import com.example.kitchenhelperkotlin.events.AddEditEvent
+import com.example.kitchenhelperkotlin.products.UnitOfMeasure.Measure
 import com.example.kitchenhelperkotlin.util.exhaustive
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,6 +59,11 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
             updateDate()
         }
 
+
+        val measureAdapter =
+            ArrayAdapter(requireContext(), R.layout.measure_spinner_item, Measure.values())
+        measureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
         binding.apply {
             eProductTitle.setText(viewModel.productTitle)
 
@@ -82,6 +91,10 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
                 ).show()
             }
 
+            sMeasure.adapter = measureAdapter
+            sMeasure.setSelection(viewModel.productMeasure.ordinal)
+
+
             eProductTitle.addTextChangedListener {
                 viewModel.productTitle = it.toString()
             }
@@ -92,6 +105,24 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
                 viewModel.productDate =
                     LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalDate()
             }
+
+            sMeasure.onItemSelectedListener = object : OnItemSelectedListener {
+
+                override fun onItemSelected(
+                    adapter: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    p3: Long
+                ) {
+                    viewModel.productMeasure = adapter?.getItemAtPosition(position) as Measure
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    return
+                }
+
+            }
+
 
             bIncreaseAmount.setOnClickListener {
                 val amount = eProductAmount.text.toString().toInt() + 1
