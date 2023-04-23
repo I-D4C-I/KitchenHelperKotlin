@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ToBuy (
     val title: String,
-    val amount: Int,
+    val amount: Int  = 0,
     val important: Boolean = false,
     val completed: Boolean = false,
     val timestamp: Long = System.currentTimeMillis(),

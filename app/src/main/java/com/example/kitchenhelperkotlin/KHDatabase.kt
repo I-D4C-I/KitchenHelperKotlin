@@ -56,6 +56,13 @@ abstract class KHDatabase : RoomDatabase() {
                         completed = true
                     )
                 )
+                toBuyDao.insert(
+                    ToBuy(
+                        title = "Sponge",
+                        important = true,
+                        completed = true
+                    )
+                )
                 productDao.insert(Product(title = "Bread", amount = 5, measure = Measure.pack))
                 productDao.insert(
                     Product(

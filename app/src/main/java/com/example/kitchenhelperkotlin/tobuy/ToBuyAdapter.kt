@@ -51,6 +51,8 @@ class ToBuyAdapter(
                 tobuyName.text = toBuy.title
                 tobuyName.paint.isStrikeThruText = toBuy.completed
                 tobuyAmount.text = toBuy.amount.toString()
+                if (toBuy.amount == 0)
+                    tobuyAmount.isVisible = false
                 tobuyPriority.isVisible = toBuy.important
             }
         }

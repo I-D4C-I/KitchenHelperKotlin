@@ -1,7 +1,7 @@
 <resources>
     <!--Общее-->
     <string name="app_name">Кухонный помощник</string>
-    <string name="version">Version 1.2</string>
+    <string name="version">Version 1.3</string>
     <string name="retype">"Повторите ввод"</string>
     <string name="edit">Изменить</string>
     <string name="name">Название</string>
@@ -60,6 +60,7 @@
     <!--Список покупок-->
     <string name="addToList">Добавить</string>
     <string name="important">Важное</string>
+    <string name="amountEnable">Количество</string>
     <string name="hideCompleted">Скрыть законченные</string>
     <string name="deleteCompleted">Удалить законченные</string>
     <string name="deletedToBuy">Покупа удалена</string>

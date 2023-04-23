@@ -48,6 +48,7 @@ class AddEditToBuyFragment : Fragment(R.layout.fragment_add_edit_tobuy) {
             cbImportant.isChecked = viewModel.toBuyImportance
             cbImportant.jumpDrawablesToCurrentState()
 
+
             eToBuyTitle.addTextChangedListener {
                 viewModel.toBuyTitle = it.toString()
             }
