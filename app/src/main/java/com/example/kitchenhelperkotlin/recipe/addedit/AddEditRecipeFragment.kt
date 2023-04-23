@@ -37,7 +37,8 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
             eRecipeTitle.setText(viewModel.recipeTitle)
             cbFavorite.isChecked = viewModel.recipeFavorite
             cbFavorite.jumpDrawablesToCurrentState()
-            eRecipeDescription.setText(viewModel.recipeNote)
+            eRecipeNote.setText(viewModel.recipeNote)
+            eRecipeDescription.setText(viewModel.recipeDescription)
 
             eRecipeTitle.addTextChangedListener {
                 viewModel.recipeTitle = it.toString()
@@ -46,13 +47,17 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
             cbFavorite.setOnCheckedChangeListener { _, isChecked ->
                 viewModel.recipeFavorite = isChecked
             }
+            eRecipeNote.addTextChangedListener {
+                viewModel.recipeNote = it.toString()
+            }
 
             eRecipeDescription.addTextChangedListener {
-                viewModel.recipeNote = it.toString()
+                viewModel.recipeDescription = it.toString()
             }
 
             saveRecipe.setOnClickListener {
                 eRecipeTitle.clearFocus()
+                eRecipeNote.clearFocus()
                 eRecipeDescription.clearFocus()
                 viewModel.onSaveClick()
             }
@@ -63,6 +68,7 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
                 when(event) {
                     is AddEditEvent.NavigateBackWithResult -> {
                         binding.eRecipeTitle.clearFocus()
+                        binding.eRecipeNote.clearFocus()
                         binding.eRecipeDescription.clearFocus()
                         setFragmentResult("add_edit_request", bundleOf("add_edit_result" to event.result)
                         )

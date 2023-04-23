@@ -43,21 +43,27 @@ class AddEditRecipeViewModel @AssistedInject constructor(
             state["recipeNote"] = value
         }
 
+    var recipeDescription = state.get<String>("recipeDesc") ?: recipe?.description ?: ""
+        set(value) {
+            field = value
+            state["recipeDesc"] = value
+        }
+
     private val addEditRecipeEventChannel = Channel<AddEditEvent>()
     val addEditRecipeEvent = addEditRecipeEventChannel.receiveAsFlow()
 
     fun onSaveClick() {
-        if (recipeTitle.isBlank() || recipeNote.isBlank()) {
+        if (recipeTitle.isBlank() || recipeDescription.isBlank()) {
             showInvalidMessage(getApplication<Application>().resources.getString(R.string.retype))
             return
         }
         if (recipe != null) {
             val updatedRecipe =
-                recipe.copy(title = recipeTitle, favorite = recipeFavorite, note = recipeNote)
+                recipe.copy(title = recipeTitle, favorite = recipeFavorite, note = recipeNote, description = recipeDescription)
             updateRecipe(updatedRecipe)
         } else {
             val newRecipe =
-                Recipe(title = recipeTitle, favorite = recipeFavorite, note = recipeNote)
+                Recipe(title = recipeTitle, favorite = recipeFavorite, note = recipeNote, description = recipeDescription)
             createRecipe(newRecipe)
         }
     }

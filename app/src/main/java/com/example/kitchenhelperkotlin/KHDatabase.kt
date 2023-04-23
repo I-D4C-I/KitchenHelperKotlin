@@ -61,8 +61,8 @@ abstract class KHDatabase : RoomDatabase() {
                     Product(
                         title = "Milk",
                         amount = 15,
-                        date = LocalDate.now().plusWeeks(1)
-                    , measure = Measure.l)
+                        date = LocalDate.now().plusWeeks(1), measure = Measure.l
+                    )
                 )
                 productDao.insert(
                     Product(
@@ -72,9 +72,29 @@ abstract class KHDatabase : RoomDatabase() {
                         measure = Measure.kg
                     )
                 )
-                recipeDao.insert(Recipe(title = "Example recipe 1", false, "Note Example 1"))
-                recipeDao.insert(Recipe(title = "Example recipe 2", true, "Note Example 2"))
-                recipeDao.insert(Recipe(title = "Example recipe 3", false, "Note Example 3"))
+                recipeDao.insert(
+                    Recipe(
+                        "Example recipe 1",
+                        false,
+                        "Note Example 1",
+                        "Description Example 1"
+                    )
+                )
+                recipeDao.insert(
+                    Recipe(
+                        "Example recipe 2",
+                        true,
+                        "Note Example 2",
+                        "Description Example 2"
+                    )
+                )
+                recipeDao.insert(
+                    Recipe(
+                        "Example recipe 3",
+                        false,
+                        description = "Description Example 3"
+                    )
+                )
             }
         }
     }

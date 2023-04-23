@@ -42,6 +42,8 @@ class RecipeAdapter(private val listener: OnItemClickListener) :
             binding.apply {
                 recipeTitle.text = recipe.title
                 recipeFavorite.isVisible = recipe.favorite
+                if (recipe.note.isBlank())
+                    recipeNote.isVisible = false
                 recipeNote.text = recipe.note
 
                 root.animation = AnimationUtils.loadAnimation(
