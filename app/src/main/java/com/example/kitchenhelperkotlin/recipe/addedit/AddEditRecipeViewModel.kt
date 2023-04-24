@@ -23,6 +23,8 @@ class AddEditRecipeViewModel @AssistedInject constructor(
     @Assisted private val state: SavedStateHandle
 ) : AndroidViewModel(application) {
 
+    val currentPart = 0
+
     val recipe = state.get<Recipe>("recipe")
 
     var recipeTitle = state.get<String>("recipeTitle") ?: recipe?.title ?: ""
@@ -43,27 +45,45 @@ class AddEditRecipeViewModel @AssistedInject constructor(
             state["recipeNote"] = value
         }
 
-    var recipeDescription = state.get<String>("recipeDesc") ?: recipe?.description ?: ""
+    var recipeDescription =
+        state.get<ArrayList<String>>("recipeDesc") ?: recipe?.description ?: arrayListOf()
         set(value) {
             field = value
             state["recipeDesc"] = value
+        }
+
+    var recipePart = state.get<String>("recipePart") ?: recipe?.description?.get(currentPart) ?: ""
+        set(value) {
+            field = value
+            state["recipePart"] = value
         }
 
     private val addEditRecipeEventChannel = Channel<AddEditEvent>()
     val addEditRecipeEvent = addEditRecipeEventChannel.receiveAsFlow()
 
     fun onSaveClick() {
-        if (recipeTitle.isBlank() || recipeDescription.isBlank()) {
+        if (recipeTitle.isBlank() || recipePart.isBlank()) {
             showInvalidMessage(getApplication<Application>().resources.getString(R.string.retype))
             return
         }
+        recipeDescription[currentPart] = recipePart
         if (recipe != null) {
             val updatedRecipe =
-                recipe.copy(title = recipeTitle, favorite = recipeFavorite, note = recipeNote, description = recipeDescription)
+                recipe.copy(
+                    title = recipeTitle,
+                    favorite = recipeFavorite,
+                    note = recipeNote,
+                    description = recipeDescription
+                )
             updateRecipe(updatedRecipe)
         } else {
             val newRecipe =
-                Recipe(title = recipeTitle, favorite = recipeFavorite, note = recipeNote, description = recipeDescription)
+                Recipe(
+                    title = recipeTitle,
+                    favorite = recipeFavorite,
+                    note = recipeNote,
+                    description = recipeDescription
+                )
             createRecipe(newRecipe)
         }
     }

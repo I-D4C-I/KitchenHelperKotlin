@@ -11,6 +11,6 @@ data class Recipe(
     val title: String,
     val favorite: Boolean = false,
     val note: String = "",
-    val description: String,
+    val description: ArrayList<String>,
     @PrimaryKey(autoGenerate = true) val id: Int = 0
 ) : Parcelable

@@ -72,6 +72,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/eRecipeDescription"
                 android:layout_width="match_parent"
+                android:gravity="start"
+
                 android:layout_height="match_parent"
                 android:hint="@string/description" />
 

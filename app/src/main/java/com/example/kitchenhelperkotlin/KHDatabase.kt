@@ -84,7 +84,7 @@ abstract class KHDatabase : RoomDatabase() {
                         "Example recipe 1",
                         false,
                         "Note Example 1",
-                        "Description Example 1"
+                        arrayListOf("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec purus efficitur, laoreet lorem vitae, viverra turpis. Phasellus tempor orci eu lectus elementum dapibus.")
                     )
                 )
                 recipeDao.insert(
@@ -92,14 +92,14 @@ abstract class KHDatabase : RoomDatabase() {
                         "Example recipe 2",
                         true,
                         "Note Example 2",
-                        "Description Example 2"
+                        arrayListOf("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec purus efficitur, laoreet lorem vitae, viverra turpis. Phasellus tempor orci eu lectus elementum dapibus.", "Donec sed sem lacinia, vehicula quam nec, vehicula sapien. Sed non lorem orci.")
                     )
                 )
                 recipeDao.insert(
                     Recipe(
                         "Example recipe 3",
                         false,
-                        description = "Description Example 3"
+                        description = arrayListOf("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec purus efficitur, laoreet lorem vitae, viverra turpis. Phasellus tempor orci eu lectus elementum dapibus.")
                     )
                 )
             }

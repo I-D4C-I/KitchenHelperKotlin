@@ -17,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-@Suppress("IMPLICIT_CAST_TO_ANY")
+@Suppress("IMPLICIT_CAST_TO_ANY", "DEPRECATION")
 @AndroidEntryPoint
 class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
 
@@ -38,7 +38,7 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
             cbFavorite.isChecked = viewModel.recipeFavorite
             cbFavorite.jumpDrawablesToCurrentState()
             eRecipeNote.setText(viewModel.recipeNote)
-            eRecipeDescription.setText(viewModel.recipeDescription)
+            eRecipeDescription.setText(viewModel.recipePart)
 
             eRecipeTitle.addTextChangedListener {
                 viewModel.recipeTitle = it.toString()
@@ -52,7 +52,7 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
             }
 
             eRecipeDescription.addTextChangedListener {
-                viewModel.recipeDescription = it.toString()
+                viewModel.recipePart = it.toString()
             }
 
             saveRecipe.setOnClickListener {
@@ -64,13 +64,14 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.addEditRecipeEvent.collect{event ->
-                when(event) {
+            viewModel.addEditRecipeEvent.collect { event ->
+                when (event) {
                     is AddEditEvent.NavigateBackWithResult -> {
                         binding.eRecipeTitle.clearFocus()
                         binding.eRecipeNote.clearFocus()
                         binding.eRecipeDescription.clearFocus()
-                        setFragmentResult("add_edit_request", bundleOf("add_edit_result" to event.result)
+                        setFragmentResult(
+                            "add_edit_request", bundleOf("add_edit_result" to event.result)
                         )
                         findNavController().popBackStack()
                     }
