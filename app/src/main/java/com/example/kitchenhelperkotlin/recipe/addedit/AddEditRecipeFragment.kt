@@ -33,13 +33,18 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
 
         val binding = FragmentAddEditRecipeBinding.bind(view)
 
+        fun refreshPart() {
+            binding.eRecipeDescription.clearFocus()
+            binding.vPart.text = getString(R.string.part, viewModel.currentPart + 1)
+            binding.eRecipeDescription.setText(viewModel.recipePart)
+        }
+
         binding.apply {
             eRecipeTitle.setText(viewModel.recipeTitle)
             cbFavorite.isChecked = viewModel.recipeFavorite
             cbFavorite.jumpDrawablesToCurrentState()
             eRecipeNote.setText(viewModel.recipeNote)
-            vPart.text = getString(R.string.part, viewModel.currentPart + 1)
-            eRecipeDescription.setText(viewModel.recipePart)
+            refreshPart()
 
             eRecipeTitle.addTextChangedListener {
                 viewModel.recipeTitle = it.toString()
@@ -58,6 +63,10 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
 
             bNextPart.setOnClickListener {
                 viewModel.onNextClick()
+            }
+
+            bPreviousPart.setOnClickListener {
+                viewModel.onPreciousClick()
             }
 
             saveRecipe.setOnClickListener {
@@ -85,8 +94,12 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
                     }
                     is RecipeAddEditEvent.ShowNextPart -> {
                         binding.bPreviousPart.isClickable = true
-                        binding.vPart.text = getString(R.string.part, viewModel.currentPart + 1)
-                        binding.eRecipeDescription.setText(viewModel.recipePart)
+                        refreshPart()
+                    }
+                    is RecipeAddEditEvent.ShowPreciousPart -> {
+                        if (viewModel.currentPart <= 0)
+                            binding.bPreviousPart.isClickable = false
+                        refreshPart()
                     }
                 }.exhaustive
             }
