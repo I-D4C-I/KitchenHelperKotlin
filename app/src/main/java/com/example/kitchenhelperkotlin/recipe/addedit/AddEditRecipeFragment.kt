@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.databinding.FragmentAddEditRecipeBinding
-import com.example.kitchenhelperkotlin.events.AddEditEvent
+import com.example.kitchenhelperkotlin.events.RecipeAddEditEvent
 import com.example.kitchenhelperkotlin.util.exhaustive
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +38,7 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
             cbFavorite.isChecked = viewModel.recipeFavorite
             cbFavorite.jumpDrawablesToCurrentState()
             eRecipeNote.setText(viewModel.recipeNote)
+            vPart.text = getString(R.string.part, viewModel.currentPart + 1)
             eRecipeDescription.setText(viewModel.recipePart)
 
             eRecipeTitle.addTextChangedListener {
@@ -55,6 +56,10 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
                 viewModel.recipePart = it.toString()
             }
 
+            bNextPart.setOnClickListener {
+                viewModel.onNextClick()
+            }
+
             saveRecipe.setOnClickListener {
                 eRecipeTitle.clearFocus()
                 eRecipeNote.clearFocus()
@@ -66,7 +71,7 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.addEditRecipeEvent.collect { event ->
                 when (event) {
-                    is AddEditEvent.NavigateBackWithResult -> {
+                    is RecipeAddEditEvent.NavigateBackWithResult -> {
                         binding.eRecipeTitle.clearFocus()
                         binding.eRecipeNote.clearFocus()
                         binding.eRecipeDescription.clearFocus()
@@ -75,8 +80,13 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
                         )
                         findNavController().popBackStack()
                     }
-                    is AddEditEvent.ShowInvalidInputMessage -> {
+                    is RecipeAddEditEvent.ShowInvalidInputMessage -> {
                         Snackbar.make(requireView(), event.msg, Snackbar.LENGTH_LONG).show()
+                    }
+                    is RecipeAddEditEvent.ShowNextPart -> {
+                        binding.bPreviousPart.isClickable = true
+                        binding.vPart.text = getString(R.string.part, viewModel.currentPart + 1)
+                        binding.eRecipeDescription.setText(viewModel.recipePart)
                     }
                 }.exhaustive
             }

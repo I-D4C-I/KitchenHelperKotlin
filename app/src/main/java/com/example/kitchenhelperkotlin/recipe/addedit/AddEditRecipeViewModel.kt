@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.kitchenhelperkotlin.R
-import com.example.kitchenhelperkotlin.events.AddEditEvent
+import com.example.kitchenhelperkotlin.events.RecipeAddEditEvent
 import com.example.kitchenhelperkotlin.recipe.Recipe
 import com.example.kitchenhelperkotlin.recipe.RecipeDao
 import com.example.kitchenhelperkotlin.util.ADD_RESULT_OK
@@ -23,7 +23,7 @@ class AddEditRecipeViewModel @AssistedInject constructor(
     @Assisted private val state: SavedStateHandle
 ) : AndroidViewModel(application) {
 
-    val currentPart = 0
+    var currentPart = 0
 
     val recipe = state.get<Recipe>("recipe")
 
@@ -58,7 +58,7 @@ class AddEditRecipeViewModel @AssistedInject constructor(
             state["recipePart"] = value
         }
 
-    private val addEditRecipeEventChannel = Channel<AddEditEvent>()
+    private val addEditRecipeEventChannel = Channel<RecipeAddEditEvent>()
     val addEditRecipeEvent = addEditRecipeEventChannel.receiveAsFlow()
 
     fun onSaveClick() {
@@ -88,18 +88,31 @@ class AddEditRecipeViewModel @AssistedInject constructor(
         }
     }
 
+    fun onNextClick() {
+        recipeDescription[currentPart] = recipePart
+        currentPart += 1
+        if (recipeDescription.size == currentPart)
+            recipeDescription.add("")
+        recipePart = recipeDescription[currentPart]
+        showNextPart()
+    }
+
     private fun showInvalidMessage(text: String) = viewModelScope.launch {
-        addEditRecipeEventChannel.send(AddEditEvent.ShowInvalidInputMessage(text))
+        addEditRecipeEventChannel.send(RecipeAddEditEvent.ShowInvalidInputMessage(text))
     }
 
     private fun createRecipe(recipe: Recipe) = viewModelScope.launch {
         recipeDao.insert(recipe)
-        addEditRecipeEventChannel.send(AddEditEvent.NavigateBackWithResult(ADD_RESULT_OK))
+        addEditRecipeEventChannel.send(RecipeAddEditEvent.NavigateBackWithResult(ADD_RESULT_OK))
     }
 
     private fun updateRecipe(recipe: Recipe) = viewModelScope.launch {
         recipeDao.update(recipe)
-        addEditRecipeEventChannel.send(AddEditEvent.NavigateBackWithResult(EDIT_RESULT_OK))
+        addEditRecipeEventChannel.send(RecipeAddEditEvent.NavigateBackWithResult(EDIT_RESULT_OK))
+    }
+
+    private fun showNextPart() = viewModelScope.launch {
+        addEditRecipeEventChannel.send(RecipeAddEditEvent.ShowNextPart)
     }
 
     @AssistedFactory
