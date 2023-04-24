@@ -52,7 +52,10 @@
     <string name="startCooking">Начать готовить</string>
     <string name="description">Описание</string>
     <string name="note">Заметка</string>
+    <string name="part">Часть</string>
     <string name="favorite">Любимый</string>
+    <string name="previousButton">previousButton</string>
+    <string name="nextButton">nextButton</string>
     <string name="recipeDeleted">Рецепт удален</string>
     <string name="addedRecipe">Рецепт добален</string>
     <string name="editedRecipe">Рецепт обновлен</string>

@@ -84,7 +84,11 @@ abstract class KHDatabase : RoomDatabase() {
                         "Example recipe 1",
                         false,
                         "Note Example 1",
-                        arrayListOf("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec purus efficitur, laoreet lorem vitae, viverra turpis. Phasellus tempor orci eu lectus elementum dapibus.")
+                        arrayListOf(
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+                                    "In nec purus efficitur, laoreet lorem vitae, viverra turpis. " +
+                                    "Phasellus tempor orci eu lectus elementum dapibus."
+                        )
                     )
                 )
                 recipeDao.insert(
@@ -92,14 +96,24 @@ abstract class KHDatabase : RoomDatabase() {
                         "Example recipe 2",
                         true,
                         "Note Example 2",
-                        arrayListOf("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec purus efficitur, laoreet lorem vitae, viverra turpis. Phasellus tempor orci eu lectus elementum dapibus.", "Donec sed sem lacinia, vehicula quam nec, vehicula sapien. Sed non lorem orci.")
+                        arrayListOf(
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+                                    "In nec purus efficitur, laoreet lorem vitae, viverra turpis. " +
+                                    "Phasellus tempor orci eu lectus elementum dapibus.",
+                            "Donec sed sem lacinia, vehicula quam nec, vehicula sapien. " +
+                                    "Sed non lorem orci."
+                        )
                     )
                 )
                 recipeDao.insert(
                     Recipe(
                         "Example recipe 3",
                         false,
-                        description = arrayListOf("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec purus efficitur, laoreet lorem vitae, viverra turpis. Phasellus tempor orci eu lectus elementum dapibus.")
+                        description = arrayListOf(
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+                                    "In nec purus efficitur, laoreet lorem vitae, viverra turpis. " +
+                                    "Phasellus tempor orci eu lectus elementum dapibus."
+                        )
                     )
                 )
             }
