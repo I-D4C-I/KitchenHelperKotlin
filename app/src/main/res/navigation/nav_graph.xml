@@ -38,7 +38,7 @@
     <dialog
         android:id="@+id/deleteAllDialogFragment"
         android:name="com.example.kitchenhelperkotlin.dialog.DeleteAllDialogFragment"
-        android:label="DeleteAllDialogFragment" >
+        android:label="DeleteAllDialogFragment">
         <argument
             android:name="dialogCode"
             app:argType="integer" />
@@ -81,7 +81,7 @@
         android:id="@+id/recipeFragment"
         android:name="com.example.kitchenhelperkotlin.recipe.RecipeFragment"
         android:label="@string/recipeBook"
-        tools:layout="@layout/fragment_recipe" >
+        tools:layout="@layout/fragment_recipe">
         <action
             android:id="@+id/action_recipeFragment_to_addEditRecipeFragment"
             app:destination="@id/addEditRecipeFragment" />
@@ -93,12 +93,12 @@
         android:id="@+id/addEditRecipeFragment"
         android:name="com.example.kitchenhelperkotlin.recipe.addedit.AddEditRecipeFragment"
         android:label="{title}"
-        tools:layout="@layout/fragment_add_edit_recipe" >
+        tools:layout="@layout/fragment_add_edit_recipe">
         <argument
             android:name="recipe"
+            android:defaultValue="@null"
             app:argType="com.example.kitchenhelperkotlin.recipe.Recipe"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
         <argument
             android:name="title"
             app:argType="string" />
@@ -106,6 +106,13 @@
     <fragment
         android:id="@+id/reviewRecipeFragment"
         android:name="com.example.kitchenhelperkotlin.recipe.review.ReviewRecipeFragment"
-        android:label="fragment_review_recipe"
-        tools:layout="@layout/fragment_review_recipe" />
+        android:label="{title}"
+        tools:layout="@layout/fragment_review_recipe">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="recipe"
+            app:argType="com.example.kitchenhelperkotlin.recipe.Recipe" />
+    </fragment>
 </navigation>

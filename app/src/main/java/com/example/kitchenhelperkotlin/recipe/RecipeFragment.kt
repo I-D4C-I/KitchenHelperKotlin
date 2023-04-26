@@ -27,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemClickListener {
 
@@ -37,7 +38,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemC
         RecipeViewModel.provideFactory(factory, this, arguments)
     }
 
-    private lateinit var searchView : SearchView
+    private lateinit var searchView: SearchView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,9 +53,9 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemC
                 searchView = searchItem.actionView as SearchView
 
                 val pendingQuery = viewModel.searchQuery.value
-                if (pendingQuery!= null && pendingQuery.isNotEmpty()){
+                if (pendingQuery != null && pendingQuery.isNotEmpty()) {
                     searchItem.expandActionView()
-                    searchView.setQuery(pendingQuery,false)
+                    searchView.setQuery(pendingQuery, false)
                 }
 
                 searchView.onQueryTextChanged {
@@ -106,7 +107,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemC
             }
         }
 
-        setFragmentResultListener("add_edit_request"){ _, bundle ->
+        setFragmentResultListener("add_edit_request") { _, bundle ->
             val result = bundle.getInt("add_edit_result")
             viewModel.onAddEditResult(result)
         }
@@ -124,16 +125,30 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemC
                                 viewModel.onUndoDeleteClick(event.recipe)
                             }.show()
                     }
+
                     is RecipeEvent.NavigateToAddRecipeScreen -> {
-                        val action = RecipeFragmentDirections.actionRecipeFragmentToAddEditRecipeFragment(resources.getString(R.string.addNew), null)
+                        val action =
+                            RecipeFragmentDirections.actionRecipeFragmentToAddEditRecipeFragment(
+                                resources.getString(R.string.addNew),
+                                null
+                            )
                         findNavController().navigate(action)
                     }
+                    //TODO: Исправить название
                     is RecipeEvent.NavigateToEditRecipeScreen -> {
-                        val action = RecipeFragmentDirections.actionRecipeFragmentToAddEditRecipeFragment(resources.getString(R.string.edit), event.recipe )
+                        //val action = RecipeFragmentDirections.actionRecipeFragmentToAddEditRecipeFragment(resources.getString(R.string.edit), event.recipe )
+
+                        val action =
+                            RecipeFragmentDirections.actionRecipeFragmentToReviewRecipeFragment(
+                                event.recipe.title,
+                                event.recipe
+                            )
+
+
                         findNavController().navigate(action)
                     }
                     is RecipeEvent.ShowSavedConfirmationMessage -> {
-                      Snackbar.make(requireView(), event.message, Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(requireView(), event.message, Snackbar.LENGTH_SHORT).show()
                     }
                 }.exhaustive
             }
