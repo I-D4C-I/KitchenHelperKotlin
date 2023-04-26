@@ -48,8 +48,8 @@
                 android:id="@+id/eRecipeNote"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:maxWidth="200dp"
-                android:hint="@string/note" />
+                android:hint="@string/note"
+                android:maxWidth="200dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,7 +122,24 @@
                 android:gravity="start"
                 android:hint="@string/description" />
 
+
         </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/bDeletePart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-16dp"
+            android:layout_marginBottom="-16dp"
+            android:background="@drawable/round_corner"
+            android:contentDescription="@string/deleteButton"
+            android:elevation="16dp"
+            android:padding="1dp"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:src="@drawable/ic_delete_48"
+            app:layout_constraintBottom_toBottomOf="@+id/descriptionInputLayout"
+            app:layout_constraintStart_toStartOf="@+id/descriptionInputLayout" />
 
         <CheckBox
             android:id="@+id/cbFavorite"

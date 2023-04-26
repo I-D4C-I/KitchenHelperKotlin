@@ -69,6 +69,10 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
                 viewModel.onPreciousClick()
             }
 
+            bDeletePart.setOnClickListener {
+                viewModel.onDeleteClick()
+            }
+
             saveRecipe.setOnClickListener {
                 eRecipeTitle.clearFocus()
                 eRecipeNote.clearFocus()
@@ -92,13 +96,8 @@ class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
                     is RecipeAddEditEvent.ShowInvalidInputMessage -> {
                         Snackbar.make(requireView(), event.msg, Snackbar.LENGTH_LONG).show()
                     }
-                    is RecipeAddEditEvent.ShowNextPart -> {
-                        binding.bPreviousPart.isClickable = true
-                        refreshPart()
-                    }
-                    is RecipeAddEditEvent.ShowPreciousPart -> {
-                        if (viewModel.currentPart <= 0)
-                            binding.bPreviousPart.isClickable = false
+                    is RecipeAddEditEvent.ShowNewPart -> {
+                        binding.bPreviousPart.isClickable = viewModel.currentPart > 0
                         refreshPart()
                     }
                 }.exhaustive

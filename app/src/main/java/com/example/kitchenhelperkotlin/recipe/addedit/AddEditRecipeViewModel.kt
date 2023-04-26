@@ -62,7 +62,8 @@ class AddEditRecipeViewModel @AssistedInject constructor(
     val addEditRecipeEvent = addEditRecipeEventChannel.receiveAsFlow()
 
     fun onSaveClick() {
-        checkMainFields()
+        if (!areMainFieldsCorrect())
+            return
         recipeDescription[currentPart] = recipePart
         if (recipe != null) {
             val updatedRecipe =
@@ -85,21 +86,22 @@ class AddEditRecipeViewModel @AssistedInject constructor(
         }
     }
 
-    private fun checkMainFields(){
+    private fun areMainFieldsCorrect(): Boolean {
         if (recipeTitle.isBlank() || recipePart.isBlank()) {
             showInvalidMessage(getApplication<Application>().resources.getString(R.string.retype))
-            return
+            return false
         }
+        return true
     }
 
     fun onNextClick() {
-        checkMainFields()
+        if (!areMainFieldsCorrect())
+            return
         recipeDescription[currentPart] = recipePart
         currentPart += 1
         if (recipeDescription.size == currentPart)
             recipeDescription.add("")
-        recipePart = recipeDescription[currentPart]
-        showNextPart()
+        showNewPart()
     }
 
     fun onPreciousClick() {
@@ -107,8 +109,18 @@ class AddEditRecipeViewModel @AssistedInject constructor(
         currentPart -= 1
         if (currentPart < 0)
             currentPart = 0
-        recipePart = recipeDescription[currentPart]
-        showPreciousPart()
+        showNewPart()
+    }
+
+    fun onDeleteClick() {
+        if (recipeDescription.size == 1)
+            recipeDescription[currentPart] = ""
+        else {
+            recipeDescription.removeAt(currentPart)
+            if (recipeDescription.size == currentPart)
+                currentPart -= 1
+        }
+        showNewPart()
     }
 
     private fun showInvalidMessage(text: String) = viewModelScope.launch {
@@ -125,12 +137,9 @@ class AddEditRecipeViewModel @AssistedInject constructor(
         addEditRecipeEventChannel.send(RecipeAddEditEvent.NavigateBackWithResult(EDIT_RESULT_OK))
     }
 
-    private fun showNextPart() = viewModelScope.launch {
-        addEditRecipeEventChannel.send(RecipeAddEditEvent.ShowNextPart)
-    }
-
-    private fun showPreciousPart() = viewModelScope.launch {
-        addEditRecipeEventChannel.send(RecipeAddEditEvent.ShowPreciousPart)
+    private fun showNewPart() = viewModelScope.launch {
+        recipePart = recipeDescription[currentPart]
+        addEditRecipeEventChannel.send(RecipeAddEditEvent.ShowNewPart)
     }
 
     @AssistedFactory
