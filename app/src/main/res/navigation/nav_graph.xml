@@ -85,6 +85,9 @@
         <action
             android:id="@+id/action_recipeFragment_to_addEditRecipeFragment"
             app:destination="@id/addEditRecipeFragment" />
+        <action
+            android:id="@+id/action_recipeFragment_to_reviewRecipeFragment"
+            app:destination="@id/reviewRecipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEditRecipeFragment"
@@ -100,4 +103,9 @@
             android:name="title"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/reviewRecipeFragment"
+        android:name="com.example.kitchenhelperkotlin.recipe.review.ReviewRecipeFragment"
+        android:label="fragment_review_recipe"
+        tools:layout="@layout/fragment_review_recipe" />
 </navigation>
