@@ -17,7 +17,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-class OperatingRecipeViewModel @AssistedInject constructor(
+class AddEditRecipeViewModel @AssistedInject constructor(
     application: Application,
     private val recipeDao: RecipeDao,
     @Assisted private val state: SavedStateHandle
@@ -143,13 +143,13 @@ class OperatingRecipeViewModel @AssistedInject constructor(
     }
 
     @AssistedFactory
-    interface OperatingFactory {
-        fun create(handle: SavedStateHandle): OperatingRecipeViewModel
+    interface AddEditFactory {
+        fun create(handle: SavedStateHandle): AddEditRecipeViewModel
     }
 
     companion object {
         fun provideFactory(
-            assistedFactory: OperatingFactory,
+            assistedFactory: AddEditFactory,
             owner: SavedStateRegistryOwner,
             defaultArgs: Bundle? = null,
         ): AbstractSavedStateViewModelFactory =

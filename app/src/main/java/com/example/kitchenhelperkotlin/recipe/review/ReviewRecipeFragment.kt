@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.databinding.FragmentReviewRecipeBinding
-import com.example.kitchenhelperkotlin.recipe.addedit.OperatingRecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -14,10 +13,10 @@ import javax.inject.Inject
 class ReviewRecipeFragment : Fragment(R.layout.fragment_review_recipe) {
 
     @Inject
-    lateinit var factory: OperatingRecipeViewModel.OperatingFactory
+    lateinit var factory: ReviewRecipeViewModel.ViewFactory
 
-    private val viewModel: OperatingRecipeViewModel by viewModels {
-        OperatingRecipeViewModel.provideFactory(factory, this, arguments)
+    private val viewModel: ReviewRecipeViewModel by viewModels {
+        ReviewRecipeViewModel.provideFactory(factory, this, arguments)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

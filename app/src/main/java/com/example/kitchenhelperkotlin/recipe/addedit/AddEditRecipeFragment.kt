@@ -22,10 +22,10 @@ import javax.inject.Inject
 class AddEditRecipeFragment : Fragment(R.layout.fragment_add_edit_recipe) {
 
     @Inject
-    lateinit var factory: OperatingRecipeViewModel.OperatingFactory
+    lateinit var factory: AddEditRecipeViewModel.AddEditFactory
 
-    private val viewModel: OperatingRecipeViewModel by viewModels {
-        OperatingRecipeViewModel.provideFactory(factory, this, arguments)
+    private val viewModel: AddEditRecipeViewModel by viewModels {
+        AddEditRecipeViewModel.provideFactory(factory, this, arguments)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
