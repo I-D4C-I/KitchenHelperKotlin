@@ -44,10 +44,14 @@ class ReviewRecipeFragment : Fragment(R.layout.fragment_review_recipe) {
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.viewRecipeEvent.collect{event ->
-                when(event){
+            viewModel.viewRecipeEvent.collect { event ->
+                when (event) {
                     is RecipeReviewEvent.NavigateToEditRecipeScreen -> {
-                        val action = ReviewRecipeFragmentDirections.actionReviewRecipeFragmentToAddEditRecipeFragment(resources.getString(R.string.edit), viewModel.obsRecipe.value)
+                        val action =
+                            ReviewRecipeFragmentDirections.actionReviewRecipeFragmentToAddEditRecipeFragment(
+                                resources.getString(R.string.edit),
+                                viewModel.obsRecipe.value
+                            )
                         findNavController().navigate(action)
                     }
                     is RecipeReviewEvent.ShowSavedConfirmationMessage -> {

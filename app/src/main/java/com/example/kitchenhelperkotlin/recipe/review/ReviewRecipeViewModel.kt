@@ -55,7 +55,7 @@ class ReviewRecipeViewModel @AssistedInject constructor(
         }
     }
 
-    private fun editRecipe(recipe: Recipe) = viewModelScope.launch{
+    private fun editRecipe(recipe: Recipe) = viewModelScope.launch {
         viewRecipeEventChannel.send(RecipeReviewEvent.NavigateToEditRecipeScreen(recipe))
     }
 
