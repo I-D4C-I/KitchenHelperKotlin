@@ -24,7 +24,12 @@ class ReviewRecipeFragment : Fragment(R.layout.fragment_review_recipe) {
         val binding = FragmentReviewRecipeBinding.bind(view)
 
         binding.apply {
-            testButton.text = viewModel.recipeTitle
+
+        }
+
+
+        viewModel.obsRecipe.observe(viewLifecycleOwner) { recipe ->
+            binding.testButton.text = recipe.title
         }
     }
 }

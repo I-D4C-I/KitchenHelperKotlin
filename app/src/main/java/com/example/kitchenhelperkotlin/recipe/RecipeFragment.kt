@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
 import com.example.kitchenhelperkotlin.databinding.FragmentRecipeBinding
-import com.example.kitchenhelperkotlin.events.RecipeEvent
+import com.example.kitchenhelperkotlin.events.recipeEvents.RecipeEvent
 import com.example.kitchenhelperkotlin.util.exhaustive
 import com.example.kitchenhelperkotlin.util.onQueryTextChanged
 import com.google.android.material.snackbar.Snackbar
@@ -134,17 +134,12 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemC
                             )
                         findNavController().navigate(action)
                     }
-                    //TODO: Исправить название
-                    is RecipeEvent.NavigateToEditRecipeScreen -> {
-                        //val action = RecipeFragmentDirections.actionRecipeFragmentToAddEditRecipeFragment(resources.getString(R.string.edit), event.recipe )
-
+                    is RecipeEvent.NavigateToViewRecipeScreen -> {
                         val action =
                             RecipeFragmentDirections.actionRecipeFragmentToReviewRecipeFragment(
                                 event.recipe.title,
                                 event.recipe
                             )
-
-
                         findNavController().navigate(action)
                     }
                     is RecipeEvent.ShowSavedConfirmationMessage -> {

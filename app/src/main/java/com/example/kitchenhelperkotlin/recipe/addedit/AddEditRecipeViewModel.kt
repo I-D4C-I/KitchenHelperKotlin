@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.kitchenhelperkotlin.R
-import com.example.kitchenhelperkotlin.events.RecipeAddEditEvent
+import com.example.kitchenhelperkotlin.events.recipeEvents.RecipeAddEditEvent
 import com.example.kitchenhelperkotlin.recipe.Recipe
 import com.example.kitchenhelperkotlin.recipe.RecipeDao
 import com.example.kitchenhelperkotlin.util.ADD_RESULT_OK

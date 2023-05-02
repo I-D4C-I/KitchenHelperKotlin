@@ -2,25 +2,30 @@ package com.example.kitchenhelperkotlin.recipe.review
 
 import android.app.Application
 import android.os.Bundle
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
+import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.recipe.Recipe
+import com.example.kitchenhelperkotlin.recipe.RecipeDao
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 class ReviewRecipeViewModel @AssistedInject constructor(
     application: Application,
+    recipeDao: RecipeDao,
     @Assisted private val state: SavedStateHandle
 ) : AndroidViewModel(application) {
 
-    val recipe = state.get<Recipe>("recipe")
+    private val recipe = state.get<Recipe>("recipe") ?: Recipe(
+        title = "Error", description = arrayListOf(
+            getApplication<Application>().resources.getString(
+                R.string.errorDescription
+            )
+        )
+    )
 
-    var recipeTitle = state.get<String>("recipeTitle") ?: recipe?.title ?: ""
-
+    val obsRecipe = recipeDao.getRecipeById(recipe.id).asLiveData()
 
     @AssistedFactory
     interface ViewFactory {

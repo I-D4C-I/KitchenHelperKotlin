@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.databinding.FragmentAddEditRecipeBinding
-import com.example.kitchenhelperkotlin.events.RecipeAddEditEvent
+import com.example.kitchenhelperkotlin.events.recipeEvents.RecipeAddEditEvent
 import com.example.kitchenhelperkotlin.util.exhaustive
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

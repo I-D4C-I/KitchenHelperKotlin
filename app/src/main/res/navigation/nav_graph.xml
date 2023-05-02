@@ -111,6 +111,9 @@
         <argument
             android:name="title"
             app:argType="string" />
+        <action
+            android:id="@+id/action_reviewRecipeFragment_to_addEditRecipeFragment"
+            app:destination="@id/addEditRecipeFragment" />
         <argument
             android:name="recipe"
             app:argType="com.example.kitchenhelperkotlin.recipe.Recipe" />

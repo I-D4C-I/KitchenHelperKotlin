@@ -7,7 +7,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import com.example.kitchenhelperkotlin.PreferencesRepository
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.SortOrder
-import com.example.kitchenhelperkotlin.events.RecipeEvent
+import com.example.kitchenhelperkotlin.events.recipeEvents.RecipeEvent
 import com.example.kitchenhelperkotlin.util.ADD_RESULT_OK
 import com.example.kitchenhelperkotlin.util.EDIT_RESULT_OK
 import dagger.assisted.Assisted
@@ -48,7 +48,7 @@ class RecipeViewModel @AssistedInject constructor(
     }
 
     fun onRecipeSelected(recipe: Recipe) = viewModelScope.launch {
-        recipeEventChannel.send(RecipeEvent.NavigateToEditRecipeScreen(recipe))
+        recipeEventChannel.send(RecipeEvent.NavigateToViewRecipeScreen(recipe))
     }
 
     fun onRecipeSwiped(recipe: Recipe) = viewModelScope.launch {
