@@ -137,7 +137,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe), RecipeAdapter.OnItemC
                     is RecipeEvent.NavigateToViewRecipeScreen -> {
                         val action =
                             RecipeFragmentDirections.actionRecipeFragmentToReviewRecipeFragment(
-                                event.recipe.title,
+                                resources.getString(R.string.description),
                                 event.recipe
                             )
                         findNavController().navigate(action)

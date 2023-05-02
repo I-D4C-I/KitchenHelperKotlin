@@ -5,11 +5,17 @@ import android.os.Bundle
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.kitchenhelperkotlin.R
+import com.example.kitchenhelperkotlin.events.recipeEvents.RecipeReviewEvent
 import com.example.kitchenhelperkotlin.recipe.Recipe
 import com.example.kitchenhelperkotlin.recipe.RecipeDao
+import com.example.kitchenhelperkotlin.util.ADD_RESULT_OK
+import com.example.kitchenhelperkotlin.util.EDIT_RESULT_OK
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 
 class ReviewRecipeViewModel @AssistedInject constructor(
     application: Application,
@@ -26,6 +32,37 @@ class ReviewRecipeViewModel @AssistedInject constructor(
     )
 
     val obsRecipe = recipeDao.getRecipeById(recipe.id).asLiveData()
+
+    private val viewRecipeEventChannel = Channel<RecipeReviewEvent>()
+    val viewRecipeEvent = viewRecipeEventChannel.receiveAsFlow()
+
+    fun onEditClick() {
+        editRecipe(recipe)
+    }
+
+    fun onEditResult(result: Int) {
+        when (result) {
+            ADD_RESULT_OK -> showConfirmationMessage(
+                getApplication<Application>().resources.getString(
+                    R.string.addedRecipe
+                )
+            )
+            EDIT_RESULT_OK -> showConfirmationMessage(
+                getApplication<Application>().resources.getString(
+                    R.string.editedRecipe
+                )
+            )
+        }
+    }
+
+    private fun editRecipe(recipe: Recipe) = viewModelScope.launch{
+        viewRecipeEventChannel.send(RecipeReviewEvent.NavigateToEditRecipeScreen(recipe))
+    }
+
+    private fun showConfirmationMessage(text: String) = viewModelScope.launch {
+        viewRecipeEventChannel.send(RecipeReviewEvent.ShowSavedConfirmationMessage(text))
+    }
+
 
     @AssistedFactory
     interface ViewFactory {
