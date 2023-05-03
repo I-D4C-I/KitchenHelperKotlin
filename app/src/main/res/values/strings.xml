@@ -60,6 +60,7 @@
     <string name="recipeDeleted">Рецепт удален</string>
     <string name="addedRecipe">Рецепт добален</string>
     <string name="editedRecipe">Рецепт обновлен</string>
+    <string name="openRecipe">Посмотреть рецепт</string>
     <string name="deleteAllRecipeMessage">Вы уверены, что хотите очистить список рецептов?</string>
     <string name="errorDescription">"Если вы видите это сообщение, то передача рецепта между фрагментами завершилась ошибкой."</string>
     <!--Список покупок-->
