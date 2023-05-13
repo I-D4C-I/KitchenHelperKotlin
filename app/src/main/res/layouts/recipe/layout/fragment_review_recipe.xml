@@ -11,37 +11,51 @@
         android:layout_height="match_parent"
         android:padding="8dp">
 
-        <TextView
-            android:id="@+id/recipeTitle"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/titleInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="36dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/custom_textview"
-            android:padding="12dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Example Title" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/recipeNote"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/eRecipeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/name"
+                tools:text ="Example Title"
+                android:inputType="none"
+                android:focusable="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/noteInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="36dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/custom_textview"
-            android:padding="12dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recipeTitle"
-            tools:text="Example Note" />
+            app:layout_constraintTop_toBottomOf="@id/titleInputLayout">
 
-        <View
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/eRecipeNote"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/note"
+                tools:text ="Example Note"
+                android:inputType="none"
+                android:focusable="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <view class="androidx.appcompat.app.AlertController$RecycleListView"
             android:id="@+id/view3"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -51,8 +65,9 @@
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipeNote"
-            app:layout_constraintVertical_bias="0.15" />
+            app:layout_constraintTop_toBottomOf="@+id/noteInputLayout"
+            app:layout_constraintVertical_bias="0.1"
+            />
 
         <Button
             android:id="@+id/openRecipe"
