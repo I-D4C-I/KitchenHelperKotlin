@@ -36,6 +36,7 @@ class ReviewRecipeFragment : Fragment(R.layout.fragment_review_recipe) {
 
         viewModel.obsRecipe.observe(viewLifecycleOwner) { recipe ->
             binding.eRecipeTitle.setText(recipe.title)
+            binding.eRecipeNote.setText(recipe.note)
         }
 
         setFragmentResultListener("add_edit_request") { _, bundle ->

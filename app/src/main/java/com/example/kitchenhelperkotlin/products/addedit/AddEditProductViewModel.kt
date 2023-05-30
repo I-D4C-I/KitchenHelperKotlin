@@ -39,7 +39,7 @@ class AddEditProductViewModel @AssistedInject constructor(
             stateHandle["productAmount"] = value
         }
 
-    var productDate = stateHandle.get<LocalDate>("productDate") ?: product?.date ?: LocalDate.now()
+    var productDate: LocalDate = stateHandle.get<LocalDate>("productDate") ?: product?.date ?: LocalDate.now()
         set(value) {
             field = value
             stateHandle["productDate"] = value

@@ -75,9 +75,9 @@ class AddEditProductFragment : Fragment(R.layout.fragment_add_edit_products) {
                 eProductAmount.setText(viewModel.productAmount)
 
                 date.set(
-                    viewModel.productDate!!.year,
-                    viewModel.productDate!!.monthValue - 1,
-                    viewModel.productDate!!.dayOfMonth,
+                    viewModel.productDate.year,
+                    viewModel.productDate.monthValue - 1,
+                    viewModel.productDate.dayOfMonth,
                 )
             } else {
                 eProductAmount.setText("0")
