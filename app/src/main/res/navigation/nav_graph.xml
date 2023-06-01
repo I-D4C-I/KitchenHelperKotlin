@@ -117,5 +117,20 @@
         <argument
             android:name="recipe"
             app:argType="com.example.kitchenhelperkotlin.recipe.Recipe" />
+        <action
+            android:id="@+id/action_reviewRecipeFragment_to_stepsRecipeFragment"
+            app:destination="@id/stepsRecipeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stepsRecipeFragment"
+        android:name="com.example.kitchenhelperkotlin.recipe.steps.StepsRecipeFragment"
+        android:label="fragment_steps_recipe"
+        tools:layout="@layout/fragment_steps_recipe" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="steps"
+            app:argType="string[]" />
     </fragment>
 </navigation>
