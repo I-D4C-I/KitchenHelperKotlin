@@ -6,11 +6,16 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.kitchenhelperkotlin.R
+import com.example.kitchenhelperkotlin.events.recipeEvents.RecipeAddEditEvent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 
 class StepsRecipeViewModel @AssistedInject constructor(
     application: Application,
@@ -21,10 +26,33 @@ class StepsRecipeViewModel @AssistedInject constructor(
 
     private val stepsRecipe = state.get<ArrayList<String>>("steps") ?: arrayListOf(
         getApplication<Application>().resources.getString(
-            R.string.errorDescription)
+            R.string.errorDescription
+        )
     )
     var step = stepsRecipe[numberOfStep]
 
+    private val stepsRecipeEventChannel = Channel<RecipeAddEditEvent>()
+    val stepsRecipeEvent = stepsRecipeEventChannel.receiveAsFlow()
+
+
+    fun onNextClick() {
+        numberOfStep++
+        if (numberOfStep + 1 > stepsRecipe.size)
+            numberOfStep = stepsRecipe.size
+        showNewStep()
+    }
+
+    fun onPreciousClick() {
+        numberOfStep--
+        if (numberOfStep < 0)
+            numberOfStep = 0
+        showNewStep()
+    }
+
+    private fun showNewStep() = viewModelScope.launch {
+        step = stepsRecipe[numberOfStep]
+        stepsRecipeEventChannel.send(RecipeAddEditEvent.ShowNewPart)
+    }
 
 
     @AssistedFactory
