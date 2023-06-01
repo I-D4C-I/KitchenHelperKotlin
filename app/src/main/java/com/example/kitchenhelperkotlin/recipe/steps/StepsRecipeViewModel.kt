@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.events.recipeEvents.RecipeAddEditEvent
+import com.example.kitchenhelperkotlin.recipe.Recipe
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -24,21 +25,23 @@ class StepsRecipeViewModel @AssistedInject constructor(
 
     var numberOfStep = 0
 
-    private val stepsRecipe = state.get<ArrayList<String>>("steps") ?: arrayListOf(
-        getApplication<Application>().resources.getString(
-            R.string.errorDescription
+    private val recipe = state.get<Recipe>("recipe") ?: Recipe(
+        title = "Error", description = arrayListOf(
+            getApplication<Application>().resources.getString(
+                R.string.errorDescription
+            )
         )
     )
-    var step = stepsRecipe[numberOfStep]
+
+    val stepsRecipe = recipe.description
 
     private val stepsRecipeEventChannel = Channel<RecipeAddEditEvent>()
     val stepsRecipeEvent = stepsRecipeEventChannel.receiveAsFlow()
 
 
     fun onNextClick() {
-        numberOfStep++
-        if (numberOfStep + 1 > stepsRecipe.size)
-            numberOfStep = stepsRecipe.size
+        if (numberOfStep + 1 < stepsRecipe.size)
+            numberOfStep++
         showNewStep()
     }
 
@@ -50,19 +53,18 @@ class StepsRecipeViewModel @AssistedInject constructor(
     }
 
     private fun showNewStep() = viewModelScope.launch {
-        step = stepsRecipe[numberOfStep]
         stepsRecipeEventChannel.send(RecipeAddEditEvent.ShowNewPart)
     }
 
 
     @AssistedFactory
-    interface ViewFactory {
+    interface StepsFactory {
         fun create(handle: SavedStateHandle): StepsRecipeViewModel
     }
 
     companion object {
         fun provideFactory(
-            assistedFactory: ViewFactory,
+            assistedFactory: StepsFactory,
             owner: SavedStateRegistryOwner,
             defaultArgs: Bundle? = null,
         ): AbstractSavedStateViewModelFactory =

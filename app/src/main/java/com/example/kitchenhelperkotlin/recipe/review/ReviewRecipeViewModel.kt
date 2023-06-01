@@ -63,6 +63,10 @@ class ReviewRecipeViewModel @AssistedInject constructor(
         viewRecipeEventChannel.send(RecipeReviewEvent.ShowSavedConfirmationMessage(text))
     }
 
+    fun onOpenRecipeClick() = viewModelScope.launch {
+        viewRecipeEventChannel.send(RecipeReviewEvent.NavigateToStepsRecipeScreen(recipe))
+    }
+
 
     @AssistedFactory
     interface ViewFactory {

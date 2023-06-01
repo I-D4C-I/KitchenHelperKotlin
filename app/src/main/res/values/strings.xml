@@ -49,6 +49,7 @@
     <string name="deleteAllProductsMessage">Вы уверены, что хотите очистить список продуктов?</string>
     <!--Рецепты-->
     <string name="addRecipe">Добавить рецепт</string>
+    <string name="recipe">Рецепт</string>
     <string name="startCooking">Начать готовить</string>
     <string name="description">Описание</string>
     <string name="note">Заметка</string>

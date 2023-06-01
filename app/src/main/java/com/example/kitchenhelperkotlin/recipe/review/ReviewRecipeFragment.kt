@@ -32,6 +32,9 @@ class ReviewRecipeFragment : Fragment(R.layout.fragment_review_recipe) {
             fbEditRecipe.setOnClickListener {
                 viewModel.onEditClick()
             }
+            openRecipe.setOnClickListener {
+                viewModel.onOpenRecipeClick()
+            }
         }
 
         viewModel.obsRecipe.observe(viewLifecycleOwner) { recipe ->
@@ -55,8 +58,18 @@ class ReviewRecipeFragment : Fragment(R.layout.fragment_review_recipe) {
                             )
                         findNavController().navigate(action)
                     }
+
                     is RecipeReviewEvent.ShowSavedConfirmationMessage -> {
                         Snackbar.make(requireView(), event.text, Snackbar.LENGTH_SHORT).show()
+                    }
+
+                    is RecipeReviewEvent.NavigateToStepsRecipeScreen -> {
+                        val action =
+                            ReviewRecipeFragmentDirections.actionReviewRecipeFragmentToStepsRecipeFragment(
+                                resources.getString(R.string.recipe),
+                                viewModel.obsRecipe.value
+                            )
+                        findNavController().navigate(action)
                     }
                 }
             }

@@ -9,17 +9,18 @@ import com.example.kitchenhelperkotlin.R
 import com.example.kitchenhelperkotlin.databinding.FragmentStepsRecipeBinding
 import com.example.kitchenhelperkotlin.events.recipeEvents.RecipeAddEditEvent
 import com.example.kitchenhelperkotlin.util.exhaustive
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class StepsRecipeFragment : Fragment(R.layout.fragment_steps_recipe) {
 
     @Inject
-    lateinit var factory: StepsRecipeViewModel.ViewFactory
+    lateinit var factory: StepsRecipeViewModel.StepsFactory
 
     private val viewModel: StepsRecipeViewModel by viewModels {
         StepsRecipeViewModel.provideFactory(factory, this, arguments)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,7 +29,7 @@ class StepsRecipeFragment : Fragment(R.layout.fragment_steps_recipe) {
         fun refreshPart() {
             binding.eRecipeStep.clearFocus()
             binding.vPart.text = getString(R.string.part, viewModel.numberOfStep + 1)
-            binding.eRecipeStep.setText(viewModel.step)
+            binding.eRecipeStep.setText(viewModel.stepsRecipe[viewModel.numberOfStep])
         }
 
         binding.apply {
@@ -56,6 +57,4 @@ class StepsRecipeFragment : Fragment(R.layout.fragment_steps_recipe) {
             }
         }
     }
-
-
 }
